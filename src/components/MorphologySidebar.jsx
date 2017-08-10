@@ -33,10 +33,11 @@ class MorphologySidebar extends React.Component {
 	}
 	render() {
 		const wdata = DataFlow.get("worddata")
-		const data = Object.keys(wdata).map(k => (
-			{ heading: k, value: wdata[k] }
-		))
 		const selectedValues = Object.keys(DataFlow.get("termConstruction"))
+		const morphSettings = DataFlow.get("morphSettings")
+		const dataToDisplay = morphSettings.filter(m => m.visible && wdata[m.heading]).map(m => {
+			return { heading: m.heading, value: wdata[m.heading] }
+		})
 		return <div style={{
 				position: "sticky",
 				boxSizing: "border-box",
@@ -47,7 +48,7 @@ class MorphologySidebar extends React.Component {
 				fontSize: "small",
 				fontFamily: "Open Sans"
 				}}>
-			{data.map((d, i) => {
+			{dataToDisplay.map((d, i) => {
 				const highlightData = selectedValues.indexOf(d.heading) > -1 ? { 
 					color: "#deecf9",
 					backgroundColor: "#0078d7"

@@ -101,7 +101,7 @@ class ParabibleHeader extends React.Component {
 						color: 'black'
 					}
 				},
-				onClick: this.props.showPanel
+				onClick: this.props.showBookSelector
 			}, {
 				key: 'nextChapter',
 				name: "",
@@ -217,6 +217,7 @@ class ParabibleHeader extends React.Component {
 			}, {
 				key: 'morphologySettings',
 				name: 'Morphology Settings', //Which fields to show
+				onClick: this.props.showMorphSettings,
 				iconProps: {
 					iconName: "GroupedList"
 				}

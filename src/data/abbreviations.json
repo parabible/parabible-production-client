@@ -141,29 +141,6 @@
 			"f": "False"
 		}
 	},
-	"category_weights": {
-		"vs": -10,
-		"vt": -9,
-		"lex": -8.5,
-		"lex_utf8": -8.3,
-		"voc_utf8": -8.1,
-		"tricons": -8,
-		"ps": -7,
-		"gn": -6,
-		"nu": -5,
-		"sp": -4,
-		"g_prs_utf8": 1,
-		"prs_gn": 1.2,
-		"prs_nu": 1.3,
-		"prs_ps": 1.1,
-		"accent": 3,
-		"accent_quality": 3.1,
-		"sdbh": 4,
-		"g_cons_utf8": 5,
-		"lxxlexeme": 5.1,
-		"gloss": 6,
-		"invert": 10
-	},
 	"clause_types": {
 		"AjCl": "Adjective clause",
 		"CPen": "Casus pendens",

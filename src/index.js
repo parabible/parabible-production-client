@@ -2,6 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import Header from './components/Header'
 import BookSelector from './components/BookSelector'
+import MorphologySettings from './components/MorphologySettings'
 import MorphologySidebar from './components/MorphologySidebar'
 import MorphologyPopup from './components/MorphologyPopup'
 import Content from './components/Content'
@@ -14,7 +15,8 @@ class App extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			showPanel: false,
+			showBookSelector: false,
+			showMorphSettings: false,
 			messages: [
 				// {
 				// 	type: "success",
@@ -34,8 +36,14 @@ class App extends React.Component {
 			this.setState({showMorphPopup: true})
 		})
 	}
-	setPanelDisplay(visibile) {
-		this.setState({showPanel: visibile})
+	setPanelDisplay(panel, visibile) {
+		const panelNames = {
+			"bookSelector": "showBookSelector",
+			"morphSettings": "showMorphSettings"
+		}
+		const state = {}
+		state[panelNames[panel]] = visibile
+		this.setState(state)
 	}
 	removeMessage(index) {
 		this.setState({ messages: this.state.messages.filter((v, i) => i !== index) })
@@ -47,7 +55,9 @@ class App extends React.Component {
 
 		return (
 			<div>
-				<Header showPanel={() => this.setPanelDisplay(true)} />
+				<Header
+					showBookSelector={() => this.setPanelDisplay("bookSelector", true)}
+					showMorphSettings={() => this.setPanelDisplay("morphSettings", true)} />
 				<div style={{position:"absolute"}}>
 					{this.state.messages.map((m, index) => 
 						<MessageBar key={index} messageBarType={MessageBarType[m.type]}
@@ -91,7 +101,12 @@ class App extends React.Component {
 						</div>
 					) : null}
 				</div>
-				<BookSelector panelIsVisible={this.state.showPanel} hidePanel={() => this.setPanelDisplay(false)} />
+				<BookSelector
+					panelIsVisible={this.state.showBookSelector}
+					hidePanel={() => this.setPanelDisplay("bookSelector", false)} />
+				<MorphologySettings
+					panelIsVisible={this.state.showMorphSettings}
+					hidePanel={() => this.setPanelDisplay("morphSettings", false)} />
 			</div>
 		)
 	}

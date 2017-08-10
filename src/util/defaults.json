@@ -5,5 +5,17 @@
 	"termConstruction": {},
 	"searchTerms": [],
 	"reference": {},
+	"morphSettings": [
+		{ "heading": "voc_utf8", "visible": true },
+		{ "heading": "sp", "visible": true },
+		{ "heading": "vs", "visible": true },
+		{ "heading": "vt", "visible": true },
+		{ "heading": "ps", "visible": true },
+		{ "heading": "nu", "visible": true },
+		{ "heading": "gn", "visible": true },
+		{ "heading": "sdbh", "visible": true },
+		{ "heading": "lxxlexeme", "visible": true },
+		{ "heading": "gloss", "visible": true }
+	],
 	"screenSizeIndex": 0
 }
