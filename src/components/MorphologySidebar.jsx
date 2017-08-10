@@ -2,13 +2,18 @@ import React from 'react'
 import DataFlow from 'util/DataFlow'
 import Abbreviations from 'data/abbreviations'
 
+let watcherObject = {}
+
 class MorphologySidebar extends React.Component {
 	constructor(props) {
 		super(props)
 		DataFlow.watch("worddata", () => {
 			DataFlow.set("termConstruction", {})
 			this.forceUpdate()
-		})
+		}, watcherObject)
+	}
+	componentWillUnmount() {
+		DataFlow.unwatch("worddata", watcherObject.worddata)
 	}
 	toggleTermProperties(props) {
 		const oldVal = DataFlow.get("termConstruction")

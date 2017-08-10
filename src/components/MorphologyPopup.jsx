@@ -1,28 +1,41 @@
 import React from 'react'
 import DataFlow from '../util/DataFlow'
+import Abbreviations from 'data/abbreviations'
+
+let watcherObject = {}
 
 class MorphologySidebar extends React.Component {
 	constructor(props) {
 		super(props)
 		DataFlow.watch("worddata", () => {
 			this.forceUpdate()
-		})
+		}, watcherObject)
+	}
+	componentWillUnmount() {
+		DataFlow.unwatch("worddata", watcherObject.worddata)
 	}
 	render() {
 		const wdata = DataFlow.get("worddata")
+		let secondaryData = []
+		if (wdata.sp == "verb")
+			if (wdata.vt == "ptca" || wdata.vt == "ptcp") {
+				secondaryData = [wdata.vs, wdata.vt, wdata.gn + wdata.nu]
+			}
+			else {
+				secondaryData = [wdata.vs, wdata.vt, wdata.ps + wdata.gn + wdata.nu]
+			}
+		else
+			secondaryData = [wdata.gn, wdata.nu]
+		const finalSecondaryData = secondaryData.reduce((a, v) => {
+			if (v)
+				a.push(v)
+			return a
+		}, [])
+
 		let dataToUse = {
 			primary: [wdata.voc_utf8, wdata.gloss],
-			secondary: []
+			secondary: finalSecondaryData.length ? finalSecondaryData : [Abbreviations.term_to_english.sp[wdata.sp]]
 		}
-		if (wdata.sp == "prep")
-			dataToUse.secondary = []
-		else if (wdata.sp == "verb")
-			if (wdata.vt == "ptca" || wdata.vt == "ptcp")
-				dataToUse.secondary = [wdata.vs, wdata.vt, wdata.gn + wdata.nu]
-			else
-				dataToUse.secondary = [wdata.vs, wdata.vt, wdata.ps + wdata.gn + wdata.nu]
-		else
-			dataToUse.secondary = [wdata.gn, wdata.nu]
 		return <div style={{
 				display: "flex",
 				fontSize: "medium",
