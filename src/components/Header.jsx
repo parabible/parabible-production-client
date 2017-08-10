@@ -304,7 +304,7 @@ class ParabibleHeader extends React.Component {
 			key: "searchTerms",
 			name: this.state.screenSizeIndex < 2 ? "Search Terms" : "",
 			icon: "CollapseMenu",
-			subMenuProps: { items: searchTerms }
+			subMenuProps: { items: searchTermMenuItems }
 		}
 
 		const rightItemList = [
@@ -349,6 +349,8 @@ class ParabibleHeader extends React.Component {
 						...rightItemList
 					]}
 				}]
+				if (searchTerms.length === 0)
+					farItemList[0].subMenuProps.items.splice(1, 1)
 				break;
 			case 2:
 				farItemList = [
@@ -356,18 +358,20 @@ class ParabibleHeader extends React.Component {
 					searchTermParentItem,
 					...rightItemList
 				]
+				if (searchTerms.length === 0)
+					farItemList.splice(1, 1)
 				break;
 			case 3:
 				farItemList = [
 					searchMenuItem,
-					...searchTerms,
+					...searchTermMenuItems,
 					...rightItemList
 				]
 				break;
 			case 4:
 				farItemList = [
 					searchMenuItem,
-					...searchTerms,
+					...searchTermMenuItems,
 					...rightItemList
 				]
 				break;
