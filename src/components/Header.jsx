@@ -16,6 +16,8 @@ class ParabibleHeader extends React.Component {
 			this.setState({"reference": r})
 		}).watch("screenSizeIndex", (n) => {
 			this.setState({ "screenSizeIndex": n })
+		}).watch("searchTerms", (n) => {
+			this.forceUpdate()
 		})
 	}
 	generateTermMenuItem({ key, text, inverted }) {

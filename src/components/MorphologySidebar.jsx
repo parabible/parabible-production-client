@@ -86,6 +86,15 @@ class MorphologySidebar extends React.Component {
 				disabled={selectedValues.length === 0}
 				iconProps={{ iconName: 'Add' }}
 				text='Create Search Term'
+				onClick={() => {
+					let newT = DataFlow.get("searchTerms")
+					newT.push({
+						"uid": Date.now().toString(),
+						"inverted": false,
+						"data": DataFlow.get("termConstruction")
+					})
+					DataFlow.set("searchTerms", newT)
+				}}
 			/>
 			</div>
 		</div>
