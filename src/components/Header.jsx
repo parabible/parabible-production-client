@@ -18,6 +18,57 @@ class ParabibleHeader extends React.Component {
 			this.setState({ "screenSizeIndex": n })
 		})
 	}
+	generateTermMenuItem({ key, text, inverted }) {
+		let menuItem = {
+			key: key,
+			name: text,
+			subMenuProps: {
+				items: [{
+					key: 'edit',
+					name: 'Modify',
+					iconProps: {
+						iconName: 'Edit'
+					},
+					onClick: () => {
+						console.log("Modify!!!")
+					}
+				}, {
+					key: 'invert',
+					name: 'Invert',
+					iconProps: {
+						iconName: inverted ? "CheckboxComposite" : "Checkbox"
+					},
+					onClick: () => {
+						let st = DataFlow.get("searchTerms")
+						const index = st.findIndex(st => st.uid === key)
+						st[index].inverted = !st[index].inverted
+						DataFlow.set("searchTerms", st)
+						this.forceUpdate()
+					}
+				}, {
+					key: 'delete',
+					name: 'Remove',
+					iconProps: {
+						iconName: 'Trash',
+						style: {
+							color: 'red'
+						}
+					},
+					onClick: () => {
+						let st = DataFlow.get("searchTerms")
+						const index = st.findIndex(st => st.uid === key)
+						delete st[index]
+						DataFlow.set("searchTerms", st)
+						this.forceUpdate()
+					}
+				}]
+			}
+		}
+		if (/[\u0590-\u05fe]/.test(text))
+			menuItem["style"] = { fontSize: "x-large", fontFamily: "SBL Biblit" }
+		return menuItem
+	}
+
 	moveChapter(direction) {
 		var referenceArray = bookDetails.reduce((previousValue, currentValue) => {
 			var newReferences = [...Array(currentValue.chapters).keys()].map((i) => ({ "book": currentValue.name, "chapter": i + 1 }))
@@ -61,135 +112,12 @@ class ParabibleHeader extends React.Component {
 			}
 		]
 
-		const searchTerms = [{
-			key: 'term1',
-			name: 'שׁמר',
-			style: { fontSize: "large" },
-			subMenuProps: {
-				items: [{
-					key: 'edit',
-					name: 'Modify',
-					iconProps: {
-						iconName: 'Edit'
-					},
-				}, {
-					key: 'invert',
-					name: 'Invert',
-					iconProps: {
-						iconName: this.state.invert ? "CheckboxComposite" : "Checkbox"
-					},
-					onClick: () => {
-						this.setState({ invert: !this.state.invert })
-						console.log(this.state.invert)
-					}
-				}, {
-					key: 'delete',
-					name: 'Remove',
-					iconProps: {
-						iconName: 'Trash',
-						style: {
-							color: 'red'
-						}
-					},
-				}]
-			}
-		}, {
-			key: 'term2',
-			name: 'אֶלֹהִים',
-			style: { fontSize: "large" },
-			subMenuProps: {
-				items: [{
-					key: 'edit',
-					name: 'Modify',
-					iconProps: {
-						iconName: 'Edit'
-					},
-				}, {
-					key: 'invert',
-					name: 'Invert',
-					iconProps: {
-						iconName: this.state.invert ? "CheckboxComposite" : "Checkbox"
-					},
-					onClick: () => {
-						this.setState({ invert: !this.state.invert })
-						console.log(this.state.invert)
-					}
-				}, {
-					key: 'delete',
-					name: 'Remove',
-					iconProps: {
-						iconName: 'Trash',
-						style: {
-							color: 'red'
-						}
-					},
-				}]
-			}
-		}, {
-			key: 'term3',
-			name: 'ῤημάτα',
-			style: { fontSize: "large" },
-			subMenuProps: {
-				items: [{
-					key: 'edit',
-					name: 'Modify',
-					iconProps: {
-						iconName: 'Edit'
-					},
-				}, {
-					key: 'invert',
-					name: 'Invert',
-					iconProps: {
-						iconName: this.state.invert ? "CheckboxComposite" : "Checkbox"
-					},
-					onClick: () => {
-						this.setState({ invert: !this.state.invert })
-						console.log(this.state.invert)
-					}
-				}, {
-					key: 'delete',
-					name: 'Remove',
-					iconProps: {
-						iconName: 'Trash',
-						style: {
-							color: 'red'
-						}
-					},
-				}]
-			}
-		}, {
-			key: 'term4',
-			name: 'Qal 3ms',
-			style: { fontSize: "large" },
-			subMenuProps: {
-				items: [{
-					key: 'edit',
-					name: 'Modify',
-					iconProps: {
-						iconName: 'Edit'
-					},
-				}, {
-					key: 'invert',
-					name: 'Invert',
-					iconProps: {
-						iconName: this.state.invert ? "CheckboxComposite" : "Checkbox"
-					},
-					onClick: () => {
-						this.setState({ invert: !this.state.invert })
-						console.log(this.state.invert)
-					}
-				}, {
-					key: 'delete',
-					name: 'Remove',
-					iconProps: {
-						iconName: 'Trash',
-						style: {
-							color: 'red'
-						}
-					},
-				}]
-			}
-		}]
+		const searchTerms = DataFlow.get("searchTerms")
+		const searchTermMenuItems = searchTerms.map(st => this.generateTermMenuItem({
+			key: st.uid, 
+			text: st.data.voc_utf8,
+			inverted: st.inverted
+		}))
 
 		const searchRangeItems = [
 			{
