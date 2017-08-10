@@ -1,4 +1,5 @@
 import React from 'react'
+import { PrimaryButton } from 'office-ui-fabric-react/lib/Button'
 import DataFlow from 'util/DataFlow'
 import Abbreviations from 'data/abbreviations'
 
@@ -79,6 +80,13 @@ class MorphologySidebar extends React.Component {
 					</div>
 				</div>
 			})}
+			<div style={{padding: "5px 10px"}}>
+			<PrimaryButton
+				disabled={selectedValues.length === 0}
+				iconProps={{ iconName: 'Add' }}
+				text='Create Search Term'
+			/>
+			</div>
 		</div>
 	}
 }
