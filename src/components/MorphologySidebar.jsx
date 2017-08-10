@@ -51,10 +51,10 @@ class MorphologySidebar extends React.Component {
 					color: "#deecf9",
 					backgroundColor: "#0078d7"
 				} : {}
-				const translatedHeading = Abbreviations.term_to_english.categories.hasOwnProperty(d.heading) ?
-					Abbreviations.term_to_english.categories[d.heading] : d.heading
-				const translatedValue = Abbreviations.term_to_english.hasOwnProperty[d.heading] ?
-					Abbreviations.term_to_english[d.heading][d.value] : d.value
+				const translatedHeading = Abbreviations.termToEnglish.categories.hasOwnProperty(d.heading) ?
+					Abbreviations.termToEnglish.categories[d.heading] : d.heading
+				const translatedValue = Abbreviations.termToEnglish[d.heading] ?
+					Abbreviations.termToEnglish[d.heading][d.value] : d.value
 				return <div key={i} className="mrow" style={Object.assign({
 						display: "flex",
 						flexFlow: "row wrap",

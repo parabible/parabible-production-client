@@ -34,7 +34,7 @@ class MorphologySidebar extends React.Component {
 
 		let dataToUse = {
 			primary: [wdata.voc_utf8, wdata.gloss],
-			secondary: finalSecondaryData.length ? finalSecondaryData : [Abbreviations.term_to_english.sp[wdata.sp]]
+			secondary: finalSecondaryData.length ? finalSecondaryData : [Abbreviations.termToEnglish.sp[wdata.sp]]
 		}
 		return <div style={{
 				display: "flex",
