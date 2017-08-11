@@ -45,7 +45,7 @@ let exportObject = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-	exportObject.devtool = ""
+	exportObject.devtool = "source-map"
 	exportObject.plugins.push(
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': '"production"'
@@ -56,7 +56,7 @@ if (process.env.NODE_ENV === 'production') {
 				screw_ie8: true
 			},
 			comments: false,
-			// sourceMap: false // For some reason this makes uglify fail
+			sourceMap: true
 		}),
 		new webpack.optimize.AggressiveMergingPlugin()
 	)
