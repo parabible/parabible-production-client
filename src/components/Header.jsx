@@ -1,26 +1,36 @@
 import React from 'react'
-import { CommandBar } from 'office-ui-fabric-react'
+import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar'
 import DataFlow from 'util/DataFlow'
 import ApiRequest from 'util/ApiRequest'
-import bookDetails from "data/bookDetails"
+import bookDetails from 'data/bookDetails'
+import AppNotify from 'util/AppNotify'
 
 class ParabibleHeader extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			invert: false,
-			screenSizeIndex: DataFlow.get("screenSizeIndex"),
-			reference: DataFlow.get("reference")
-		}
-		DataFlow.watch("reference", (r) => {
-			this.setState({"reference": r})
-		}).watch("screenSizeIndex", (n) => {
-			this.setState({ "screenSizeIndex": n })
-		}).watch("searchTerms", (n) => {
-			this.forceUpdate()
-		})
+		this.state = DataFlow.bindState([
+			"highlightTermsSetting",
+			"screenSizeIndex",
+			"reference",
+			"screenSizeIndex",
+			"searchTerms"
+		], this.setState.bind(this))
+		// {
+		// 	highlightTerms: DataFlow.get("highlightTermsSetting"),
+		// 	screenSizeIndex: DataFlow.get("screenSizeIndex"),
+		// 	reference: DataFlow.get("reference")
+		// }
+		// DataFlow.watch("highlightTermsSetting", h => {
+		// 	this.setState({ "highlightTerms": h })
+		// }).watch("reference", (r) => {
+		// 	this.setState({ "reference": r })
+		// }).watch("screenSizeIndex", (n) => {
+		// 	this.setState({ "screenSizeIndex": n })
+		// }).watch("searchTerms", (n) => {
+		// 	this.forceUpdate()
+		// })
 	}
-	generateTermMenuItem({ key, text, inverted }) {
+	generateTermMenuItem({ key, text, invert }) {
 		let menuItem = {
 			key: key,
 			name: text,
@@ -38,12 +48,12 @@ class ParabibleHeader extends React.Component {
 					key: 'invert',
 					name: 'Invert',
 					iconProps: {
-						iconName: inverted ? "CheckboxComposite" : "Checkbox"
+						iconName: invert ? "CheckboxComposite" : "Checkbox"
 					},
 					onClick: () => {
-						let st = DataFlow.get("searchTerms")
+						const st = this.state.searchTerms.slice()
 						const index = st.findIndex(st => st.uid === key)
-						st[index].inverted = !st[index].inverted
+						st[index].invert = !st[index].invert
 						DataFlow.set("searchTerms", st)
 						this.forceUpdate()
 					}
@@ -57,9 +67,9 @@ class ParabibleHeader extends React.Component {
 						}
 					},
 					onClick: () => {
-						let st = DataFlow.get("searchTerms")
+						let st = this.state.searchTerms.slice()
 						const index = st.findIndex(st => st.uid === key)
-						delete st[index]
+						st.splice(index, 1)
 						DataFlow.set("searchTerms", st)
 						this.forceUpdate()
 					}
@@ -69,6 +79,20 @@ class ParabibleHeader extends React.Component {
 		if (/[\u0590-\u05fe]/.test(text))
 			menuItem["style"] = { fontSize: "x-large", fontFamily: "SBL Biblit" }
 		return menuItem
+	}
+	generateSettingsMenu(menuData) {
+		const searchField = DataFlow.get(menuData.field)
+		return menuData.items.map(item => ({
+			key: item.name,
+			name: item.title,
+			iconProps: {
+				iconName: searchField == item.name ? "CheckboxComposite" : "Checkbox"
+			},
+			onClick: () => {
+				DataFlow.set(menuData.field, item.name)
+				this.forceUpdate()
+			}
+		}))
 	}
 
 	moveChapter(direction) {
@@ -83,6 +107,25 @@ class ParabibleHeader extends React.Component {
 		newIndex = newIndex < referenceArray.length ? newIndex : 0
 
 		DataFlow.set("reference", referenceArray[newIndex])
+	}
+
+	doSearch() {
+		if (this.state.searchTerms.length === 0) {
+			AppNotify.send({
+				type: "warning",
+				message: "You have not created any search terms. Click on a word, choose an attribute to search for and click the 'Create Search Term' button."
+			})
+			return
+		}
+		const type = DataFlow.get("searchTypeSetting")
+		switch(type) {
+			case "normal":
+				ApiRequest("termSearch")
+				break
+			case "wordStudy":
+			case "collocation":
+				break
+		}
 	}
 
 	render() {
@@ -114,58 +157,72 @@ class ParabibleHeader extends React.Component {
 			}
 		]
 
-		const searchTerms = DataFlow.get("searchTerms")
-		const searchTermMenuItems = searchTerms.map(st => this.generateTermMenuItem({
-			key: st.uid, 
-			text: st.data.voc_utf8,
-			inverted: st.inverted
-		}))
+		const searchTermMenuItems = this.state.searchTerms.map(st => {
+			let val = "?"
+			if (st.data.hasOwnProperty("voc_utf8"))
+				val = st.data.voc_utf8
+			else if (st.data.hasOwnProperty("lxxlexeme"))
+				val = st.data.lxxlexeme
+			else if (st.data.hasOwnProperty("gloss"))
+				val = st.data.gloss
+			else if (st.data.hasOwnProperty("sdbh"))
+				val = st.data.sdbh
+			else if (st.data.hasOwnProperty("vs") || st.data.hasOwnProperty("vt")) {
+				val = st.data.hasOwnProperty("vs") ? st.data.vs + " " : ""
+				val += st.data.hasOwnProperty("vt") ? st.data.vt : ""
+			}
+			else if (st.data.hasOwnProperty("ps") || st.data.hasOwnProperty("gn") || st.data.hasOwnProperty("nu")) {
+				val = st.data.hasOwnProperty("ps") ? st.data.ps + " " : ""
+				val += st.data.hasOwnProperty("nu") ? st.data.nu + " " : ""
+				val += st.data.hasOwnProperty("gn") ? st.data.gn : ""
+			}
+			else if (st.data.hasOwnProperty("sp")) {
+				val = st.data.sp
+			}
+			
+			return this.generateTermMenuItem({
+				key: st.uid, 
+				text: val,
+				invert: st.invert
+			})
+		})
 
-		const searchRangeItems = [
-			{
-				key: 'phrase',
-				name: 'Phrase',
-			}, {
-				key: 'clause',
-				name: 'Clause',
-			}, {
-				key: 'sentence',
-				name: 'Sentence',
-			}, {
-				key: 'verse',
-				name: 'Verse',
-			}
-		]
-		const searchTypeItems = [
-			{
-				key: 'normal',
-				name: 'Normal',
-			}, {
-				key: 'collocation',
-				name: 'Collocation',
-			}, {
-				key: 'wordStudy',
-				name: 'Word Study',
-			}
-		]
-		const searchFilterItems = [
-			{
-				key: 'none',
-				name: 'None',
-			}, {
-				key: 'current',
-				name: 'Current',
-			}, {
-				key: 'pentateuch',
-				name: 'Pentateuch',
-			}, {
-				key: 'minorProphets',
-				name: 'Minor Prophets',
-			}, {
-				key: 'custom',
-				name: 'Custom',
-			}
-		]
+		const menuRange = {
+			"field": "searchRangeSetting",
+			"items": [
+				{ name: 'phrase', title: 'Phrase' },
+				{ name: 'clause', title: 'Clause' },
+				{ name: 'sentence', title: 'Sentence' },
+				{ name: 'verse', title: 'Verse' }
+			]
+		}
+		const searchRangeItems = this.generateSettingsMenu(menuRange)
+
+
+		const menuType = {
+			"field": "searchTypeSetting",
+			"items": [
+				{ name: 'normal', title: 'Normal' },
+				// { name: 'collocation', title: 'Collocation' },
+				// { name: 'wordStudy', title: 'Word Study' }
+			]
+		}
+		const searchTypeItems = this.generateSettingsMenu(menuType)
+
+
+		const menuFilter = {
+			"field": "searchFilterSetting",
+			"items": [
+				{ name: 'none', title: 'None' },
+				{ name: 'current', title: 'Current' },
+				{ name: 'pentateuch', title: 'Pentateuch' },
+				{ name: 'minorProphets', title: 'Minor Prophets' },
+				// TODO: { name: 'custom', title: 'Custom' }
+			]
+		}
+		const searchFilterItems = this.generateSettingsMenu(menuFilter)
+
+		
 		const searchSettingsItems = [
 			{
 				key: 'searchRange',
@@ -188,6 +245,13 @@ class ParabibleHeader extends React.Component {
 					iconName: "Filter"
 				},
 				subMenuProps: { items: searchFilterItems }
+			}, {
+				key: 'highlight',
+				name: 'Highlight Terms',
+				iconProps: {
+					iconName: this.state.highlightTermsSetting ? "CheckboxComposite" : "Checkbox"
+				},
+				onClick: () => DataFlow.set("highlightTermsSetting", !this.state.highlightTermsSetting)
 			}
 		]
 		const generalSettingsItems = [
@@ -204,17 +268,6 @@ class ParabibleHeader extends React.Component {
 					iconName: "ListMirrored"
 				},
 				subMenuProps: { "items": [
-					{
-						key: 'highlight',
-						name: 'Highlight Terms',
-						iconProps: {
-							iconName: this.state.invert ? "CheckboxComposite" : "Checkbox"
-						},
-						onClick: () => {
-							this.setState({ invert: !this.state.invert })
-							console.log(this.state.invert)
-						}
-					}
 				]}
 			}, {
 				key: 'morphologySettings',
@@ -229,7 +282,8 @@ class ParabibleHeader extends React.Component {
 		const searchMenuItem = {
 			key: "search",
 			name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "Search" : "",
-			icon: "Search"
+			icon: "Search",
+			onClick: this.doSearch.bind(this)
 		}
 		const searchTermParentItem = {
 			key: "searchTerms",

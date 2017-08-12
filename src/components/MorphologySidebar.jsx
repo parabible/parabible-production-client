@@ -82,20 +82,23 @@ class MorphologySidebar extends React.Component {
 				</div>
 			})}
 			<div style={{padding: "5px 10px"}}>
-			<PrimaryButton
-				disabled={selectedValues.length === 0}
-				iconProps={{ iconName: 'Add' }}
-				text='Create Search Term'
-				onClick={() => {
-					let newT = DataFlow.get("searchTerms")
-					newT.push({
-						"uid": Date.now().toString(),
-						"inverted": false,
-						"data": DataFlow.get("termConstruction")
-					})
-					DataFlow.set("searchTerms", newT)
-				}}
-			/>
+			{Object.keys(wdata).length > 0 && (
+				<PrimaryButton
+					disabled={selectedValues.length === 0}
+					iconProps={{ iconName: 'Add' }}
+					text='Create Search Term'
+					onClick={() => {
+						let newT = DataFlow.get("searchTerms")
+						newT.push({
+							"uid": Date.now().toString(),
+							"inverted": false,
+							"data": DataFlow.get("termConstruction")
+						})
+						DataFlow.set("searchTerms", newT)
+						DataFlow.set("termConstruction", {})
+						this.forceUpdate()
+					}} />
+			)}
 			</div>
 		</div>
 	}

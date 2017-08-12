@@ -15,14 +15,24 @@
 		.mrow:hover {
 			background-color: #deecf9;
 		}
+		.resultsRow:hover {
+			background: rgba(230,230,230,0.5);
+		}
 		.sortableDrag {
 			z-index: 1000001;
 			font-family: "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+		}
+		/* straight from net chunks */
+		verse {
+			color: rgb(234, 67, 0);
+			vertical-align: top;
+			font-size: 45%; /* 10% larger than hebrew verse numbers */
+			font-weight: bold;
 		}
 	</style>
 </head>
 <body style="margin: 0; height: 100vh; width: 100vw; user-select: none">
 	<div id="app"></div>
-	<script src="/bundle.js?1"></script>
+	<script src="/bundle.js"></script>
 </body>
 </html>
