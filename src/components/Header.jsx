@@ -334,7 +334,7 @@ class ParabibleHeader extends React.Component {
 						...rightItemList
 					]}
 				}]
-				if (searchTerms.length === 0)
+				if (this.state.searchTerms.length === 0)
 					farItemList[0].subMenuProps.items.splice(1, 1)
 				break;
 			case 2:
@@ -343,7 +343,7 @@ class ParabibleHeader extends React.Component {
 					searchTermParentItem,
 					...rightItemList
 				]
-				if (searchTerms.length === 0)
+				if (this.state.searchTerms.length === 0)
 					farItemList.splice(1, 1)
 				break;
 			case 3:
