@@ -20,7 +20,7 @@ class BookSelector extends React.Component {
 			const chapterLinks = Array.from({ length: bkD.chapters }, (v, i) => {
 				return {
 					name: `Chapter ${i + 1}`,
-					url: `#${i + 1}`,
+					url: '',
 					key: `${bkD.name}${i + 1}`,
 					onClick: () => {
 						DataFlow.set("reference", { "book": bkD.name, "chapter": i+1 })
@@ -30,7 +30,7 @@ class BookSelector extends React.Component {
 			})
 			return {
 				name: bkD.name,
-				url: '#',
+				url: '',
 				key: bkD.name,
 				links: chapterLinks,
 				onClick: () => this.state.selectedReference.book == bkD.name ?
