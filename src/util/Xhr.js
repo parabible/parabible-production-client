@@ -1,7 +1,7 @@
 import axios from 'axios'
 const CancelToken = axios.CancelToken;
 
-const apiRoot = "http://35.192.69.39/api"
+const apiRoot = "https://parabible.com/api"
 const apiUrl = {
 	"termSearch": "/term-search",
 	"collocation": "/collocation",
