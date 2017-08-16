@@ -87,15 +87,3 @@ const DataFlow = {
 	}
 }
 export default DataFlow
-
-// bindState(prop, setStateFunction) {
-// 	if (!this._valid(prop, "bindState")) return this
-// 	this.watch(prop, (value) => setStateFunction({prop: value}))
-// 	return this
-// },
-//,
-// getObject(propArray) {
-// 	var retVal = {}
-// 	propArray.forEach((prop) => retVal[prop] = this._appData[prop])
-// 	return retVal
-// }
