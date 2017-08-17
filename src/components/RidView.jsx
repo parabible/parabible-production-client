@@ -1,9 +1,11 @@
 import React from 'react'
 import AccentUnit from './AccentUnit'
+import DataFlow from 'util/DataFlow'
 
 const wlcDisplay = (rid, wlc, activeWid) => (
 	wlc.map((accentUnit, i) =>
 		<AccentUnit
+			style={{ fontFamily: DataFlow.get("fontSetting") }}
 			key={i}
 			verseNumber={i === 0 ? (rid % 1000) : false}
 			accentUnit={accentUnit}

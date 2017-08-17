@@ -25,5 +25,6 @@
 		{ "heading": "lxxlexeme", "visible": true },
 		{ "heading": "gloss", "visible": true }
 	],
-	"screenSizeIndex": 0
+	"screenSizeIndex": 0,
+	"fontSetting": "SBL Biblit"
 }

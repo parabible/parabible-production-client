@@ -5,6 +5,9 @@ import Abbreviations from 'data/abbreviations'
 
 let watcherObject = {}
 
+const hebrewCategories = ["lex_utf8", "g_cons_utf8", "voc_utf8", "tricons"]
+const greekCategories = ["lxxlexeme"]
+
 class MorphologySidebar extends React.Component {
 	constructor(props) {
 		super(props)
@@ -57,6 +60,12 @@ class MorphologySidebar extends React.Component {
 					Abbreviations.termToEnglish.categories[d.heading] : d.heading
 				const translatedValue = Abbreviations.termToEnglish[d.heading] ?
 					Abbreviations.termToEnglish[d.heading][d.value] : d.value
+				//TODO: Consider greekCategories (need a font setting...)
+				const fontSettings = {}
+				if (hebrewCategories.indexOf(d.heading) > -1) {
+					fontSettings["fontFamily"] = DataFlow.get("fontSetting")
+					fontSettings["fontSize"] = "large"
+				}
 				return <div key={i} className="mrow" style={Object.assign({
 						display: "flex",
 						flexFlow: "row wrap",
@@ -74,9 +83,10 @@ class MorphologySidebar extends React.Component {
 						}}>
 						{translatedHeading}
 					</div>
-					<div className="mvalue" style={{
-						marginLeft: "15px",
-						}}>
+					<div className="mvalue" style={Object.assign({
+								marginLeft: "15px"
+							}, fontSettings
+						)}>
 						{translatedValue}
 					</div>
 				</div>

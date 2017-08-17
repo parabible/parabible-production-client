@@ -72,7 +72,7 @@ class App extends React.Component {
 					showBookSelector={() => this.setPanelDisplay("bookSelector", true)}
 					showMorphSettings={() => this.setPanelDisplay("morphSettings", true)} />
 				<div style={{
-					fontFamily: "SBL Biblit",
+					fontFamily: `${DataFlow.get("fontSetting")}, "SBL Biblit", "Open Sans", "Arial"`,
 					fontSize: "xx-large",
 					lineHeight: 1.6,
 					overflow: "auto",

@@ -77,7 +77,7 @@ class ParabibleHeader extends React.Component {
 			}
 		}
 		if (/[\u0590-\u05fe]/.test(text))
-			menuItem["style"] = { fontSize: "x-large", fontFamily: "SBL Biblit" }
+			menuItem["style"] = { fontSize: "x-large", fontFamily: DataFlow.get("fontSetting") }
 		return menuItem
 	}
 	generateSettingsMenu(menuData) {

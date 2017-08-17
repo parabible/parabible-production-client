@@ -42,7 +42,14 @@ class MorphologySidebar extends React.Component {
 				width: "100%",
 				backfaceVisibility: "hidden"}}>
 			{dataToUse.primary.map((d, i) => (
-				<div key={i} style={{padding: "5px 15px",fontWeight: "bold", flex: 1, display: "inline-block", textAlign: "center"}}>{d}</div>
+				<div key={i} style={{
+						padding: "5px 15px",
+						fontWeight: "bold",
+						flex: 1,
+						display: "inline-block",
+						textAlign: "center",
+						fontFamily: i == 0 ? DataFlow.get("fontSetting") : "inherit"
+					}}>{d}</div>
 			))}
 			{dataToUse.secondary.map((d, i) => (
 				<div key={i} style={{ padding: "5px 15px", flex: 1, display: "inline-block", textAlign: "center"}}>{d}</div>
