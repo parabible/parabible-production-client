@@ -1,5 +1,3 @@
 node_modules/
-build/bundle.js
-build/bundle.js.map
 jsconfig.json
 .gitignore
