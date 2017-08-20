@@ -15,11 +15,14 @@ const UrlToReference = (url) => {
 	// const urlStripped = url.slice(1)
 	//2. separate book and chapter
 	const urlParts = url.split("/")
-	const bookPart = urlParts[1]
+	const bookPart = urlParts[1].replace("-", " ")
 	const chapterPart = urlParts[2]
 	//3. match book
 	const book = _matchBook(bookPart)
-	return !book ? false : {
+	return !book ? {
+		book: "Genesis",
+		chapter: chapterPart ? parseInt(chapterPart) : 1
+	} : {
 		book: book,
 		chapter: chapterPart ? parseInt(chapterPart) : 1
 	}
