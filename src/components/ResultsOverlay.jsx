@@ -7,7 +7,8 @@ import RidView from './RidView'
 
 const ResultsOverlay = ({hideOverlay}) => {
 	const searchResults = DataFlow.get("searchResults")
-	const useAbbreviation = DataFlow.get("screenSizeIndex") < 4 ? true : false
+	const multiline = DataFlow.get("screenSizeIndex") < 2
+	const useAbbreviation = DataFlow.get("screenSizeIndex") < 4 && !multiline ? true : false
 	return (
 	<div style={{
 		position: "fixed",
@@ -42,14 +43,19 @@ const ResultsOverlay = ({hideOverlay}) => {
 		<List
 			items={DataFlow.get("searchResults").results}
 			onRenderCell={(item, index) => (
-				<div style={{ display: "flex", padding: "5px 15px", cursor: "pointer" }} className="resultsRow">
+				<div style={{ display: "flex",
+					flexDirection: multiline ? "column" : "row",
+					padding: multiline ? "5px" : "5px 15px",
+						cursor: "pointer" 
+					}} className="resultsRow">
 					<div style={{
-						flexBasis: "100px",
+						flexBasis: multiline ? "" : "100px",
 						fontFamily: "Open Sans",
 						fontSize: "small",
 						fontWeight: "bold",
 						textTransform: "uppercase" }}>
-						{generateReference(item.verses, useAbbreviation)}
+						{generateReference(item.verses,
+						useAbbreviation)}
 					</div>
 					<div style={{ flex: 1 }}>
 						{item.verses.map(rid => (
