@@ -1,7 +1,7 @@
-import books from 'data/books'
+import books from 'data/bookDetails'
 
 const _matchBook = (urlBook) => {
-	const bookNames = Object.keys(books)
+	const bookNames = books.map(b => b.name)
 	const urlArray = urlBook.split("")
 	const r = new RegExp("^" + urlArray.join(".*"), "i")
 	return bookNames.reduce((a, v) => {
