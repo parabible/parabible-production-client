@@ -27,5 +27,3 @@ history.listen((location, action) => {
 const newRef = UrlToReference(location.pathname)
 if (newRef)
 	DataFlow.set("reference", newRef)
-
-console.log("I actually ran")
