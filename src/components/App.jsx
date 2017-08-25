@@ -67,45 +67,35 @@ class App extends React.Component {
 			this.state.screenSizeIndex == 3 ? "210px" : "160px"
 
 		return (
-			<div>
-				<Header
-					showBookSelector={() => this.setPanelDisplay("bookSelector", true)}
-					showMorphSettings={() => this.setPanelDisplay("morphSettings", true)} />
-				<div style={{
+			<div style={{
 					fontFamily: `${DataFlow.get("fontSetting")}, "SBL Biblit", "Open Sans", "Arial"`,
 					fontSize: "xx-large",
-					lineHeight: 1.6,
-					overflow: "auto",
-					position: "absolute",
-					top: "40px",
-					left: 0,
-					right: 0,
-					height: "calc(100vh - 40px)",
+					lineHeight: 1.6
 				}}>
-					<div style={{ maxWidth: mainMaxWidth, margin: "auto" }}>
-						<div style={{ display: "table", width: "100%" }}>
-							{this.state.screenSizeIndex > 1 ? (
-								<div style={{ display: "table-cell", width: morphWidth }}>
-									<MorphologySidebar />
-								</div>
-							) : null}
-							<div style={{ display: "table-cell" }}>
-								<Content />
+				<div id="headerbar">
+					<Header
+						showBookSelector={() => this.setPanelDisplay("bookSelector", true)}
+						showMorphSettings={() => this.setPanelDisplay("morphSettings", true)} />
+				</div>
+				<div style={{display:"flex",maxWidth:mainMaxWidth,margin:"auto",paddingTop:10,verticalAlign:"top"}}>
+					{this.state.screenSizeIndex > 1 ? (
+						<div style={{flex:1}}>
+							<div id="morphbar">
+								<MorphologySidebar />
 							</div>
 						</div>
-					</div>
-					{this.state.screenSizeIndex <= 1 && this.state.showMorphPopup ? (
-						<div style={{
-							position: "sticky",
-							bottom: 0,
-							left: 0,
-							right: 0,
-							background: "rgba(255,255,255,0.7)"
-						}}>
-							<MorphologyPopup hidePopup={() => this.setState({ showMorphPopup: false })} />
-						</div>
 					) : null}
+					<div style={{flex:3}}>
+						<Content />
+					</div>
 				</div>
+
+				{this.state.screenSizeIndex <= 1 && this.state.showMorphPopup ? (
+					<div id="morphpopup">
+						<MorphologyPopup hidePopup={() => this.setState({ showMorphPopup: false })} />
+					</div>
+				) : null}
+
 				<div style={{ position: "absolute", left: "50px", right: "50px", top: "50px" }}>
 					{this.state.appMessages.map((m, index) =>
 						<MessageBar key={index} messageBarType={MessageBarType[m.type]}
@@ -114,6 +104,8 @@ class App extends React.Component {
 						</MessageBar>
 					)}
 				</div>
+
+				{/* PANELS */}
 				<BookSelector
 					panelIsVisible={this.state.showBookSelector}
 					hidePanel={() => this.setPanelDisplay("bookSelector", false)} />
