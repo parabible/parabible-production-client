@@ -70,23 +70,36 @@ class App extends React.Component {
 			<div style={{
 					fontFamily: `${DataFlow.get("fontSetting")}, "SBL Biblit", "Open Sans", "Arial"`,
 					fontSize: "xx-large",
-					lineHeight: 1.6
+					lineHeight: 1.6,
+					height: "100%",
+					overflow: "hidden"
 				}}>
 				<div id="headerbar">
 					<Header
 						showBookSelector={() => this.setPanelDisplay("bookSelector", true)}
 						showMorphSettings={() => this.setPanelDisplay("morphSettings", true)} />
 				</div>
-				<div style={{display:"flex",maxWidth:mainMaxWidth,margin:"auto",paddingTop:10,verticalAlign:"top"}}>
-					{this.state.screenSizeIndex > 1 ? (
-						<div style={{flex:1}}>
-							<div id="morphbar">
-								<MorphologySidebar />
+				<div style={{
+					position: "fixed",
+					left: 0,
+					right: 0,
+					top: 40,
+					bottom: 0,
+					overflowX: "hidden",
+					overflowY: "auto",
+					"-webkit-overflow-scrolling": "touch"
+				}}>
+					<div style={{display:"flex",maxWidth:mainMaxWidth,margin:"auto",paddingTop:10,verticalAlign:"top"}}>
+						{this.state.screenSizeIndex > 1 ? (
+							<div style={{flex:1}}>
+								<div id="morphbar">
+									<MorphologySidebar />
+								</div>
 							</div>
+						) : null}
+						<div style={{flex:3}}>
+							<Content />
 						</div>
-					) : null}
-					<div style={{flex:3}}>
-						<Content />
 					</div>
 				</div>
 
@@ -112,9 +125,9 @@ class App extends React.Component {
 				<MorphologySettings
 					panelIsVisible={this.state.showMorphSettings}
 					hidePanel={() => this.setPanelDisplay("morphSettings", false)} />
-				{this.state.showResults && (
-					<ResultsOverlay hideOverlay={() => this.setPanelDisplay("resultsOverlay", false)} />
-				)}
+				<ResultsOverlay 
+					panelIsVisible={this.state.showResults}
+					hideOverlay={() => this.setPanelDisplay("resultsOverlay", false)} />
 			</div>
 		)
 	}
