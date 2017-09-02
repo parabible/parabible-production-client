@@ -26,5 +26,6 @@
 		{ "heading": "gloss", "visible": true }
 	],
 	"screenSizeIndex": 0,
-	"fontSetting": "SBL Biblit"
+	"fontSetting": "SBL Biblit",
+	"textsToDisplay": ["wlc"]
 }

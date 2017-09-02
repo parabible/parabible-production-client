@@ -27,7 +27,10 @@ const ApiRequest = (endpoint) => {
 			})
 			break
 		case "chapterText":
-			payload = { "reference": DataFlow.get("reference") }
+			payload = {
+				"reference": DataFlow.get("reference"),
+				"texts": DataFlow.get("textsToDisplay")
+			}
 			if (DataFlow.get("highlightTermsSetting") && DataFlow.get("searchTerms").length > 0) {
 				payload["search_terms"] = DataFlow.get("searchTerms")
 			}

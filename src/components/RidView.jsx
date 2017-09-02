@@ -1,5 +1,6 @@
 import React from 'react'
 import AccentUnit from './AccentUnit'
+import LXXVerse from './LXXVerse'
 import DataFlow from 'util/DataFlow'
 
 const fontSetting = () => {
@@ -16,28 +17,26 @@ const wlcDisplay = (rid, wlc, activeWid) => (
 	)
 )
 const lxxDisplay = (rid, lxx, activeWid) => (
-	"need some lxx things..."
-	// wlc.map((accentUnit, i) =>
-	// 	<AccentUnit
-	// 		key={i}
-	// 		verseNumber={i === 0 ? (rid % 1000) : false}
-	// 		accentUnit={accentUnit}
-	// 		activeWid={activeWid} />
-	// )
+	Object.keys(lxx).map(verseUnit => (
+		<LXXVerse
+			key={verseUnit}
+			lxxVerse={lxx[verseUnit]}
+			activeWid={activeWid} />
+	))
 )
 
 const parallelView =({rid, activeWid, ridData}) => (
-	<div data-rid={rid} style={{display: "table", tableLayout: "fixed", width: "100%" }}>
+	<div data-rid={rid} style={{display: "table", tableLayout: "fixed", width: "100%", direction: "ltr" }}>
 		{ridData.hasOwnProperty("wlc") ? (
 			<div style={{ display: "table-cell", verticalAlign: "top", direction: "rtl", fontSize: "x-large", padding: "3px 5px", fontFamily: fontSetting()}}>
 				{wlcDisplay(rid, ridData.wlc, activeWid)}
 			</div>
 		) : ""}
 		{ridData.hasOwnProperty("net") ? (
-			<div style={{ display: "table-cell", verticalAlign: "top", padding: "3px 5px" }} dangerouslySetInnerHTML={{ __html: ridData.net}} />
+			<div style={{ display: "table-cell", verticalAlign: "top", padding: "3px 5px", fontSize: "medium" }} dangerouslySetInnerHTML={{ __html: ridData.net}} />
 		) : ""}
 		{ridData.hasOwnProperty("lxx") ? (
-			<div style={{ display: "table-cell", verticalAlign: "top", padding: "3px 5px" }}>
+			<div style={{ display: "table-cell", verticalAlign: "top", padding: "3px 5px", fontSize: "large" }}>
 				{lxxDisplay(rid, ridData.lxx, activeWid)}
 			</div>
 		) : ""}

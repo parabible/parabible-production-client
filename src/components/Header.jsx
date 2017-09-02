@@ -15,20 +15,6 @@ class ParabibleHeader extends React.Component {
 			"screenSizeIndex",
 			"searchTerms"
 		], this.setState.bind(this))
-		// {
-		// 	highlightTerms: DataFlow.get("highlightTermsSetting"),
-		// 	screenSizeIndex: DataFlow.get("screenSizeIndex"),
-		// 	reference: DataFlow.get("reference")
-		// }
-		// DataFlow.watch("highlightTermsSetting", h => {
-		// 	this.setState({ "highlightTerms": h })
-		// }).watch("reference", (r) => {
-		// 	this.setState({ "reference": r })
-		// }).watch("screenSizeIndex", (n) => {
-		// 	this.setState({ "screenSizeIndex": n })
-		// }).watch("searchTerms", (n) => {
-		// 	this.forceUpdate()
-		// })
 	}
 	generateTermMenuItem({ key, text, invert }) {
 		let menuItem = {
@@ -80,18 +66,38 @@ class ParabibleHeader extends React.Component {
 			menuItem["style"] = { fontSize: "x-large", fontFamily: DataFlow.get("fontSetting") }
 		return menuItem
 	}
-	generateSettingsMenu(menuData) {
+	generateSettingsMenu(menuData, multiple=false) {
 		const searchField = DataFlow.get(menuData.field)
+		const isChecked = (itemName) => {
+			return multiple ? 
+				(searchField.indexOf(itemName) !== -1) :
+				(searchField == itemName)
+		}
+		const clickHandler = (itemName) => {
+			return multiple ? () => {
+					const index = searchField.indexOf(itemName)
+					if (index === -1) {
+						DataFlow.set(menuData.field, searchField.concat(itemName))
+					}
+					else {
+						var newArray = searchField.slice()
+						newArray.splice(index, 1)
+						DataFlow.set(menuData.field, newArray)
+					}
+					this.forceUpdate()
+				} : () => {
+					DataFlow.set(menuData.field, itemName)
+					this.forceUpdate()
+				}
+		} 
+
 		return menuData.items.map(item => ({
 			key: item.name,
 			name: item.title,
 			iconProps: {
-				iconName: searchField == item.name ? "CheckboxComposite" : "Checkbox"
+				iconName: isChecked(item.name) ? "CheckboxComposite" : "Checkbox"
 			},
-			onClick: () => {
-				DataFlow.set(menuData.field, item.name)
-				this.forceUpdate()
-			}
+			onClick: clickHandler(item.name)
 		}))
 	}
 
@@ -222,6 +228,17 @@ class ParabibleHeader extends React.Component {
 		}
 		const searchFilterItems = this.generateSettingsMenu(menuFilter)
 
+
+		const menuTexts = {
+			"field": "textsToDisplay",
+			"items": [
+				{ name: 'wlc', title: 'WLC' },
+				{ name: 'net', title: 'NET' },
+				{ name: 'lxx', title: 'LXX' }
+			]
+		}
+		const textSettingsItems = this.generateSettingsMenu(menuTexts, true)
+
 		
 		const searchSettingsItems = [
 			{
@@ -263,12 +280,11 @@ class ParabibleHeader extends React.Component {
 				}
 			}, {
 				key: 'textSettings',
-				name: 'Text Settings', //Parallel View? Syntax Diagram? Highlight Search Terms?
+				name: 'Text Sources', //Parallel View? Syntax Diagram? Highlight Search Terms?
 				iconProps: {
 					iconName: "ListMirrored"
 				},
-				subMenuProps: { "items": [
-				]}
+				subMenuProps: { "items": textSettingsItems }
 			}, {
 				key: 'morphologySettings',
 				name: 'Morphology Settings', //Which fields to show
