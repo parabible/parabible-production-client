@@ -23,7 +23,9 @@
 		{ "heading": "gn", "visible": true },
 		{ "heading": "sdbh", "visible": true },
 		{ "heading": "lxxlexeme", "visible": true },
-		{ "heading": "gloss", "visible": true }
+		{ "heading": "gloss", "visible": true },
+		{ "heading": "lexeme", "visible": true },
+		{ "heading": "morphology", "visible": true }
 	],
 	"screenSizeIndex": 0,
 	"fontSetting": "SBL Biblit",

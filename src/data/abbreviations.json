@@ -23,13 +23,14 @@
 			"has_suffix": "Has Pron. Suffix",
 			"g_uvf_utf8": "Univalent Final",
 			"sdbh": "Semantic Domain",
-			"lxxlexeme": "LXX Lexeme",
+			"lxxlexeme": "Parallel Lexeme",
 			"gloss": "Gloss",
 			"rootregex": "Root Regex",
-			"invert": "Invert (search helper)",
 			"book": "Book",
 			"ch": "Chapter",
-			"v": "Verse"
+			"v": "Verse",
+			"lexeme": "LXX Lexeme",
+			"morphology": "Morphology Code"
 		},
 		"is_definite": {
 			"det": "Yes",
