@@ -36,7 +36,7 @@ const parallelView =({rid, activeWid, ridData}) => (
 			<div style={{ display: "table-cell", verticalAlign: "top", padding: "3px 5px", fontSize: "medium" }} dangerouslySetInnerHTML={{ __html: ridData.net}} />
 		) : ""}
 		{ridData.hasOwnProperty("lxx") ? (
-			<div style={{ display: "table-cell", verticalAlign: "top", padding: "3px 5px", fontSize: "large" }}>
+			<div style={{ display: "table-cell", verticalAlign: "top", padding: "3px 5px", fontSize: "large", fontFamily: "sans" }}>
 				{lxxDisplay(rid, ridData.lxx, activeWid)}
 			</div>
 		) : ""}
