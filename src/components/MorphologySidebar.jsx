@@ -1,6 +1,7 @@
 import React from 'react'
 import { PrimaryButton } from 'office-ui-fabric-react/lib/Button'
 import DataFlow from 'util/DataFlow'
+import AppNotify from 'util/AppNotify'
 import Abbreviations from 'data/abbreviations'
 
 let watcherObject = {}
@@ -20,6 +21,13 @@ class MorphologySidebar extends React.Component {
 		DataFlow.unwatch("worddata", watcherObject.worddata)
 	}
 	toggleTermProperties(props) {
+		//TODO: allow searching on the LXX
+		const tmpIllegalLXXprops = ["lexeme", "morphology"]
+		if (tmpIllegalLXXprops.indexOf(props.heading) !== -1) {
+			AppNotify.send({ type: "warning", message: "Sorry, parabible does not yet support searching the LXX (but it's coming...)"})
+			return
+		}
+
 		const oldVal = DataFlow.get("termConstruction")
 		if (Object.keys(oldVal).indexOf(props.heading) > -1) {
 			let newVal = oldVal
