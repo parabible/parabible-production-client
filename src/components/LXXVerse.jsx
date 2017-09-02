@@ -2,7 +2,7 @@ import React from 'react'
 import WordBit from './WordBit'
 
 const LXXVerse = ({verseNumber, lxxVerse, activeWid}) => (
-	<span className="lxxVerse">
+	<span className="lxxVerse" style={{ fontFamily: "SBL Biblit" }}>
 		{verseNumber !== false ? (
 			<span style={{
 					color: "#ea4300",
