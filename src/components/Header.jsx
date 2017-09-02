@@ -238,6 +238,8 @@ class ParabibleHeader extends React.Component {
 			]
 		}
 		const textSettingsItems = this.generateSettingsMenu(menuTexts, true)
+		// TODO: whatever is required to not force the WLC
+		textSettingsItems[0]["disabled"] = true
 
 		
 		const searchSettingsItems = [
