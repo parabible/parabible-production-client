@@ -11,13 +11,6 @@ class Content extends React.Component {
 			"activeWid",
 			"searchHighlights"
 		], this.setState.bind(this))
-		//  {
-		// 	btext: DataFlow.get("bibledata"),
-		// 	activeWid: DataFlow.get("activeWid")
-		// }
-		// DataFlow
-		// 	.watch("bibledata", b => this.setState({btext: b}))
-		// 	.watch("activeWid", w => this.setState({ activeWid: w }))
 	}
 	render() {
 		if (!this.state.bibledata) {
@@ -25,9 +18,8 @@ class Content extends React.Component {
 			ApiRequest("chapterText")
 			return <div />
 		}
-		let btextHighlight = this.state.bibledata
-		if (DataFlow.get("highlightTermsSetting") && 
-			Object.keys(DataFlow.get("searchHighlights")).length > 0) {
+		let btextHighlight = DataFlow.get("bibledata")
+		if (DataFlow.get("highlightTermsSetting") && DataFlow.get("searchHighlights")) {
 			const sh = DataFlow.get("searchHighlights")
 			const hSet = Object.keys(sh).map(k => ({
 				uid: k,
