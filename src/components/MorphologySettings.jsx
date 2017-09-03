@@ -91,8 +91,10 @@ class MorphologySettings extends React.Component {
 				isLightDismiss={true}
 				headerText='Morphology Settings'
 				closeButtonAriaLabel='Close'>
-				
+
 				<SortableComponent />
+
+				<div style={{ height: "60px" }}></div>
 			</Panel>
 		)
 	}

@@ -118,6 +118,7 @@ class MorphologySidebar extends React.Component {
 					}} />
 			)}
 			</div>
+			<div style={{ height: "30px" }}></div>
 		</div>
 	}
 }
