@@ -29,7 +29,7 @@ const ApiRequest = (endpoint) => {
 		case "chapterText":
 			payload = {
 				"reference": DataFlow.get("reference"),
-				"texts": DataFlow.get("textsToDisplay")
+				"texts": DataFlow.get("textsToDisplayMain")
 			}
 			if (DataFlow.get("highlightTermsSetting") && DataFlow.get("searchTerms").length > 0) {
 				payload["search_terms"] = DataFlow.get("searchTerms")
@@ -45,6 +45,7 @@ const ApiRequest = (endpoint) => {
 				"query": DataFlow.get("searchTerms"),
 				"search_range": DataFlow.get("searchRangeSetting"),
 				"search_filter": searchFilterOptions(DataFlow.get("searchFilterSetting")),
+				"texts": DataFlow.get("textsToDisplaySearch")
 			}
 			DataFlow.set("lastSearch", payload)
 			if (!DataFlow.setWasEqual()) {

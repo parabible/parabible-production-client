@@ -229,17 +229,29 @@ class ParabibleHeader extends React.Component {
 		const searchFilterItems = this.generateSettingsMenu(menuFilter)
 
 
-		const menuTexts = {
-			"field": "textsToDisplay",
+		const menuTextsToDisplayMain = {
+			"field": "textsToDisplayMain",
 			"items": [
 				{ name: 'wlc', title: 'WLC' },
 				{ name: 'net', title: 'NET' },
 				{ name: 'lxx', title: 'LXX' }
 			]
 		}
-		const textSettingsItems = this.generateSettingsMenu(menuTexts, true)
+		const textsToDisplayMainItems = this.generateSettingsMenu(menuTextsToDisplayMain, true)
 		// TODO: whatever is required to not force the WLC
-		textSettingsItems[0]["disabled"] = true
+		textsToDisplayMainItems[0]["disabled"] = true
+
+		const menuTextsToDisplaySearch = {
+			"field": "textsToDisplaySearch",
+			"items": [
+				{ name: 'wlc', title: 'WLC' },
+				{ name: 'net', title: 'NET' },
+				{ name: 'lxx', title: 'LXX' }
+			]
+		}
+		const textsToDisplaySearchItems = this.generateSettingsMenu(menuTextsToDisplaySearch, true)
+		// TODO: whatever is required to not force the WLC
+		textsToDisplaySearchItems[0]["disabled"] = true
 
 		
 		const searchSettingsItems = [
@@ -281,12 +293,19 @@ class ParabibleHeader extends React.Component {
 					iconName: "Font"
 				}
 			}, {
-				key: 'textSettings',
-				name: 'Text Sources', //Parallel View? Syntax Diagram? Highlight Search Terms?
+				key: 'textViewMainSettings',
+				name: 'Main View Texts', //Parallel View? Syntax Diagram? Highlight Search Terms?
 				iconProps: {
 					iconName: "ListMirrored"
 				},
-				subMenuProps: { "items": textSettingsItems }
+				subMenuProps: { "items": textsToDisplayMainItems }
+			}, {
+				key: 'textViewSearchSettings',
+				name: 'Search Results Texts', //Parallel View? Syntax Diagram? Highlight Search Terms?
+				iconProps: {
+					iconName: "SetAction"
+				},
+				subMenuProps: { "items": textsToDisplaySearchItems }
 			}, {
 				key: 'morphologySettings',
 				name: 'Morphology Settings', //Which fields to show
