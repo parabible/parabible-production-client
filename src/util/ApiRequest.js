@@ -12,6 +12,10 @@ DataFlow
 		if (DataFlow.get("highlightTermsSetting"))
 			chapterReload()
 	})
+	.watch("highlightTermsSetting", () => {
+		if (DataFlow.get("highlightTermsSetting") && DataFlow.get("searchTerms"))
+			chapterReload()
+	})
 	.watch("activeWid", () => {
 		ApiRequest("wordLookup")
 	})

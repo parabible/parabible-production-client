@@ -9,7 +9,8 @@ class Content extends React.Component {
 		this.state = DataFlow.bindState([
 			"bibledata",
 			"activeWid",
-			"searchHighlights"
+			"searchHighlights",
+			"highlightTermsSetting"
 		], this.setState.bind(this))
 	}
 	render() {
