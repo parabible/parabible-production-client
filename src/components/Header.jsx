@@ -232,9 +232,9 @@ class ParabibleHeader extends React.Component {
 		const menuTextsToDisplayMain = {
 			"field": "textsToDisplayMain",
 			"items": [
-				{ name: 'wlc', title: 'WLC' },
-				{ name: 'net', title: 'NET' },
-				{ name: 'lxx', title: 'LXX' }
+				{ name: 'wlc', title: 'BHS (Hebrew)' },
+				{ name: 'net', title: 'NET (English)' },
+				{ name: 'lxx', title: 'LXX (Greek)' }
 			]
 		}
 		const textsToDisplayMainItems = this.generateSettingsMenu(menuTextsToDisplayMain, true)
@@ -244,9 +244,9 @@ class ParabibleHeader extends React.Component {
 		const menuTextsToDisplaySearch = {
 			"field": "textsToDisplaySearch",
 			"items": [
-				{ name: 'wlc', title: 'WLC' },
-				{ name: 'net', title: 'NET' },
-				{ name: 'lxx', title: 'LXX' }
+				{ name: 'wlc', title: 'BHS (Hebrew)' },
+				{ name: 'net', title: 'NET (English)' },
+				{ name: 'lxx', title: 'LXX (Greek)' }
 			]
 		}
 		const textsToDisplaySearchItems = this.generateSettingsMenu(menuTextsToDisplaySearch, true)
