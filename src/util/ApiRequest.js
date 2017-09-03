@@ -1,11 +1,19 @@
 import DataFlow from './DataFlow'
 import { Xhr, apiEndpoints } from './Xhr'
 
-DataFlow.watch("reference", () => {
+const chapterReload = () => {
 	ApiRequest("chapterText")
-}).watch("activeWid", () => {
-	ApiRequest("wordLookup")
-})
+}
+DataFlow
+	.watch("textsToDisplayMain", chapterReload)
+	.watch("reference", chapterReload)
+	.watch("searchTerms", () => {
+		if (DataFlow.get("highlightTermsSetting"))
+			chapterReload()
+	})
+	.watch("activeWid", () => {
+		ApiRequest("wordLookup")
+	})
 
 const searchFilterOptions = (filter) => {
 	const options = {
@@ -35,8 +43,8 @@ const ApiRequest = (endpoint) => {
 				payload["search_terms"] = DataFlow.get("searchTerms")
 			}
 			Xhr(endpoint, payload).then(result => {
-				DataFlow.set("searchHighlights", result.highlights)
 				DataFlow.set("bibledata", result.text)
+				DataFlow.set("searchHighlights", result.highlights)
 				// DataFlow.set("reference", result.reference)
 			})
 			break
