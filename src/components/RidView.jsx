@@ -17,12 +17,12 @@ const wlcDisplay = (rid, wlc, activeWid) => (
 	)
 )
 const lxxDisplay = (rid, lxx, activeWid) => (
-	Object.keys(lxx).map(verseUnit => (
+	lxx ? Object.keys(lxx).map(verseUnit => (
 		<LXXVerse
 			key={verseUnit}
 			lxxVerse={lxx[verseUnit]}
 			activeWid={activeWid} />
-	))
+	)) : null
 )
 
 const parallelView =({rid, activeWid, ridData}) => (
