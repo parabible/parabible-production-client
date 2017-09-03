@@ -8,6 +8,7 @@ DataFlow
 	.watch("textsToDisplayMain", chapterReload)
 	.watch("reference", chapterReload)
 	.watch("searchTerms", () => {
+		// TODO: just reload highlights... (not redownload whole chapter)
 		if (DataFlow.get("highlightTermsSetting"))
 			chapterReload()
 	})
