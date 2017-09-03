@@ -46,7 +46,7 @@ class MorphologySidebar extends React.Component {
 		const wdata = DataFlow.get("worddata")
 		const selectedValues = Object.keys(DataFlow.get("termConstruction"))
 		const morphSettings = DataFlow.get("morphSettings")
-		const dataToDisplay = morphSettings.filter(m => m.visible && wdata[m.heading]).map(m => {
+		const dataToDisplay = morphSettings.filter(m => m.visible && wdata.hasOwnProperty(m.heading)).map(m => {
 			return { heading: m.heading, value: wdata[m.heading] }
 		})
 		return <div style={{
