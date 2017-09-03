@@ -29,8 +29,8 @@
 			"book": "Book",
 			"ch": "Chapter",
 			"v": "Verse",
-			"lexeme": "LXX Lexeme",
-			"morphology": "Morphology Code"
+			"lexeme": "Lexeme (LXX)",
+			"morphology": "Morphology* (LXX)"
 		},
 		"is_definite": {
 			"det": "Yes",
