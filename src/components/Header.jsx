@@ -167,6 +167,8 @@ class ParabibleHeader extends React.Component {
 			let val = "?"
 			if (st.data.hasOwnProperty("voc_utf8"))
 				val = st.data.voc_utf8
+			else if (st.data.hasOwnProperty("tricons"))
+				val = st.data.tricons
 			else if (st.data.hasOwnProperty("lxxlexeme"))
 				val = st.data.lxxlexeme
 			else if (st.data.hasOwnProperty("gloss"))
