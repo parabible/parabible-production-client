@@ -6,7 +6,13 @@ const chapterReload = () => {
 }
 DataFlow
 	.watch("textsToDisplayMain", chapterReload)
-	.watch("reference", chapterReload)
+	.watch("reference", () => {
+		chapterReload()
+		ga('send', {
+			hitType: 'event',
+			eventCategory: 'navigate'
+		})
+	})
 	.watch("searchTerms", () => {
 		// TODO: just reload highlights... (not redownload whole chapter)
 		if (DataFlow.get("highlightTermsSetting"))
@@ -18,6 +24,10 @@ DataFlow
 	})
 	.watch("activeWid", () => {
 		ApiRequest("wordLookup")
+		ga('send', {
+			hitType: 'event',
+			eventCategory: 'word'
+		})
 	})
 
 const searchFilterOptions = (filter) => {
@@ -72,6 +82,11 @@ const ApiRequest = (endpoint) => {
 			else {
 				DataFlow.renotify("searchResults")
 			}
+			ga('send', {
+				hitType: 'event',
+				eventCategory: 'search',
+				eventAction: endpoint
+			})
 			break
 		default:
 			if (apiEndpoints.indexOf(endpoint) !== -1) {

@@ -58,6 +58,11 @@ class ParabibleHeader extends React.Component {
 						st.splice(index, 1)
 						DataFlow.set("searchTerms", st)
 						this.forceUpdate()
+						ga('send', {
+							hitType: 'event',
+							eventCategory: 'searchTerms',
+							eventAction: "remove"
+						})
 					}
 				}]
 			}
@@ -113,6 +118,10 @@ class ParabibleHeader extends React.Component {
 		newIndex = newIndex < referenceArray.length ? newIndex : 0
 
 		DataFlow.set("reference", referenceArray[newIndex])
+		ga('send', {
+			hitType: 'event',
+			eventCategory: 'navigate',
+		})
 	}
 
 	doSearch() {
@@ -132,6 +141,11 @@ class ParabibleHeader extends React.Component {
 			case "collocation":
 				break
 		}
+		ga('send', {
+			hitType: 'event',
+			eventCategory: 'search',
+			eventAction: type
+		})
 	}
 
 	render() {

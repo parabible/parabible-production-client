@@ -115,6 +115,11 @@ class MorphologySidebar extends React.Component {
 						DataFlow.set("searchTerms", newT)
 						DataFlow.set("termConstruction", {})
 						this.forceUpdate()
+						ga('send', {
+							hitType: 'event',
+							eventCategory: 'searchTerms',
+							eventAction: "add"
+						})
 					}} />
 			)}
 			</div>
