@@ -7,6 +7,7 @@
 			"lex": "Sense Lexeme",
 			"lex_utf8": "Sense Lexeme",
 			"g_cons_utf8": "Inflected Consonants",
+			"g_word_utf8": "Word in Text",
 			"voc_utf8": "Root",
 			"tricons": "Consonantal Root",
 			"ps": "Person",
