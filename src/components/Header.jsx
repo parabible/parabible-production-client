@@ -301,14 +301,16 @@ class ParabibleHeader extends React.Component {
 				onClick: () => DataFlow.set("highlightTermsSetting", !this.state.highlightTermsSetting)
 			}
 		]
+		//TODO: Add font settings
 		const generalSettingsItems = [
+			// {
+			// 	key: 'fontSettings',
+			// 	name: 'Font Settings',
+			// 	iconProps: {
+			// 		iconName: "Font"
+			// 	}
+			// },
 			{
-				key: 'fontSettings',
-				name: 'Font Settings',
-				iconProps: {
-					iconName: "Font"
-				}
-			}, {
 				key: 'textViewMainSettings',
 				name: 'Main View Texts', //Parallel View? Syntax Diagram? Highlight Search Terms?
 				iconProps: {
