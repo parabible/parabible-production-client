@@ -25,6 +25,7 @@ const lxxDisplay = (rid, lxx, activeWid) => (
 	)) : null
 )
 
+// TODO: Do something actual with fonts for LXX
 const parallelView =({rid, activeWid, ridData}) => (
 	<div data-rid={rid} style={{display: "table", tableLayout: "fixed", width: "100%", direction: "ltr" }}>
 		{ridData.hasOwnProperty("wlc") ? (
@@ -36,7 +37,7 @@ const parallelView =({rid, activeWid, ridData}) => (
 			<div style={{ display: "table-cell", verticalAlign: "top", padding: "3px 5px", fontSize: "medium" }} dangerouslySetInnerHTML={{ __html: ridData.net}} />
 		) : ""}
 		{ridData.hasOwnProperty("lxx") ? (
-			<div style={{ display: "table-cell", verticalAlign: "top", padding: "3px 5px", fontSize: "large", fontFamily: "sans" }}>
+			<div style={{ display: "table-cell", verticalAlign: "top", padding: "3px 5px", fontSize: "large", fontFamily: "SBL Biblit, SBL Greek, sans" }}>
 				{lxxDisplay(rid, ridData.lxx, activeWid)}
 			</div>
 		) : ""}
