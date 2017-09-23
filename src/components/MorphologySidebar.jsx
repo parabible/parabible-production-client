@@ -6,8 +6,9 @@ import Abbreviations from 'data/abbreviations'
 
 let watcherObject = {}
 
-const hebrewCategories = ["lex_utf8", "g_cons_utf8", "voc_utf8", "tricons"]
-const greekCategories = ["lxxlexeme"]
+const hebrewCategories = ["lex_utf8", "g_cons_utf8", "g_word_utf8", "voc_utf8", "tricons", "g_prs_utf8"]
+// lxxlexeme is on the hebrew data, lexeme is on CCAT
+const greekCategories = ["lxxlexeme", "lexeme"]
 
 class MorphologySidebar extends React.Component {
 	constructor(props) {
@@ -42,6 +43,22 @@ class MorphologySidebar extends React.Component {
 		}
 		this.forceUpdate()
 	}
+	createSearchTerm() {
+		let newT = DataFlow.get("searchTerms")
+		newT.push({
+			"uid": Date.now().toString(),
+			"inverted": false,
+			"data": DataFlow.get("termConstruction")
+		})
+		DataFlow.set("searchTerms", newT)
+		DataFlow.set("termConstruction", {})
+		this.forceUpdate()
+		ga('send', {
+			hitType: 'event',
+			eventCategory: 'searchTerms',
+			eventAction: "add"
+		})
+	}
 	render() {
 		const wdata = DataFlow.get("worddata")
 		const selectedValues = Object.keys(DataFlow.get("termConstruction"))
@@ -74,6 +91,10 @@ class MorphologySidebar extends React.Component {
 					fontSettings["fontFamily"] = DataFlow.get("fontSetting")
 					fontSettings["fontSize"] = "large"
 				}
+				else if (greekCategories.indexOf(d.heading) > -1) {
+					fontSettings["fontFamily"] = "SBL Biblit, SBL Greek"
+					fontSettings["fontSize"] = "120%"
+				}
 				return <div key={i} className="mrow" style={Object.assign({
 						display: "flex",
 						flexFlow: "row wrap",
@@ -105,22 +126,7 @@ class MorphologySidebar extends React.Component {
 					disabled={selectedValues.length === 0}
 					iconProps={{ iconName: 'Add' }}
 					text='Create Search Term'
-					onClick={() => {
-						let newT = DataFlow.get("searchTerms")
-						newT.push({
-							"uid": Date.now().toString(),
-							"inverted": false,
-							"data": DataFlow.get("termConstruction")
-						})
-						DataFlow.set("searchTerms", newT)
-						DataFlow.set("termConstruction", {})
-						this.forceUpdate()
-						ga('send', {
-							hitType: 'event',
-							eventCategory: 'searchTerms',
-							eventAction: "add"
-						})
-					}} />
+					onClick={() => createSearchTerm()} />
 			)}
 			</div>
 			<div style={{ height: "30px" }}></div>
