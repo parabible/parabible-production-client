@@ -19,51 +19,60 @@ const ResultsOverlay = ({panelIsVisible, hideOverlay}) => {
 			right: 0,
 			background: "rgba(255, 255, 255, 0.9)",
 			overflowY: "scroll",
-			"-webkit-overflow-scrolling": "touch"
-		}}>
-				<div style={{
-					fontFamily: "Open Sans",
-					fontSize: "large",
-					fontWeight: "bold",
-					textAlign:"center",
-					padding: "5px"
-					}}>
-					Search Results ({searchResults && Object.keys(searchResults).length > 0 ? searchResults.length : 0})
-				</div>
-				<div style={{
-					position: "fixed",
-					top: 50,
-					right: 25
-					}}>
-					<PrimaryButton
-						onClick={hideOverlay}
-						iconProps={{ iconName: 'ChromeClose' }} />
-				</div>
-			<List
-				items={DataFlow.get("searchResults").results}
-				onRenderCell={(item, index) => (
-					<div style={{ display: "flex",
-						flexDirection: multiline ? "column" : "row",
-						padding: multiline ? "5px" : "5px 15px",
-							cursor: "pointer" 
-						}} className="resultsRow">
-						<div style={{
-							flexBasis: multiline ? "" : "100px",
-							fontFamily: "Open Sans",
-							fontSize: "small",
-							fontWeight: "bold",
-							textTransform: "uppercase" }}>
-							{generateReference(item.verses,
-							useAbbreviation)}
+			"-webkit-overflow-scrolling": "touch" }}>
+
+			<div style={{
+				fontFamily: "Open Sans",
+				fontSize: "large",
+				fontWeight: "bold",
+				textAlign:"center",
+				padding: "5px"
+				}}>
+				Search Results ({searchResults && Object.keys(searchResults).length > 0 ? searchResults.length : 0})
+			</div>
+
+			<div style={{
+				position: "fixed",
+				top: 50,
+				right: 25
+				}}>
+				<PrimaryButton
+					onClick={hideOverlay}
+					iconProps={{ iconName: 'ChromeClose' }} />
+			</div>
+
+			<span style={{
+				userSelect: DataFlow.get("screenSizeIndex") > 2 ? "text" : "none",
+				cursor: "text" }}>
+				<List
+					items={DataFlow.get("searchResults").results}
+					onRenderCell={(item, index) => (
+						<div style={{ display: "flex",
+							flexDirection: multiline ? "column" : "row",
+							padding: multiline ? "5px" : "5px 15px",
+								cursor: "pointer" 
+							}} className="resultsRow">
+							<div style={{
+								flexBasis: multiline ? "" : "100px",
+								fontFamily: "Open Sans",
+								fontSize: "small",
+								fontWeight: "bold",
+								textTransform: "uppercase" }}>
+								{
+									generateReference(
+										item.verses,
+										useAbbreviation)
+								}
+							</div>
+							<div style={{ flex: 1 }}>
+								{item.verses.map(rid => (
+									<RidView key={rid} rid={rid} ridData={item.text[rid]} activeWid={-1} />
+								))}
+							</div>
 						</div>
-						<div style={{ flex: 1 }}>
-							{item.verses.map(rid => (
-								<RidView key={rid} rid={rid} ridData={item.text[rid]} activeWid={-1} />
-							))}
-						</div>
-					</div>
-				)}
-			/>
+					)}
+				/>
+			</span>
 		</div>
 	)
 }
