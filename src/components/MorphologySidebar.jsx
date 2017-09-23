@@ -126,7 +126,7 @@ class MorphologySidebar extends React.Component {
 					disabled={selectedValues.length === 0}
 					iconProps={{ iconName: 'Add' }}
 					text='Create Search Term'
-					onClick={() => createSearchTerm()} />
+					onClick={this.createSearchTerm.bind(this)} />
 			)}
 			</div>
 			<div style={{ height: "30px" }}></div>
