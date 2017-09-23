@@ -49,7 +49,9 @@ class Content extends React.Component {
 				margin: "auto",
 				maxWidth: "760px",
 				padding: "5px 20px 50px 20px",
-				direction: "rtl"
+				direction: "rtl",
+				userSelect: DataFlow.get("screenSizeIndex") > 2 ? "text" : "none",
+				cursor: "text"
 				}}>
 				{Object.keys(btextHighlight).map(k => 
 					<RidView
