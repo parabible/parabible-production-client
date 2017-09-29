@@ -109,15 +109,6 @@ class App extends React.Component {
 					</div>
 				) : null}
 
-				<div style={{ position: "absolute", left: "50px", right: "50px", top: "50px" }}>
-					{this.state.appMessages.map((m, index) =>
-						<MessageBar key={index} messageBarType={MessageBarType[m.type]}
-							onDismiss={() => AppNotify.remove(m.mid)}>
-							{m.message}
-						</MessageBar>
-					)}
-				</div>
-
 				{/* PANELS */}
 				<BookSelector
 					panelIsVisible={this.state.showBookSelector}
@@ -128,6 +119,16 @@ class App extends React.Component {
 				<ResultsOverlay 
 					panelIsVisible={this.state.showResults}
 					hideOverlay={() => this.setPanelDisplay("resultsOverlay", false)} />
+
+				{/* NOTIFICATIONS */}
+				<div style={{ position: "absolute", left: "50px", right: "50px", top: "50px", zIndex: 10 }}>
+					{this.state.appMessages.map((m, index) =>
+						<MessageBar key={index} messageBarType={MessageBarType[m.type]}
+							onDismiss={() => AppNotify.remove(m.mid)}>
+							{m.message}
+						</MessageBar>
+					)}
+				</div>
 			</div>
 		)
 	}
