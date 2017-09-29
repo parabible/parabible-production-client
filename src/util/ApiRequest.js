@@ -1,5 +1,6 @@
 import DataFlow from './DataFlow'
 import { Xhr, apiEndpoints } from './Xhr'
+import AppNotify from 'util/AppNotify'
 
 const chapterReload = () => {
 	ApiRequest("chapterText")
@@ -28,6 +29,17 @@ DataFlow
 			hitType: 'event',
 			eventCategory: 'word'
 		})
+	})
+	.watch("searchResults", (sr) => {
+		/* This function is just to notify the user when results are truncated */
+		if (sr.results.length < sr.length)
+		{
+			const actualLength = sr.results.length
+			AppNotify.send({
+				type: "warning",
+				message: `Your search returned too many results so we're only displaying ${actualLength} of them.`
+			})
+		}
 	})
 
 const searchFilterOptions = (filter) => {
