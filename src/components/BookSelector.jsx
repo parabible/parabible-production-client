@@ -8,12 +8,9 @@ import bookDetails from "data/bookDetails"
 class BookSelector extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			selectedReference: DataFlow.get("reference") || { "book": "Genesis", "chapter": 1 }
-		}
-		DataFlow.watch("reference", (r) =>{
-			this.setState({ "selectedReference": r })
-		})
+		this.state = DataFlow.bindState([
+			"reference"
+		], this.setState.bind(this))
 	}
 	render() {
 		const bookChapterLinks = bookDetails.map(bkD => {
@@ -33,10 +30,10 @@ class BookSelector extends React.Component {
 				url: '',
 				key: bkD.name,
 				links: chapterLinks,
-				onClick: () => this.state.selectedReference.book == bkD.name ?
-					this.setState({ selectedReference: false }) :
-					this.setState({ selectedReference: { "book": bkD.name } }),
-				isExpanded: this.state.selectedReference.book == bkD.name
+				onClick: () => this.state.reference.book == bkD.name ?
+					this.setState({ reference: false }) :
+					this.setState({ reference: { "book": bkD.name } }),
+				isExpanded: this.state.reference.book == bkD.name
 			}
 		})
 		return(
@@ -57,7 +54,7 @@ class BookSelector extends React.Component {
 							}
 						]
 					}
-					selectedKey={this.state.selectedReference.book + (this.state.selectedReference.chapter)}
+					selectedKey={this.state.reference.book + (this.state.reference.chapter)}
 				/>
 				<div style={{height:"60px"}}></div>
 			</Panel>
