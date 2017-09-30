@@ -1,6 +1,10 @@
 var CACHE_NAME = 'my-pwa-cache-v1'
 var urlsToCache = [
 	'/bundle.js',
+	'/fonts/sblbiblit.css',
+	'/fonts/hinted-subset-SBLBibLit.eot',
+	'/fonts/hinted-subset-SBLBibLit.ttf',
+	'/fonts/hinted-subset-SBLBibLit.woff',
 	'https://fonts.googleapis.com/css?family=Open+Sans:400,700',
 	'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/5.0.1/css/fabric.min.css'
 ]
