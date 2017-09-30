@@ -4,6 +4,13 @@ import DataFlow from 'util/DataFlow'
 
 const history = createHistory()
 
+const setTitle = (reference = null) => {
+	if (!reference) {
+		reference = DataFlow.get("reference")
+	}
+	document.title = `Parabible | ${reference.book} ${reference.chapter}`
+}
+
 const referenceToUrl = (reference) => {
 	const bookUrl = reference.book.replace(" ", "-").replace(" ", "-")
 	return `/${bookUrl}/${reference.chapter}`
@@ -15,6 +22,7 @@ DataFlow.watch("reference", r => {
 		history.push( referenceToUrl(r) )
 	}
 	justPopped = false
+	setTitle(r)
 })
 history.listen((location, action) => {
 	// don't set reference if it was a push (unnecessary
@@ -29,10 +37,11 @@ history.listen((location, action) => {
 // is in the location in case someone navigated somewhere on purpose
 if (location.pathname === "/") {
 	const newRef = referenceToUrl(DataFlow.get("reference"))
+	setTitle()
 	history.push( newRef )
-	console.log("history.push", newRef)
 }
 else {
-	DataFlow.set("reference", UrlToReference(location.pathname))
-	console.log("DataFlow.set", location.pathname)
+	const r = UrlToReference(location.pathname)
+	DataFlow.set("reference", r)
+	setTitle(r)
 }
