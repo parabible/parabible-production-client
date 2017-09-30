@@ -31,7 +31,18 @@
 			"ch": "Chapter",
 			"v": "Verse",
 			"lexeme": "Lexeme (LXX)",
-			"morphology": "Morphology* (LXX)"
+			"morphology": "Morphology* (LXX)",
+
+			"pos": "Part of Speech",
+			"tense": "Tense",
+			"voice": "Voice",
+			"mood": "Mood",
+			"person": "Person",
+			"number": "Number",
+			"case": "Case",
+			"gender": "Gender",
+			"declension": "Declension",
+			"degree": "Degree"
 		},
 		"is_definite": {
 			"det": "Yes",
@@ -138,9 +149,78 @@
 			"e": "Emphatic",
 			"NA": "NA"
 		},
-		"invert": {
-			"t": "True",
-			"f": "False"
+
+		"pos": {
+			"noun": "Noun",
+			"verb": "Verb",
+			"adj": "Adjective",
+			
+			"art": "Article",
+			"dprn": "Demonstrative Pronoun",
+			"iprn": "Interrogative/Indefinite Pronoun",
+			"ppprn": "Personal/Possessive Pronoun",
+			"rprn": "Relative Pronoun",
+			"ost": "ὅστις",
+			
+			"conj":"Conjunction",
+			"part":"Particle",
+			"intj":"Interjection",
+			"indc":"Indeclinable Number",
+			"prep":"Preposition",
+			"adv":"Adverb"
+		},
+		"tense": {
+			"pres": "Present",
+			"impf": "Imperfect",
+			"fut": "Future",
+			"aor": "Aorist",
+			"perf": "Perfect",
+			"plupf": "Pluperfect"
+		},
+		"voice": {
+			"act": "Active",
+			"mid": "Middle",
+			"pass": "Passive"
+		},
+		"mood": {
+			"ind": "Indicative",
+			"impv": "Imperative",
+			"subj": "Subjunctive",
+			"opt": "Optative",
+			"infn": "Infinitive",
+			"ptcp": "Participle"
+		},
+		"person": {
+			"1": "First",
+			"2": "Second",
+			"3": "Third"
+		},
+		"number": {
+			"sg": "Singular",
+			"dl": "Dual",
+			"pl": "Plural"
+		},
+		"case": {
+			"nom": "Nominative",
+			"gen": "Genitive",
+			"dat": "Dative",
+			"acc": "Accusative",
+			"voc": "Vocative"
+		},
+		"gender": {
+			"masc": "Masculine",
+			"fem": "Feminine",
+			"neut": "Neuter"
+		},
+		"degree": {
+			"comp": "Comparative",
+			"super": "Superlative"
+		},
+		"declension": {
+			"1": "First Declension",
+			"2": "Second Declension",
+			"3": "Third Declension",
+			"indcp": "Indeclinable Proper Noun"
 		}
 	},
 	"clause_types": {
