@@ -23,7 +23,20 @@ class MorphologySidebar extends React.Component {
 	}
 	toggleTermProperties(props) {
 		//TODO: allow searching on the LXX
-		const tmpIllegalLXXprops = ["lexeme", "morphology"]
+		const tmpIllegalLXXprops = [
+			"lexeme",
+			"morphology",
+			"pos",
+			"tense",
+			"voice",
+			"mood",
+			"person",
+			"number",
+			"case",
+			"gender",
+			"declension",
+			"degree"
+		]
 		if (tmpIllegalLXXprops.indexOf(props.heading) !== -1) {
 			AppNotify.send({ type: "warning", message: "Sorry, parabible does not yet support searching the LXX (but it's coming...)"})
 			return
