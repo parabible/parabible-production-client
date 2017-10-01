@@ -1,6 +1,15 @@
 import books from 'data/bookDetails'
+import generousBookNames from 'data/generousBookNames'
 
 const _matchBook = (urlBook) => {
+	// first see if we can map directly
+	const possibleKey = urlBook.toLowerCase()
+	const generousNameList = Object.keys(generousBookNames)
+	if (generousNameList.indexOf(possibleKey) > -1) {
+		return generousBookNames[possibleKey]
+	}
+
+	// now try use regex to guess
 	const bookNames = books.map(b => b.name)
 	const urlArray = urlBook.split("")
 	const r = new RegExp("^" + urlArray.join(".*"), "i")
