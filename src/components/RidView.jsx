@@ -54,10 +54,10 @@ const RidView = ({rid, ridData, activeWid}) => {
 	else {
 		switch(ridDataKeys[0]) {
 			case "wlc":
-				return <div style={{
+				return <div id={thisVerseActive ? "activeVerse" : ""} style={{
 						display: "inline",
 						fontFamily: fontSetting(),
-						backgroundColor: thisVerseActive ? "rgba(255,255,0,0.25)" : "inherit"
+						backgroundColor: thisVerseActive ? "rgba(255,255,0,0.4)" : "inherit"
 					}} data-rid={rid}>
 					{wlcDisplay(rid, ridData.wlc, activeWid)}
 				</div>
