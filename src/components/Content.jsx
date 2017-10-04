@@ -15,15 +15,15 @@ class Content extends React.Component {
 	}
 	componentDidMount() {
 		if (DataFlow.get("activeVerse")) {
-			const $vEl = () => document.querySelector("#activeVerse")
-			if ($vEl()) {
-				// There seems to be a redraw that messes this up
-				// even with requestAnimationFrame
-				// so we resort to a timer...
-				window.setTimeout(() => {
-					$vEl().scrollIntoView(true)
-				}, 1500)
-			}
+			// There seems to be a redraw that messes this up
+			// even with requestAnimationFrame
+			// so we resort to a timer...
+			window.setTimeout(() => {
+				const $vEl = document.querySelector("#activeVerse")
+				if ($vEl) {
+					$vEl.scrollIntoView(true)
+				}
+			}, 1000)
 		}
 	}
 	render() {
