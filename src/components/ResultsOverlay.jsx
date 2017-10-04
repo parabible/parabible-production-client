@@ -2,7 +2,7 @@ import React from 'react'
 import { List } from 'office-ui-fabric-react/lib/List'
 import { PrimaryButton } from 'office-ui-fabric-react/lib/Button'
 import DataFlow from 'util/DataFlow'
-import { generateReference } from 'util/ReferenceHelper'
+import { generateReference, generateURL } from 'util/ReferenceHelper'
 import RidView from './RidView'
 
 const ResultsOverlay = ({panelIsVisible, hideOverlay}) => {
@@ -58,11 +58,9 @@ const ResultsOverlay = ({panelIsVisible, hideOverlay}) => {
 								fontSize: "small",
 								fontWeight: "bold",
 								textTransform: "uppercase" }}>
-								{
-									generateReference(
-										item.verses,
-										useAbbreviation)
-								}
+								<a href={generateURL(item.verses[0])}>
+									{generateReference(item.verses, useAbbreviation)}
+								</a>
 							</div>
 							<div style={{ flex: 1 }}>
 								{item.verses.map(rid => (

@@ -84,4 +84,10 @@ const generateReference = (rids, abbreviation=false) => {
 	})
 	return humanReadable
 }
-export { generateReference }
+const generateURL = (rid) => {
+	const bk = getBook(rid, true).replace(" ", "-")
+	const ch = getChapter(rid, true)
+	const vs = rid % 1000
+	return `/${bk}/${ch}#${vs}`
+}
+export { generateReference, generateURL }
