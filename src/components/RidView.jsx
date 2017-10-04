@@ -46,6 +46,8 @@ const parallelView =({rid, activeWid, ridData}) => (
 
 const RidView = ({rid, ridData, activeWid}) => {
 	const ridDataKeys = Object.keys(ridData)
+	const activeVerse = DataFlow.get("activeVerse")
+	const thisVerseActive = activeVerse ? location.pathname == activeVerse.url && rid % 1000 === activeVerse.verse : false
 	if (ridDataKeys.length > 1) {
 		return parallelView({rid, ridData, activeWid})
 	}
@@ -54,7 +56,8 @@ const RidView = ({rid, ridData, activeWid}) => {
 			case "wlc":
 				return <div style={{
 						display: "inline",
-						fontFamily: fontSetting()
+						fontFamily: fontSetting(),
+						backgroundColor: thisVerseActive ? "rgba(255,255,0,0.25)" : "inherit"
 					}} data-rid={rid}>
 					{wlcDisplay(rid, ridData.wlc, activeWid)}
 				</div>

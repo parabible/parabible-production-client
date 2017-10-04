@@ -13,6 +13,7 @@
 	"searchHighlights": [],
 	"lastSearch": {},
 	"reference": { "book": "Genesis", "chapter": 1 },
+	"activeVerse": 0,
 	"morphSettings": [
 		{ "heading": "voc_utf8", "visible": true },
 		{ "heading": "sp", "visible": true },

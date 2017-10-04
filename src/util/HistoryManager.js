@@ -4,6 +4,8 @@ import DataFlow from 'util/DataFlow'
 
 const history = createHistory()
 
+const activeVerse = location.hash.substr(1)
+
 const setTitle = (reference = null) => {
 	if (!reference) {
 		reference = DataFlow.get("reference")
@@ -20,9 +22,12 @@ let justPopped = false
 DataFlow.watch("reference", r => {
 	if (!justPopped) { // don't push if justPopped
 		history.push( referenceToUrl(r) )
+		// I think we should not retain activeVerse when moving backwards and forwards through chapters...
+		DataFlow.set("activeVerse", false)
 	}
 	justPopped = false
 	setTitle(r)
+
 })
 history.listen((location, action) => {
 	// don't set reference if it was a push (unnecessary
@@ -44,4 +49,15 @@ else {
 	const r = UrlToReference(location.pathname)
 	DataFlow.set("reference", r)
 	setTitle(r)
+}
+
+
+if (activeVerse) {
+	DataFlow.set("activeVerse", {
+		"url": location.pathname,
+		"verse": +activeVerse
+	})
+}
+else {
+	DataFlow.set("activeVerse", false)
 }
