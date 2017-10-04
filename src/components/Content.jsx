@@ -13,6 +13,19 @@ class Content extends React.Component {
 			"highlightTermsSetting"
 		], this.setState.bind(this))
 	}
+	componentDidMount() {
+		if (DataFlow.get("activeVerse")) {
+			const $vEl = () => document.querySelector("#activeVerse")
+			if ($vEl()) {
+				// There seems to be a redraw that messes this up
+				// even with requestAnimationFrame
+				// so we resort to a timer...
+				window.setTimeout(() => {
+					$vEl().scrollIntoView(true)
+				}, 1500)
+			}
+		}
+	}
 	render() {
 		if (!this.state.bibledata) {
 			// We don't really want a blank slate...

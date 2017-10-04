@@ -58,7 +58,7 @@ const ResultsOverlay = ({panelIsVisible, hideOverlay}) => {
 								fontSize: "small",
 								fontWeight: "bold",
 								textTransform: "uppercase" }}>
-								<a href={generateURL(item.verses[0])}>
+								<a href={generateURL(item.verses[0])} className="verseUrl">
 									{generateReference(item.verses, useAbbreviation)}
 								</a>
 							</div>
