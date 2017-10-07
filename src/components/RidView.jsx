@@ -26,8 +26,8 @@ const lxxDisplay = (rid, lxx, activeWid) => (
 )
 
 // TODO: Do something actual with fonts for LXX
-const parallelView =({rid, activeWid, ridData}) => (
-	<div data-rid={rid} style={{display: "table", tableLayout: "fixed", width: "100%", direction: "ltr" }}>
+const parallelView =({rid, activeWid, ridData, thisVerseActive}) => (
+	<div data-rid={rid} id={thisVerseActive ? "activeVerse" : ""} style={{display: "table", tableLayout: "fixed", width: "100%", direction: "ltr", backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : "inherit" }}>
 		{ridData.hasOwnProperty("wlc") ? (
 			<div style={{ display: "table-cell", verticalAlign: "top", direction: "rtl", fontSize: "x-large", padding: "3px 5px", fontFamily: fontSetting()}}>
 				{wlcDisplay(rid, ridData.wlc, activeWid)}
@@ -49,7 +49,7 @@ const RidView = ({rid, ridData, activeWid}) => {
 	const activeVerse = DataFlow.get("activeVerse")
 	const thisVerseActive = activeVerse ? location.pathname == activeVerse.url && rid % 1000 === activeVerse.verse : false
 	if (ridDataKeys.length > 1) {
-		return parallelView({rid, ridData, activeWid})
+		return parallelView({rid, ridData, activeWid, thisVerseActive})
 	}
 	else {
 		switch(ridDataKeys[0]) {
@@ -57,7 +57,7 @@ const RidView = ({rid, ridData, activeWid}) => {
 				return <div id={thisVerseActive ? "activeVerse" : ""} style={{
 						display: "inline",
 						fontFamily: fontSetting(),
-						backgroundColor: thisVerseActive ? "rgba(255,255,0,0.4)" : "inherit"
+						backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : "inherit"
 					}} data-rid={rid}>
 					{wlcDisplay(rid, ridData.wlc, activeWid)}
 				</div>
