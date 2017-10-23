@@ -176,6 +176,21 @@ class ParabibleHeader extends React.Component {
 				onClick: () => this.moveChapter(1)
 			}
 		]
+		if (this.state.screenSizeIndex > 2) {
+			nearItemList.push({
+				key: 'shebanq',
+				name: "",
+				iconProps: {
+					iconName: 'OpenInNewWindow'
+				},
+				onClick: () => {
+					const chapter = this.state.reference.chapter
+					const currentBookDetail = bookDetails.find(b => b.name == this.state.reference.book)
+					const shebanqBook = currentBookDetail.shebanqBook
+					window.open(`http://shebanq.ancient-data.org/hebrew/text?book=${shebanqBook}&chapter=${chapter}&mr=m`,'_blank')
+				}
+			})
+		}
 
 		const searchTermMenuItems = this.state.searchTerms.map(st => {
 			let val = "?"
