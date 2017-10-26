@@ -23,17 +23,19 @@ const UrlToReference = (url) => {
 	//1. strip leading stuff if it's there
 	// const urlStripped = url.slice(1)
 	//2. separate book and chapter
-	const urlParts = url.split("/")
+	const decodedURL = decodeURI(url)
+	const urlParts = decodedURL.split("/")
 	const bookPart = urlParts[1].replace("-", " ")
-	const chapterPart = urlParts[2]
+	const chapterPart = urlParts[2] ? parseInt(urlParts[2]) : 1
 	//3. match book
-	const book = _matchBook(bookPart)
-	return !book ? {
-		book: "Genesis",
-		chapter: chapterPart ? parseInt(chapterPart) : 1
-	} : {
-		book: book,
-		chapter: chapterPart ? parseInt(chapterPart) : 1
+	let book = _matchBook(bookPart)
+	if (!book) {
+		const alphanumbericOnlyBookPart = bookPart.replace(/[^a-zA-Z\d]/g, '')
+		book = _matchBook(bookPart)
+		if (!book) {
+			book= "Genesis"
+		}
 	}
+	return { book, chapterPart }
 }
 export default UrlToReference
