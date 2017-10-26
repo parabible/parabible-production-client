@@ -26,7 +26,7 @@ const UrlToReference = (url) => {
 	const decodedURL = decodeURI(url)
 	const urlParts = decodedURL.split("/")
 	const bookPart = urlParts[1].replace("-", " ")
-	const chapterPart = urlParts[2] ? parseInt(urlParts[2]) : 1
+	const chapter = urlParts[2] ? parseInt(urlParts[2]) : 1
 	//3. match book
 	let book = _matchBook(bookPart)
 	if (!book) {
@@ -36,6 +36,6 @@ const UrlToReference = (url) => {
 			book= "Genesis"
 		}
 	}
-	return { book, chapterPart }
+	return { book, chapter }
 }
 export default UrlToReference
