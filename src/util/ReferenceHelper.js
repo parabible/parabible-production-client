@@ -86,7 +86,7 @@ const generateReference = (rids, abbreviation=false) => {
 }
 const generateURL = (rid) => {
 	const bk = getBook(rid, true).replace(" ", "-")
-	const ch = getChapter(rid, true)
+	const ch = getChapter(rid)
 	const vs = rid % 1000
 	return `/${bk}/${ch}#${vs}`
 }
