@@ -26,8 +26,8 @@ const UrlToReference = (url) => {
 	const decodedURL = decodeURI(url)
 	const urlParts = decodedURL.split("/")
 	const bookPart = urlParts[1].replace(/[^a-zA-Z\d]/g, '')
-	const chapterPart = urlParts[2].toLowerCase() == "nan" ? "1" : urlParts[2]
-	const chapter = chapterPart ? parseInt(chapterPart) : 1
+	const chapterPart = urlParts[2] ? parseInt(urlParts[2]) : 1
+	const chapter = isNan(chapterPart) ? 1 : chapterPart
 	//3. match book
 	let book = _matchBook(bookPart) || "Genesis"
 	return { book, chapter }
