@@ -48,6 +48,7 @@ const searchFilterOptions = (filter) => {
 		"current": [DataFlow.get("reference").book],
 		"pentateuch": ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy"],
 		"minorProphets": ["Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi"],
+		"wisdomBooks": ["Job", "Proverbs", "Ecclesiastes"],
 		// "custom": DataFlow.get("customBookFilter")
 	}
 	return options[filter]

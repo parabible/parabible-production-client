@@ -254,6 +254,7 @@ class ParabibleHeader extends React.Component {
 				{ name: 'current', title: 'Current' },
 				{ name: 'pentateuch', title: 'Pentateuch' },
 				{ name: 'minorProphets', title: 'Minor Prophets' },
+				{ name: 'wisdomBooks', title: 'Wisdom Books' },
 				// TODO: { name: 'custom', title: 'Custom' }
 			]
 		}
