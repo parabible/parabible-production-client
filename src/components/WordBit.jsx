@@ -4,7 +4,10 @@ import DataFlow from 'util/DataFlow'
 const WordBit = ({wbit, activeWid}) => {
 	const styles = { cursor: "pointer" }
 	if (wbit.hasOwnProperty("searchHighlight"))
-		styles.color = "#ff8c00"
+	{
+		const color = DataFlow.get("searchTerms").find(st => st.uid === wbit.searchHighlight).color
+		styles.color = color || "#ff8c00"
+	}
 	if (activeWid === wbit.wid)
 		styles.color = "#0078d7"
 	const bitstyles = {}

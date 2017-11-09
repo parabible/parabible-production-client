@@ -1,5 +1,8 @@
 import React from 'react'
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar'
+import { ContextualMenuItemType } from 'office-ui-fabric-react/lib/ContextualMenu'
+import { SwatchColorPicker } from 'office-ui-fabric-react/lib/SwatchColorPicker'
+import { ColorPicker } from 'office-ui-fabric-react/lib/ColorPicker'
 import DataFlow from 'util/DataFlow'
 import ApiRequest from 'util/ApiRequest'
 import bookDetails from 'data/bookDetails'
@@ -17,56 +20,139 @@ class ParabibleHeader extends React.Component {
 		], this.setState.bind(this))
 	}
 	generateTermMenuItem({ key, text, invert }) {
+		const colorMenuSection = [{
+				key: 'section',
+				itemType: ContextualMenuItemType.Divider
+			}, {
+				key: 'color',
+				name: 'Highlight Colour',
+				iconProps: {
+					iconName: 'Trash',
+					style: {
+						color: 'red'
+					}
+				},
+				onRender: () => {
+					let colorOptions = [
+						{ id: 'default', color: "#ff8c00" },
+						{ id: 'green', color: '#00ff00' },
+						{ id: 'blue', color: '#0000ff' },
+						{ id: 'red', color: '#ff0000' },
+					]
+					let selectedId = "default"
+					const customColor = this.state.searchTerms.find(st => st.uid === key).color
+					if (customColor) {
+						const idx = colorOptions.findIndex(c => c.color === customColor)
+						if (idx >= 0) {
+							selectedId = colorOptions[idx].id
+							colorOptions.push({ id: 'custom', color: "#888888" })
+						}
+						else {
+							selectedId = "custom"
+							colorOptions.push({ id: 'custom', color: customColor })
+						}
+					}
+					else {
+						selectedId = "default"
+						colorOptions.push({ id: 'custom', color: "#888888" })
+					}
+					return (
+						<SwatchColorPicker
+							key='scp'
+							columnCount={ 10 }
+							cellShape={ 'square' }
+							colorCells={colorOptions}
+							onColorChanged={(id, color) => {
+								const st = this.state.searchTerms.slice()
+								const index = st.findIndex(st => st.uid === key)
+								st[index].color = color
+								DataFlow.set("searchTerms", st)
+							}}
+							selectedId={selectedId}
+						/>
+					);
+				}
+			},
+			{
+				name: 'Custom Color',
+				key: 'customColor',
+				iconProps: {
+					iconName: 'Color'
+				},
+				subMenuProps: {
+					items: [
+						{
+							key: "customColorPicker",
+							onRender: () => <ColorPicker
+								key='sp'
+								color={DataFlow.get("searchTerms").find(st => st.uid === key).color || "#888"}
+								alphaSliderHidden={true}
+								onColorChanged={(color) => {
+									const st = this.state.searchTerms.slice()
+									const index = st.findIndex(st => st.uid === key)
+									st[index].color = color
+									DataFlow.set("searchTerms", st)
+								}}
+							/>
+						}
+					]
+				}
+			}
+		]
 		let menuItem = {
 			key: key,
 			name: text,
 			subMenuProps: {
-				items: [{
-					key: 'edit',
-					name: 'Modify',
-					iconProps: {
-						iconName: 'Edit'
-					},
-					onClick: () => {
-						console.log("Modify!!!")
-					}
-				}, {
-					key: 'invert',
-					name: 'Invert',
-					iconProps: {
-						iconName: invert ? "CheckboxComposite" : "Checkbox"
-					},
-					onClick: () => {
-						const st = this.state.searchTerms.slice()
-						const index = st.findIndex(st => st.uid === key)
-						st[index].invert = !st[index].invert
-						DataFlow.set("searchTerms", st)
-						this.forceUpdate()
-					}
-				}, {
-					key: 'delete',
-					name: 'Remove',
-					iconProps: {
-						iconName: 'Trash',
-						style: {
-							color: 'red'
+				items: [
+					{
+						key: 'edit',
+						name: 'Modify',
+						iconProps: {
+							iconName: 'Edit'
+						},
+						onClick: () => {
+							console.log("Modify!!!")
 						}
-					},
-					onClick: () => {
-						let st = this.state.searchTerms.slice()
-						const index = st.findIndex(st => st.uid === key)
-						st.splice(index, 1)
-						DataFlow.set("searchTerms", st)
-						this.forceUpdate()
-						ga('send', {
-							hitType: 'event',
-							eventCategory: 'searchTerms',
-							eventAction: "remove"
-						})
+					}, {
+						key: 'invert',
+						name: 'Invert',
+						iconProps: {
+							iconName: invert ? "CheckboxComposite" : "Checkbox"
+						},
+						onClick: () => {
+							const st = this.state.searchTerms.slice()
+							const index = st.findIndex(st => st.uid === key)
+							st[index].invert = !st[index].invert
+							DataFlow.set("searchTerms", st)
+							this.forceUpdate()
+						}
+					}, {
+						key: 'delete',
+						name: 'Remove',
+						iconProps: {
+							iconName: 'Trash',
+							style: {
+								color: 'red'
+							}
+						},
+						onClick: () => {
+							let st = this.state.searchTerms.slice()
+							const index = st.findIndex(st => st.uid === key)
+							st.splice(index, 1)
+							DataFlow.set("searchTerms", st)
+							this.forceUpdate()
+							ga('send', {
+								hitType: 'event',
+								eventCategory: 'searchTerms',
+								eventAction: "remove"
+							})
+						}
 					}
-				}]
+				]
 			}
 		}
+		if (DataFlow.get("highlightTermsSetting"))
+			menuItem["subMenuProps"]["items"].push(...colorMenuSection)
 		if (/[\u0590-\u05fe]/.test(text))
 			menuItem["style"] = { fontSize: "x-large", fontFamily: DataFlow.get("fontSetting") }
 		return menuItem
