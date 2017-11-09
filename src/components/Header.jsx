@@ -37,7 +37,7 @@ class ParabibleHeader extends React.Component {
 						{ id: 'default', color: "#FF8C00" },
 						{ id: 'green', color: '#107C10' },
 						{ id: 'blue', color: '#00B294' },
-						{ id: 'red', color: '#E81123' }
+						{ id: 'red', color: '#A80000' }
 					]
 					let selectedId = "default"
 					const customColor = this.state.searchTerms.find(st => st.uid === key).color
