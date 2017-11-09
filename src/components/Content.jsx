@@ -36,7 +36,7 @@ class Content extends React.Component {
 		let btextHighlight = DataFlow.get("bibledata")
 		if (DataFlow.get("highlightTermsSetting") && DataFlow.get("searchHighlights")) {
 			const sh = DataFlow.get("searchHighlights")
-			const hSet = Object.keys(sh).map(k => ({
+			const hSet = Object.keys(sh).reverse().map(k => ({
 				uid: k,
 				highlight: new Set(sh[k])
 			}))
