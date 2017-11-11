@@ -428,6 +428,28 @@ class ParabibleHeader extends React.Component {
 				onClick: () => DataFlow.set("highlightTermsSetting", !this.state.highlightTermsSetting)
 			}
 		]
+		if (this.state.searchTerms.length > 0) {
+			searchSettingsItems.push({
+				key: 'clearTerms',
+				name: 'Clear Search Terms',
+				iconProps: {
+					iconName: 'Trash',
+					style: {
+						color: 'red'
+					}
+				},
+				onClick: () => {
+					console.log(this.state.searchTerms)
+					DataFlow.set("searchTerms", [])
+					this.forceUpdate()
+					ga('send', {
+						hitType: 'event',
+						eventCategory: 'searchTerms',
+						eventAction: "removeAll"
+					})
+				}
+			})
+		}
 		//TODO: Add font settings
 		const generalSettingsItems = [
 			// {
