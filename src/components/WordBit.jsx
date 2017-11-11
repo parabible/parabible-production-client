@@ -5,7 +5,8 @@ const WordBit = ({wbit, activeWid}) => {
 	const styles = { cursor: "pointer" }
 	if (wbit.hasOwnProperty("searchHighlight"))
 	{
-		const color = DataFlow.get("searchTerms").find(st => st.uid === wbit.searchHighlight).color
+		const term = DataFlow.get("searchTerms").find(st => st.uid === wbit.searchHighlight)
+		const color = term && term.hasOwnProperty("color") ? term.color : false
 		styles.color = color || "#ff8c00"
 	}
 	if (activeWid === wbit.wid)
