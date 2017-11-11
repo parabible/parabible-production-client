@@ -1,8 +1,8 @@
 import React from 'react'
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar'
 import { ContextualMenuItemType } from 'office-ui-fabric-react/lib/ContextualMenu'
-import { SwatchColorPicker } from 'office-ui-fabric-react/lib/SwatchColorPicker'
-import { ColorPicker } from 'office-ui-fabric-react/lib/ColorPicker'
+import generateSearchTermMenuItem from './SearchTermMenuItem'
+
 import DataFlow from 'util/DataFlow'
 import ApiRequest from 'util/ApiRequest'
 import bookDetails from 'data/bookDetails'
@@ -18,144 +18,6 @@ class ParabibleHeader extends React.Component {
 			"screenSizeIndex",
 			"searchTerms"
 		], this.setState.bind(this))
-	}
-	generateTermMenuItem({ key, text, invert }) {
-		const colorMenuSection = [{
-				key: 'section',
-				itemType: ContextualMenuItemType.Divider
-			}, {
-				key: 'color',
-				name: 'Highlight Colour',
-				iconProps: {
-					iconName: 'Trash',
-					style: {
-						color: 'red'
-					}
-				},
-				onRender: () => {
-					let colorOptions = [
-						{ id: 'default', color: "#FF8C00" },
-						{ id: 'green', color: '#107C10' },
-						{ id: 'blue', color: '#00B294' },
-						{ id: 'red', color: '#A80000' }
-					]
-					let selectedId = "default"
-					const customColor = this.state.searchTerms.find(st => st.uid === key).color
-					if (customColor) {
-						const idx = colorOptions.findIndex(c => c.color === customColor)
-						if (idx >= 0) {
-							selectedId = colorOptions[idx].id
-							colorOptions.push({ id: 'custom', color: "#888888" })
-						}
-						else {
-							selectedId = "custom"
-							colorOptions.push({ id: 'custom', color: customColor })
-						}
-					}
-					else {
-						selectedId = "default"
-						colorOptions.push({ id: 'custom', color: "#888888" })
-					}
-					return (
-						<SwatchColorPicker
-							key='scp'
-							columnCount={ 10 }
-							cellShape={ 'square' }
-							colorCells={colorOptions}
-							onColorChanged={(id, color) => {
-								const st = this.state.searchTerms.slice()
-								const index = st.findIndex(st => st.uid === key)
-								st[index].color = color
-								DataFlow.set("searchTerms", st)
-							}}
-							selectedId={selectedId}
-						/>
-					);
-				}
-			},
-			{
-				name: 'Custom Color',
-				key: 'customColor',
-				iconProps: {
-					iconName: 'Color'
-				},
-				subMenuProps: {
-					items: [
-						{
-							key: "customColorPicker",
-							onRender: () => <ColorPicker
-								key='sp'
-								color={DataFlow.get("searchTerms").find(st => st.uid === key).color || "#888"}
-								alphaSliderHidden={true}
-								onColorChanged={(color) => {
-									const st = this.state.searchTerms.slice()
-									const index = st.findIndex(st => st.uid === key)
-									st[index].color = color
-									DataFlow.set("searchTerms", st)
-								}}
-							/>
-						}
-					]
-				}
-			}
-		]
-		let menuItem = {
-			key: key,
-			name: text,
-			subMenuProps: {
-				items: [
-					{
-						key: 'edit',
-						name: 'Modify',
-						iconProps: {
-							iconName: 'Edit'
-						},
-						onClick: () => {
-							console.log("Modify!!!")
-						}
-					}, {
-						key: 'invert',
-						name: 'Invert',
-						iconProps: {
-							iconName: invert ? "CheckboxComposite" : "Checkbox"
-						},
-						onClick: () => {
-							const st = this.state.searchTerms.slice()
-							const index = st.findIndex(st => st.uid === key)
-							st[index].invert = !st[index].invert
-							DataFlow.set("searchTerms", st)
-							this.forceUpdate()
-						}
-					}, {
-						key: 'delete',
-						name: 'Remove',
-						iconProps: {
-							iconName: 'Trash',
-							style: {
-								color: 'red'
-							}
-						},
-						onClick: () => {
-							let st = this.state.searchTerms.slice()
-							const index = st.findIndex(st => st.uid === key)
-							st.splice(index, 1)
-							DataFlow.set("searchTerms", st)
-							this.forceUpdate()
-							ga('send', {
-								hitType: 'event',
-								eventCategory: 'searchTerms',
-								eventAction: "remove"
-							})
-						}
-					}
-				]
-			}
-		}
-		if (DataFlow.get("highlightTermsSetting"))
-			menuItem["subMenuProps"]["items"].push(...colorMenuSection)
-		if (/[\u0590-\u05fe]/.test(text))
-			menuItem["style"] = { fontSize: "x-large", fontFamily: DataFlow.get("fontSetting") }
-		return menuItem
 	}
 	generateSettingsMenu(menuData, multiple=false) {
 		const searchField = DataFlow.get(menuData.field)
@@ -303,37 +165,7 @@ class ParabibleHeader extends React.Component {
 			})
 		}
 
-		const searchTermMenuItems = this.state.searchTerms.map(st => {
-			let val = "?"
-			if (st.data.hasOwnProperty("voc_utf8"))
-				val = st.data.voc_utf8
-			else if (st.data.hasOwnProperty("tricons"))
-				val = st.data.tricons
-			else if (st.data.hasOwnProperty("lxxlexeme"))
-				val = st.data.lxxlexeme
-			else if (st.data.hasOwnProperty("gloss"))
-				val = st.data.gloss
-			else if (st.data.hasOwnProperty("sdbh"))
-				val = st.data.sdbh
-			else if (st.data.hasOwnProperty("vs") || st.data.hasOwnProperty("vt")) {
-				val = st.data.hasOwnProperty("vs") ? st.data.vs + " " : ""
-				val += st.data.hasOwnProperty("vt") ? st.data.vt : ""
-			}
-			else if (st.data.hasOwnProperty("ps") || st.data.hasOwnProperty("gn") || st.data.hasOwnProperty("nu")) {
-				val = st.data.hasOwnProperty("ps") ? st.data.ps + " " : ""
-				val += st.data.hasOwnProperty("nu") ? st.data.nu + " " : ""
-				val += st.data.hasOwnProperty("gn") ? st.data.gn : ""
-			}
-			else if (st.data.hasOwnProperty("sp")) {
-				val = st.data.sp
-			}
-			
-			return this.generateTermMenuItem({
-				key: st.uid, 
-				text: val,
-				invert: st.invert
-			})
-		})
+		const searchTermMenuItems = this.state.searchTerms.map(t => generateSearchTermMenuItem({uid:t.uid}))
 
 		const menuRange = {
 			"field": "searchRangeSetting",
@@ -439,7 +271,6 @@ class ParabibleHeader extends React.Component {
 					}
 				},
 				onClick: () => {
-					console.log(this.state.searchTerms)
 					DataFlow.set("searchTerms", [])
 					this.forceUpdate()
 					ga('send', {
