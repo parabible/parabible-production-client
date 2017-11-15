@@ -40,6 +40,7 @@ function fromCache(request) {
 }
 
 function update(request) {
+	if (request.method === "POST") return null // POST can't be cached
 	return caches.open(CACHE).then(cache => {
 		return fetch(request).then(response => {
 			return cache.put(request, response)
