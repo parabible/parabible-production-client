@@ -68,6 +68,15 @@
 			text-indent: 10px;
 			font-style: italic;
 		}
+		.loadingmessage {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			text-align: center;
+			background-color: #f4f4f4;
+		}
 	</style>
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -87,6 +96,78 @@
 		<p>Search clauses and sentences for any combination of word features.</p>
 		<p>Identify syntactical constructions and discover their meanings.</p>
 		<p>Unlock the original languages as a tool for Biblical study.</p>
+		<div class="loadingmessage">
+			<style type="text/css">
+				div.message {
+					margin-top: 100px;
+					text-transform: uppercase;
+					font-family: sans-serif;
+					color: #111;
+					font-weight: bold;
+					font-size: small;
+				}
+				.spinner {
+					margin: 10px auto;
+					width: 50px;
+					height: 40px;
+					text-align: center;
+					font-size: 10px;
+				}
+
+				.spinner > div {
+					background-color: #005a9e;
+					height: 100%;
+					width: 6px;
+					display: inline-block;
+					
+					-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+					animation: sk-stretchdelay 1.2s infinite ease-in-out;
+				}
+
+				.spinner .rect2 {
+					-webkit-animation-delay: -1.1s;
+					animation-delay: -1.1s;
+				}
+
+				.spinner .rect3 {
+					-webkit-animation-delay: -1.0s;
+					animation-delay: -1.0s;
+				}
+
+				.spinner .rect4 {
+					-webkit-animation-delay: -0.9s;
+					animation-delay: -0.9s;
+				}
+
+				.spinner .rect5 {
+					-webkit-animation-delay: -0.8s;
+					animation-delay: -0.8s;
+				}
+
+				@-webkit-keyframes sk-stretchdelay {
+					0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+					20% { -webkit-transform: scaleY(1.0) }
+				}
+
+				@keyframes sk-stretchdelay {
+					0%, 40%, 100% { 
+						transform: scaleY(0.4);
+						-webkit-transform: scaleY(0.4);
+					}  20% { 
+						transform: scaleY(1.0);
+						-webkit-transform: scaleY(1.0);
+					}
+				}
+			</style>
+			<div class="message">loading</div>
+			<div class="spinner">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</div>
 	</div>
 	<script src="/bundle.js"></script><script type="text/javascript">
 		window._urq = window._urq || [];
