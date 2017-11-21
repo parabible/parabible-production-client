@@ -27,7 +27,7 @@ const lxxDisplay = (rid, lxx, activeWid) => (
 
 // TODO: Do something actual with fonts for LXX
 const parallelView =({rid, activeWid, ridData, thisVerseActive}) => (
-	<div data-rid={rid} id={thisVerseActive ? "activeVerse" : ""} style={{display: "table", tableLayout: "fixed", width: "100%", direction: "ltr", backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : "inherit" }}>
+	<div className="contiguousrid" data-rid={rid} id={thisVerseActive ? "activeVerse" : ""} style={{display: "table", tableLayout: "fixed", width: "100%", direction: "ltr", backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : "" }}>
 		{ridData.hasOwnProperty("wlc") ? (
 			<div style={{ display: "table-cell", verticalAlign: "top", direction: "rtl", fontSize: "x-large", padding: "3px 5px", fontFamily: fontSetting()}}>
 				{wlcDisplay(rid, ridData.wlc, activeWid)}
@@ -46,18 +46,23 @@ const parallelView =({rid, activeWid, ridData, thisVerseActive}) => (
 
 const RidView = ({rid, ridData, activeWid}) => {
 	const ridDataKeys = Object.keys(ridData)
+	console.log("check HistoryManager to improve this - test on basis of rid")
 	const activeVerse = DataFlow.get("activeVerse")
-	const thisVerseActive = activeVerse ? location.pathname == activeVerse.url && rid % 1000 === activeVerse.verse : false
+	const thisVerseActive = activeVerse ?
+		location.pathname == activeVerse.url && rid % 1000 === activeVerse.verse :
+		false
 	if (ridDataKeys.length > 1) {
+		// PARALLEL
 		return parallelView({rid, ridData, activeWid, thisVerseActive})
 	}
 	else {
+		// SINGLE TEXT
 		switch(ridDataKeys[0]) {
 			case "wlc":
-				return <div id={thisVerseActive ? "activeVerse" : ""} style={{
+				return <div className="contiguousrid" id={thisVerseActive ? "activeVerse" : ""} style={{
 						display: "inline",
 						fontFamily: fontSetting(),
-						backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : "inherit"
+						backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : ""
 					}} data-rid={rid}>
 					{wlcDisplay(rid, ridData.wlc, activeWid)}
 				</div>
