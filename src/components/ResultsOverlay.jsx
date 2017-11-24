@@ -9,6 +9,8 @@ const ResultsOverlay = ({panelIsVisible, hideOverlay}) => {
 	const searchResults = DataFlow.get("searchResults")
 	const multiline = DataFlow.get("screenSizeIndex") < 2
 	const useAbbreviation = DataFlow.get("screenSizeIndex") < 4 && !multiline ? true : false
+	const resultCount = searchResults && Object.keys(searchResults).length > 0 ?
+		(searchResults.truncated ? searchResults.truncated : searchResults.results.length) : "?"
 	return (
 		<div style={{
 			visibility: panelIsVisible ? "visible" : "hidden",
@@ -28,7 +30,7 @@ const ResultsOverlay = ({panelIsVisible, hideOverlay}) => {
 				textAlign:"center",
 				padding: "5px"
 				}}>
-				Search Results ({searchResults && Object.keys(searchResults).length > 0 ? searchResults.truncated : 0})
+				Search Results ({resultCount})
 			</div>
 
 			<div style={{
