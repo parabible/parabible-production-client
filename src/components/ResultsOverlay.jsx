@@ -28,7 +28,7 @@ const ResultsOverlay = ({panelIsVisible, hideOverlay}) => {
 				textAlign:"center",
 				padding: "5px"
 				}}>
-				Search Results ({searchResults && Object.keys(searchResults).length > 0 ? searchResults.length : 0})
+				Search Results ({searchResults && Object.keys(searchResults).length > 0 ? searchResults.truncated : 0})
 			</div>
 
 			<div style={{

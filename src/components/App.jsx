@@ -35,7 +35,7 @@ class App extends React.Component {
 			this.setState({ showMorphPopup: true })
 		}).watch("searchResults", () => {
 			const r = DataFlow.get("searchResults")
-			if (r && Object.keys(r).length > 0 && r.length > 0) {
+			if (r && Object.keys(r).length > 0) {
 				this.setState({ showResults: true })
 			}
 			else {

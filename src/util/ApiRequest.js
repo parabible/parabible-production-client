@@ -32,12 +32,11 @@ DataFlow
 	})
 	.watch("searchResults", (sr) => {
 		/* This function is just to notify the user when results are truncated */
-		if (sr.results.length < sr.length)
+		if (sr.truncated)
 		{
-			const actualLength = sr.results.length
 			AppNotify.send({
 				type: "warning",
-				message: `Your search returned too many results so we're only displaying ${actualLength} of them.`
+				message: `Your search returned too many results so we're only displaying ${sr.results.length} of them.`
 			})
 		}
 	})
