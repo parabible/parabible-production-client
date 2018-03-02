@@ -46,10 +46,9 @@ const parallelView =({rid, activeWid, ridData, thisVerseActive}) => (
 
 const RidView = ({rid, ridData, activeWid}) => {
 	const ridDataKeys = Object.keys(ridData)
-	console.log("check HistoryManager to improve this - test on basis of rid")
 	const activeVerse = DataFlow.get("activeVerse")
 	const thisVerseActive = activeVerse ?
-		location.pathname == activeVerse.url && rid % 1000 === activeVerse.verse :
+		rid === activeVerse.rid :
 		false
 	if (ridDataKeys.length > 1) {
 		// PARALLEL
