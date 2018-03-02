@@ -70,7 +70,7 @@ class Content extends React.Component {
 				{Object.keys(btextHighlight).map(k => 
 					<RidView
 						key={k}
-						rid={k}
+						rid={+k}
 						ridData={btextHighlight[k]}
 						activeWid={this.state.activeWid} />
 				)}
