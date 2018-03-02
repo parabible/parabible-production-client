@@ -1,6 +1,6 @@
 import bookDetails from "data/bookDetails"
 
-const groupConsecutiveRids = (rids) => {
+const _groupConsecutiveRids = (rids) => {
 	const ridSort = rids.sort()
 	return ridSort.reduce((a, v) => {
 		if (a.length === 0) {
@@ -19,27 +19,27 @@ const groupConsecutiveRids = (rids) => {
 	}, [])
 }
 
-const getBook = (rid, abbreviation) => {
+const _getBook = (rid, abbreviation) => {
 	const book = bookDetails[Math.floor(rid / 10000000) - 1]
 	return abbreviation ? book.abbreviation : book.name
 }
-const getChapter = (rid) => {
+const _getChapter = (rid) => {
 	return Math.floor(rid / 1000) % 10000
 }
-const getVerse = (rid) => {
+const _getVerse = (rid) => {
 	return rid % 1000
 }
 
 const generateReference = (rids, abbreviation=false) => {
-	const groupedRids = groupConsecutiveRids(rids)
+	const groupedRids = _groupConsecutiveRids(rids)
 	const ridRefs = groupedRids.map(ridList => {
 		const lastRid = ridList[ridList.length - 1]
 		return {
-			book: getBook(ridList[0], abbreviation),
-			firstChapter: getChapter(ridList[0]),
-			lastChapter: getChapter(lastRid),
-			firstVerse: getVerse(ridList[0]),
-			lastVerse: getVerse(lastRid)
+			book: _getBook(ridList[0], abbreviation),
+			firstChapter: _getChapter(ridList[0]),
+			lastChapter: _getChapter(lastRid),
+			firstVerse: _getVerse(ridList[0]),
+			lastVerse: _getVerse(lastRid)
 		}
 	})
 	let lastBook = null
@@ -85,9 +85,20 @@ const generateReference = (rids, abbreviation=false) => {
 	return humanReadable
 }
 const generateURL = (rid) => {
-	const bk = getBook(rid, true).replace(" ", "-")
-	const ch = getChapter(rid)
+	const bk = _getBook(rid, true).replace(" ", "-")
+	const ch = _getChapter(rid)
 	const vs = rid % 1000
 	return `/${bk}/${ch}#${vs}`
 }
-export { generateReference, generateURL }
+
+const _getBookInt = (book) => {
+	return bookDetails.findIndex(d => d.name === book) + 1
+}
+
+const generateRid = (reference) => {
+	const book = _getBookInt(reference.book) * 10000000
+	const ch = reference.chapter * 1000
+	const v = reference.hasOwnProperty("verse") ? reference.verse : 0
+	return book + ch + v
+}
+export { generateReference, generateURL, generateRid }

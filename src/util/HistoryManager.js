@@ -1,5 +1,6 @@
 import createHistory from 'history/createBrowserHistory'
 import UrlToReference from 'util/UrlToReference'
+import { generateRid } from 'util/ReferenceHelper'
 import DataFlow from 'util/DataFlow'
 
 const history = createHistory()
@@ -53,9 +54,11 @@ else {
 
 
 if (activeVerse) {
+	const r = DataFlow.get("reference")
+	Object.assign(r, { "verse": +activeVerse })
 	DataFlow.set("activeVerse", {
-		"url": location.pathname,
-		"verse": +activeVerse
+		"rid": generateRid(r),
+		"verse": r["verse"]
 	})
 }
 else {
