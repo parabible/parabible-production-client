@@ -9,8 +9,18 @@ const _matchBook = (urlBook) => {
 		return generousBookNames[possibleKey]
 	}
 
-	// now try use regex to guess
+	// now try use regex to guess (return on first match)
 	const bookNames = books.map(b => b.name)
+	{	// let's try a regex on the starting characters of book names
+		const r = new RegExp(`^${urlBook}.*`, "i")
+		const possibleMatch = bookNames.reduce((a, v) => {
+			if (a) return a
+			return r.test(v) ? v : a
+		}, false)
+		if (possibleMatch) return possibleMatch
+	}
+
+	// this is a pretty promiscuous guess but it works on stuff like "1kgs"
 	const urlArray = urlBook.split("")
 	const r = new RegExp("^" + urlArray.join(".*"), "i")
 	return bookNames.reduce((a, v) => {
