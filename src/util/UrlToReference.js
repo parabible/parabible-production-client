@@ -9,8 +9,18 @@ const _matchBook = (urlBook) => {
 		return generousBookNames[possibleKey]
 	}
 
-	// now try use regex to guess
+	// now try use regex to guess (return on first match)
 	const bookNames = books.map(b => b.name)
+	{	// let's try a regex on the starting characters of book names
+		const r = new RegExp(`^${urlBook}.*`, "i")
+		const possibleMatch = bookNames.reduce((a, v) => {
+			if (a) return a
+			return r.test(v) ? v : a
+		}, false)
+		if (possibleMatch) return possibleMatch
+	}
+
+	// this is a pretty promiscuous guess but it works on stuff like "1kgs"
 	const urlArray = urlBook.split("")
 	const r = new RegExp("^" + urlArray.join(".*"), "i")
 	return bookNames.reduce((a, v) => {
@@ -21,15 +31,24 @@ const _matchBook = (urlBook) => {
 
 const UrlToReference = (url) => {
 	//1. strip leading stuff if it's there
-	// const urlStripped = url.slice(1)
+	const decodedURL = decodeURI(url).substring(1)
 	//2. separate book and chapter
-	const decodedURL = decodeURI(url)
-	const urlParts = decodedURL.split("/")
-	const bookPart = urlParts[1].replace(/[^a-zA-Z\d]/g, '')
-	const chapterPart = urlParts[2] ? parseInt(urlParts[2]) : 1
-	const chapter = isNaN(chapterPart) ? 1 : chapterPart
-	//3. match book
-	let book = _matchBook(bookPart) || "Genesis"
+	let book, chapter, verse
+	const urlMatches = decodedURL.match(/([a-zA-Z]+)\D*(\d+)(\D*(\d+))?/)
+	if (urlMatches != null) {
+		book = _matchBook(urlMatches[1]) || "Genesis"
+		chapter = urlMatches.length > 1 ? +urlMatches[2] : 1
+		//there is a nested match to allow the optional trailing separator+verse number
+		verse = urlMatches.length > 2 ? +urlMatches[4] : 1 
+	}
+	else {
+		book = _matchBook(decodedURL) || "Genesis"
+		chapter = 1
+	}
+	console.log(decodedURL, urlMatches, urlMatches[1], { book, chapter, verse })
+
+	if (verse)
+		return { book, chapter, verse }
 	return { book, chapter }
 }
 export default UrlToReference

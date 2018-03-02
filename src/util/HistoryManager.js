@@ -5,8 +5,6 @@ import DataFlow from 'util/DataFlow'
 
 const history = createHistory()
 
-const activeVerse = location.hash.substr(1)
-
 const setTitle = (reference = null) => {
 	if (!reference) {
 		reference = DataFlow.get("reference")
@@ -16,7 +14,8 @@ const setTitle = (reference = null) => {
 
 const referenceToUrl = (reference) => {
 	const bookUrl = reference.book.replace(" ", "-").replace(" ", "-")
-	return `/${bookUrl}/${reference.chapter}`
+	const verseAppend = reference.hasOwnProperty("verse") ? "#" + reference.verse : ""
+	return `/${bookUrl}/${reference.chapter}${verseAppend}`
 }
 
 let justPopped = false
@@ -35,7 +34,7 @@ history.listen((location, action) => {
 	// since DataFlow handles that but important for justPopped)
 	if (action == "POP") {
 		justPopped = true // set justPopped before setting reference!
-		DataFlow.set("reference", UrlToReference(location.pathname))
+		DataFlow.set("reference", UrlToReference(location.pathname + location.hash))
 	}
 })
 
@@ -47,18 +46,16 @@ if (location.pathname === "/") {
 	history.push( newRef )
 }
 else {
-	const r = UrlToReference(location.pathname)
+	const r = UrlToReference(location.pathname + location.hash)
 	DataFlow.set("reference", r)
 	setTitle(r)
 }
 
 
-if (activeVerse) {
-	const r = DataFlow.get("reference")
-	Object.assign(r, { "verse": +activeVerse })
+if (DataFlow.get("reference").hasOwnProperty("verse")) {
 	DataFlow.set("activeVerse", {
-		"rid": generateRid(r),
-		"verse": r["verse"]
+		"rid": generateRid(DataFlow.get("reference")),
+		"verse": DataFlow.get("reference")["verse"]
 	})
 }
 else {
