@@ -45,7 +45,6 @@ const UrlToReference = (url) => {
 		book = _matchBook(decodedURL) || "Genesis"
 		chapter = 1
 	}
-	console.log(decodedURL, urlMatches, urlMatches[1], { book, chapter, verse })
 
 	if (verse)
 		return { book, chapter, verse }
