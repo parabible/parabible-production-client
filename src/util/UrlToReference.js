@@ -29,19 +29,22 @@ const _matchBook = (urlBook) => {
 	}, false)
 }
 
+const _regexSearchForReference = (urlString) => {
+	// [^a-zA-Z\d\s:] - anything non alpha-numeric
+	const matches = urlString.match(/((?:(?:\d)[^a-zA-Z\d\s:]*)?[a-zA-Z]+)[^a-zA-Z\d\s:]*(\d+)(\D*(\d+))?/)
+	return matches ? {
+		book: _matchBook(matches[1]) || "Genesis",
+		chapter: matches.length > 1 ? +matches[2] : 1,
+		verse: matches.length > 2 ? +matches[4] : 1
+	} : false
+}
+
 const UrlToReference = (url) => {
 	//1. strip leading stuff if it's there
 	const decodedURL = decodeURI(url).substring(1)
 	//2. separate book and chapter
-	let book, chapter, verse
-	const urlMatches = decodedURL.match(/([a-zA-Z]+)\D*(\d+)(\D*(\d+))?/)
-	if (urlMatches != null) {
-		book = _matchBook(urlMatches[1]) || "Genesis"
-		chapter = urlMatches.length > 1 ? +urlMatches[2] : 1
-		//there is a nested match to allow the optional trailing separator+verse number
-		verse = urlMatches.length > 2 ? +urlMatches[4] : 1 
-	}
-	else {
+	let { book, chapter, verse } = _regexSearchForReference(decodedURL)
+	if (!book) {
 		book = _matchBook(decodedURL) || "Genesis"
 		chapter = 1
 	}
