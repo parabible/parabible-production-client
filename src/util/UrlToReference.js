@@ -3,7 +3,7 @@ import generousBookNames from 'data/generousBookNames'
 
 const _matchBook = (urlBook) => {
 	// first see if we can map directly
-	const possibleKey = urlBook.toLowerCase()
+	const possibleKey = urlBook.replace(/[-_\ ]/g,"").toLowerCase()
 	const generousNameList = Object.keys(generousBookNames)
 	if (generousNameList.indexOf(possibleKey) > -1) {
 		return generousBookNames[possibleKey]
