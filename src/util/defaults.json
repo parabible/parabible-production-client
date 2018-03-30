@@ -32,8 +32,8 @@
 		{"heading": "voice","visible": true},
 		{"heading": "person","visible": true},
 		{"heading": "case","visible": true},
-		{"heading": "gender","visible": true}
-		{"heading": "number","visible": true},
+		{"heading": "gender","visible": true},
+		{"heading": "number","visible": true}
 	],
 	"screenSizeIndex": 0,
 	"fontSetting": "SBL Biblit",
