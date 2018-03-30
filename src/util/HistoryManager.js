@@ -1,8 +1,9 @@
 import createHistory from 'history/createBrowserHistory'
-import UrlToReference from 'util/UrlToReference'
+import ReferenceParser from 'referenceparser'
 import { generateRid } from 'util/ReferenceHelper'
 import DataFlow from 'util/DataFlow'
 
+const rp = new ReferenceParser()
 const history = createHistory()
 
 const setTitle = (reference = null) => {
@@ -16,6 +17,12 @@ const referenceToUrl = (reference) => {
 	const bookUrl = reference.book.replace(" ", "-").replace(" ", "-")
 	const verseAppend = reference.hasOwnProperty("verse") ? "#" + reference.verse : ""
 	return `/${bookUrl}/${reference.chapter}${verseAppend}`
+}
+const urlToReference = (urlString) => {
+	let refObj = rp.parse(decodeURI(urlString).substring(1))
+	if (refObj.verse === null) delete refObj.verse
+	if (refObj.chapter === null) delete refObj.chapter
+	return refObj
 }
 
 let justPopped = false
@@ -34,7 +41,7 @@ history.listen((location, action) => {
 	// since DataFlow handles that but important for justPopped)
 	if (action == "POP") {
 		justPopped = true // set justPopped before setting reference!
-		DataFlow.set("reference", UrlToReference(location.pathname + location.hash))
+		DataFlow.set("reference", urlToReference(location.pathname + location.hash))
 	}
 })
 
@@ -46,7 +53,7 @@ if (location.pathname === "/") {
 	history.push( newRef )
 }
 else {
-	const r = UrlToReference(location.pathname + location.hash)
+	const r = urlToReference(location.pathname + location.hash)
 	DataFlow.set("reference", r)
 	setTitle(r)
 }
