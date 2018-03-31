@@ -20,8 +20,9 @@ const referenceToUrl = (reference) => {
 }
 const urlToReference = (urlString) => {
 	let refObj = rp.parse(decodeURI(urlString).substring(1))
+	if (refObj.book === null) refObj.book = "Genesis"
+	if (refObj.chapter === null) refObj.chapter = 1
 	if (refObj.verse === null) delete refObj.verse
-	if (refObj.chapter === null) delete refObj.chapter
 	return refObj
 }
 
