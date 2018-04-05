@@ -1,7 +1,7 @@
 import React from 'react'
 
 import DataFlow from 'util/DataFlow'
-import Popout from 'react-popout'
+import { Popout, insertPopoutStylesheetRule } from 'react-popout-component'
 import { generateReference, generateURL } from 'util/ReferenceHelper'
 
 const removeAccents = (s) => s.replace(/[\u0590-\u05AF\u05BD]/g,"")
@@ -27,7 +27,6 @@ const lxxDisplay = (rid, lxx, activeWid) => (
 )
 
 const TableRow = ({result}) => {
-    console.log(result.verses)
     const wlcTextArray = []
     const netTextArray = []
     const lxxTextArray = []
@@ -37,36 +36,44 @@ const TableRow = ({result}) => {
             const wlc_no_accents = t.wlc.map(au => au.map(({wid, trailer, temperature, word}) => ({wid, trailer, temperature, word: removeAccents(word)})))
             wlcTextArray.push(wlcDisplay(v, wlc_no_accents, -1))
         }
-        if (t.hasOwnProperty("net")) netTextArray.push(<span dangerouslySetInnerHTML={{ __html: t.net}}></span>)
+        if (t.hasOwnProperty("net")) netTextArray.push(<span key={v} dangerouslySetInnerHTML={{ __html: t.net}}></span>)
         if (t.hasOwnProperty("lxx")) lxxTextArray.push(lxxDisplay(v, t.lxx, -1))
     })
-    console.log(wlcTextArray, netTextArray, lxxTextArray)
+    const tds = []
+    tds.push(<td key={"ref"} width={"10%"}>{generateReference(result.verses, true)}</td>)
+    if (wlcTextArray.length > 0) tds.push(<td key={"wlc"} width={"30%"} className="largeText">{wlcTextArray}</td>)
+    if (netTextArray.length > 0) tds.push(<td key={"net"} width={"30%"}>{netTextArray}</td>)
+    if (lxxTextArray.length > 0) tds.push(<td key={"lxx"} width={"30%"}>{lxxTextArray}</td>)
     return (
-        <tr>
-            <td width={"10%"}>{generateReference(result.verses, true)}</td>
-            {wlcTextArray.length > 0 ? (
-                <td width={"30%"} className="largeText">{wlcTextArray}</td>
-            ) : ""}
-            {netTextArray.length > 0 ? (
-                <td width={"30%"}>{netTextArray}</td>
-            ) : ""}
-            {lxxTextArray.length > 0 ? (
-                <td width={"30%"}>{lxxTextArray}</td>
-            ) : ""}
-        </tr>
+        <tr>{tds}</tr>
     )
 }
 
+const htmlTemplate = `
+<!DOCTYPE>
+<html lang="en" dir="ltr">
+<head>
+    <title>Search Results</title>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        table { border-collapse: collapse; }
+        td { border-right: 1px solid #ddd; border-bottom: 1px solid #aaa; padding: 10px; }
+        td:last-child { border-right: none; }
+        tr:last-child > td { border-bottom: none; }
+        td.largeText { font-size: x-large; }
+    </style>
+</head>
+<body></body>
+</html>
+`
+
 const PopoutManager = ({popoutExit}) => {
-    DataFlow.get("searchResults").results.forEach(result => (
-        console.log(result.text[10007006])
-    ))
-    return <Popout url='/resultstable.html' title='Window title' onClosing={popoutExit}>
-        <table>
+    return <Popout onClose={popoutExit} html={htmlTemplate}>
+        <table><tbody>
             {DataFlow.get("searchResults").results.map(result => (
                 <TableRow key={result.node} result={result} />
             ))}
-        </table>
+        </tbody></table>
     </Popout>
 }
 export default PopoutManager

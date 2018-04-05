@@ -27,7 +27,7 @@
     "office-ui-fabric-react": "^4.30.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-popout": "^1.0.1",
+    "react-popout-component": "^1.8.3",
     "react-sortable-hoc": "^0.6.7",
     "webpack-visualizer-plugin": "^0.1.11"
   }
