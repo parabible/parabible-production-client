@@ -41,7 +41,7 @@ const TableRow = ({result}) => {
     })
     const tds = []
     tds.push(<td key={"ref"} width={"10%"}>{generateReference(result.verses, true)}</td>)
-    if (wlcTextArray.length > 0) tds.push(<td key={"wlc"} width={"30%"} className="largeText">{wlcTextArray}</td>)
+    if (wlcTextArray.length > 0) tds.push(<td key={"wlc"} width={"30%"} className="hebrewText">{wlcTextArray}</td>)
     if (netTextArray.length > 0) tds.push(<td key={"net"} width={"30%"}>{netTextArray}</td>)
     if (lxxTextArray.length > 0) tds.push(<td key={"lxx"} width={"30%"}>{lxxTextArray}</td>)
     return (
@@ -60,7 +60,7 @@ const htmlTemplate = `
         td { border-right: 1px solid #ddd; border-bottom: 1px solid #aaa; padding: 10px; }
         td:last-child { border-right: none; }
         tr:last-child > td { border-bottom: none; }
-        td.largeText { font-size: x-large; }
+        td.hebrewText { font-size: x-large; direction: rtl; }
     </style>
 </head>
 <body></body>
