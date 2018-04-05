@@ -49,8 +49,7 @@ const TableRow = ({result}) => {
     )
 }
 
-const htmlTemplate = `
-<!DOCTYPE>
+const htmlTemplate = `<!DOCTYPE>
 <html lang="en" dir="ltr">
 <head>
     <title>Search Results</title>
