@@ -4,7 +4,7 @@ import LXXVerse from './LXXVerse'
 import DataFlow from 'util/DataFlow'
 
 const fontSetting = () => {
-	return `${DataFlow.get("fontSetting")}, "SBL Biblit", "Open Sans", "Arial"`
+	return `"${DataFlow.get("fontSetting")}", "SBL Biblit", "Open Sans", "Arial"`
 }
 
 const wlcDisplay = (rid, wlc, activeWid) => (
