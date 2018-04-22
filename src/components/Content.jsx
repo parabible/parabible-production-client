@@ -1,6 +1,7 @@
 import React from 'react'
 import DataFlow from 'util/DataFlow'
 import RidView from 'components/RidView'
+import LicenseView from 'components/LicenseView'
 import ApiRequest from 'util/ApiRequest'
 
 class Content extends React.Component {
@@ -33,6 +34,7 @@ class Content extends React.Component {
 			ApiRequest("chapterText")
 			return <div />
 		}
+		const licenseList = new Set()
 		let btextHighlight = DataFlow.get("bibledata")
 		if (DataFlow.get("highlightTermsSetting") && DataFlow.get("searchHighlights")) {
 			const sh = DataFlow.get("searchHighlights")
@@ -49,6 +51,7 @@ class Content extends React.Component {
 				return false
 			}
 			Object.keys(btextHighlight).forEach(rid => {
+				Object.keys(btextHighlight[rid]).forEach(k => licenseList.add(k))
 				btextHighlight[rid].wlc.forEach((au, i) => {
 					au.forEach((wbit, j) => {
 						const hid = highlightID(wbit.wid)
@@ -74,6 +77,9 @@ class Content extends React.Component {
 						ridData={btextHighlight[k]}
 						activeWid={this.state.activeWid} />
 				)}
+				<div style={{direction:"ltr", fontFamily:"sans-serif", fontSize: "x-small", marginTop: "40px", paddingTop: "10px", borderTop: "1px solid #aaa"}}>
+					<LicenseView license={Array.from(licenseList)} />
+				</div>
 			</div>
 		)
 	}
