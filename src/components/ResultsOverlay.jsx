@@ -1,11 +1,11 @@
 import React from 'react'
 import { List } from 'office-ui-fabric-react/lib/List'
-import { PrimaryButton } from 'office-ui-fabric-react/lib/Button'
+import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react/lib/Button'
 import DataFlow from 'util/DataFlow'
 import { generateReference, generateURL } from 'util/ReferenceHelper'
 import RidView from './RidView'
 
-const ResultsOverlay = ({panelIsVisible, hideOverlay}) => {
+const ResultsOverlay = ({panelIsVisible, hideOverlay, showPopout}) => {
 	const searchResults = DataFlow.get("searchResults")
 	const multiline = DataFlow.get("screenSizeIndex") < 2
 	const useAbbreviation = DataFlow.get("screenSizeIndex") < 4 && !multiline ? true : false
@@ -38,6 +38,9 @@ const ResultsOverlay = ({panelIsVisible, hideOverlay}) => {
 				top: 50,
 				right: 25
 				}}>
+				{!multiline ? <DefaultButton
+					onClick={showPopout}
+					iconProps={{ iconName: 'Print' }} /> : ""}
 				<PrimaryButton
 					onClick={hideOverlay}
 					iconProps={{ iconName: 'ChromeClose' }} />

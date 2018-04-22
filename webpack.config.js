@@ -1,5 +1,6 @@
 var path = require("path")
 var webpack = require("webpack")
+var Visualizer = require('webpack-visualizer-plugin')
 
 let exportObject = {
 	entry: "./src/index.js",
@@ -41,7 +42,7 @@ let exportObject = {
 		extensions: ['.jsx', '.js', '.json'],
 		modules: [path.resolve(__dirname, 'src'), 'node_modules']
 	},
-	plugins: []
+	plugins: [new Visualizer()]
 }
 
 if (process.env.NODE_ENV === 'production') {

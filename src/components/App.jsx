@@ -7,10 +7,13 @@ import MorphologyPopup from 'components/MorphologyPopup'
 import MorphologySettings from 'components/MorphologySettings'
 import BookSelector from 'components/BookSelector'
 import ResultsOverlay from 'components/ResultsOverlay'
+import PopoutManager from 'components/PopoutManager'
 
 import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
 
+// This just executes and should run before DataFlow
 import MediaBreakpoints from 'util/MediaBreakpoints'
+
 import DataFlow from 'util/DataFlow'
 import AppNotify from 'util/AppNotify'
 
@@ -27,7 +30,8 @@ class App extends React.Component {
 			},
 			screenSizeIndex: DataFlow.get("screenSizeIndex"),
 			showMorphPopup: false,
-			showResults: false
+			showResults: false,
+			showNewTabSearchResults: false
 		}
 		DataFlow.watch("screenSizeIndex", n => {
 			this.setState({ "screenSizeIndex": n })
@@ -118,7 +122,8 @@ class App extends React.Component {
 					hidePanel={() => this.setPanelDisplay("morphSettings", false)} />
 				<ResultsOverlay 
 					panelIsVisible={this.state.showResults}
-					hideOverlay={() => this.setPanelDisplay("resultsOverlay", false)} />
+					hideOverlay={() => this.setPanelDisplay("resultsOverlay", false)}
+					showPopout={() => this.setState({"showNewTabSearchResults": true})} />
 
 				{/* NOTIFICATIONS */}
 				<div style={{ position: "absolute", left: "50px", right: "50px", top: "50px", zIndex: 10 }}>
@@ -129,6 +134,11 @@ class App extends React.Component {
 						</MessageBar>
 					)}
 				</div>
+
+				{/* POPOUT WINDOW*/}
+				{this.state.showNewTabSearchResults ?
+					<PopoutManager popoutExit={() => this.setState({"showNewTabSearchResults": false})}></PopoutManager>
+				: ""}
 			</div>
 		)
 	}
