@@ -36,7 +36,6 @@ class Content extends React.Component {
 			ApiRequest("chapterText")
 			return <div />
 		}
-		const licenseList = new Set()
 		let btextHighlight = DataFlow.get("bibledata")
 		if (DataFlow.get("highlightTermsSetting") && DataFlow.get("searchHighlights")) {
 			const sh = DataFlow.get("searchHighlights")
@@ -53,7 +52,6 @@ class Content extends React.Component {
 				return false
 			}
 			Object.keys(btextHighlight).forEach(rid => {
-				Object.keys(btextHighlight[rid]).forEach(k => licenseList.add(k))
 				btextHighlight[rid].wlc.forEach((au, i) => {
 					au.forEach((wbit, j) => {
 						const hid = highlightID(wbit.wid)
@@ -63,6 +61,10 @@ class Content extends React.Component {
 				})
 			})
 		}
+		const licenseList = new Set()
+		Object.keys(btextHighlight).forEach(rid => 
+			Object.keys(btextHighlight[rid]).forEach(k => licenseList.add(k))
+		)
 		return (
 			<div style={{
 				margin: "auto",
