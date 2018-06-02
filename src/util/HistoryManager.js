@@ -35,11 +35,11 @@ DataFlow.watch("reference", r => {
 	}
 	justPopped = false
 	setTitle(r)
-
 })
 history.listen((location, action) => {
 	// don't set reference if it was a push (unnecessary
 	// since DataFlow handles that but important for justPopped)
+	ga('set', 'page', location.pathname + location.hash)
 	if (action == "POP") {
 		justPopped = true // set justPopped before setting reference!
 		DataFlow.set("reference", urlToReference(location.pathname + location.hash))
