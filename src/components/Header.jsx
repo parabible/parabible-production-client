@@ -234,16 +234,9 @@ class ParabibleHeader extends React.Component {
 				key: 'searchRange',
 				name: 'Search Range',
 				iconProps: {
-					iconName: "Switcher"
+					iconName: "Switch"
 				},
 				subMenuProps: { items: searchRangeItems }
-			}, {
-				key: 'searchType',
-				name: 'Search Type',
-				iconProps: {
-					iconName: "Library"
-				},
-				subMenuProps: { items: searchTypeItems }
 			}, {
 				key: 'searchFilter',
 				name: 'Search Filter',
@@ -251,6 +244,13 @@ class ParabibleHeader extends React.Component {
 					iconName: "Filter"
 				},
 				subMenuProps: { items: searchFilterItems }
+			}, {
+				key: 'searchType',
+				name: 'Search Type',
+				iconProps: {
+					iconName: "Library"
+				},
+				subMenuProps: { items: searchTypeItems }
 			}, {
 				key: 'highlight',
 				name: 'Highlight Terms',
@@ -330,14 +330,14 @@ class ParabibleHeader extends React.Component {
 		const rightItemList = [
 			{
 				key: "searchSettings",
-				name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "Search Settings" : "",
+				name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "Search Options" : "",
 				icon: "Settings",
 				subMenuProps: { items: searchSettingsItems }
 			},
 			{
 				key: "generalSettings",
-				name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "Options" : "",
-				icon: "PlayerSettings",
+				name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "Settings" : "",
+				icon: "ColumnOptions",
 				subMenuProps: { items: generalSettingsItems }
 			},
 			//  {
