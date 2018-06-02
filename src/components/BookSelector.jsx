@@ -1,9 +1,9 @@
 import React from 'react'
-import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
-import { Nav } from 'office-ui-fabric-react/lib/Nav';
+import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel'
+import { Nav } from 'office-ui-fabric-react/lib/Nav'
 import DataFlow from 'util/DataFlow'
 import ApiRequest from 'util/ApiRequest'
-import bookDetails from "data/bookDetails"
+import bookDetails from 'data/bookDetails'
 
 class BookSelector extends React.Component {
 	constructor(props) {
