@@ -101,4 +101,9 @@ const generateRid = (reference) => {
 	const v = reference.hasOwnProperty("verse") ? reference.verse : 0
 	return book + ch + v
 }
-export { generateReference, generateURL, generateRid }
+
+const isNewTestament = (reference) => {
+	const {book} = reference
+	return bookDetails.findIndex(d => d.name === book) > 38
+}
+export { generateReference, generateURL, generateRid, isNewTestament }

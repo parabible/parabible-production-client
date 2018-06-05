@@ -26,5 +26,14 @@
         },
         "data_url": "http://ccat.sas.upenn.edu/gopher/text/religion/biblical/",
         "description": "Septuaginta, ed. A. Rahlfs\n(Stuttgart: Württembergische Bibelanstalt, 1935; repr. in 9th ed., 1971).\n\nCATSS LXX = The computer form prepared by the TLG (Thesaurus Linguae Graecae) Project directed by T. Brunner at the University of California, Irvine, with further verification and adaptation (in process) by CATSS towards conformity with the individual Göttingen editions that have appeared since 1935."
+    },
+    "sbl": {
+        "name": "SBL GNT",
+        "short_description": "SBL Greek New Testament w/tagging by MorphGNT",
+        "license": {
+            "name": "Copyright © 2010 by the Society of Biblical Literature and Logos Bible Software"
+        },
+        "data_url": "http://sblgnt.com/",
+        "description": "A critical Greek NT comparing major critical editions. Including tagging data released under CC-BY-SA: Tauber, J. K., ed. (2017) MorphGNT: SBLGNT Edition. Version 6.12 [Data set]. https://github.com/morphgnt/sblgnt DOI: 10.5281/zenodo.376200"
     }
 }

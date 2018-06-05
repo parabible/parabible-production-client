@@ -1,6 +1,7 @@
 import DataFlow from './DataFlow'
 import { Xhr, apiEndpoints } from './Xhr'
 import AppNotify from 'util/AppNotify'
+import { isNewTestament } from 'util/ReferenceHelper'
 
 const chapterReload = () => {
 	ApiRequest("chapterText")
@@ -62,9 +63,23 @@ const ApiRequest = (endpoint) => {
 			})
 			break
 		case "chapterText":
+			const ref = DataFlow.get("reference")
+			const texts = DataFlow.get("textsToDisplayMain")
+			if (isNewTestament(ref)) {
+				const need = !["net", "sbl"].reduce((a, t) => a || texts.includes(t), false)
+				if (need) {
+					texts.push("sbl")
+				}
+			}
+			else {
+				const need = !["net", "wlc", "lxx"].reduce((a, t) => a || texts.includes(t), false)
+				if (need) {
+					texts.push("wlc")
+				}
+			}
 			payload = {
-				"reference": DataFlow.get("reference"),
-				"texts": DataFlow.get("textsToDisplayMain")
+				"reference": ref,
+				"texts": texts
 			}
 			if (DataFlow.get("highlightTermsSetting") && DataFlow.get("searchTerms").length > 0) {
 				payload["search_terms"] = DataFlow.get("searchTerms")
