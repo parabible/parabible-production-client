@@ -208,8 +208,9 @@ class ParabibleHeader extends React.Component {
 			"field": "textsToDisplayMain",
 			"items": [
 				{ name: 'wlc', title: 'BHS (Hebrew)' },
+				{ name: 'lxx', title: 'LXX (Greek)' },
+				{ name: 'sbl', title: 'SBL GNT (Greek)' },
 				{ name: 'net', title: 'NET (English)' },
-				{ name: 'lxx', title: 'LXX (Greek)' }
 			]
 		}
 		const textsToDisplayMainItems = this.generateSettingsMenu(menuTextsToDisplayMain, true)
@@ -220,13 +221,14 @@ class ParabibleHeader extends React.Component {
 			"field": "textsToDisplaySearch",
 			"items": [
 				{ name: 'wlc', title: 'BHS (Hebrew)' },
+				{ name: 'lxx', title: 'LXX (Greek)' },
+				{ name: 'sbl', title: 'SBL GNT (Greek)' },
 				{ name: 'net', title: 'NET (English)' },
-				{ name: 'lxx', title: 'LXX (Greek)' }
 			]
 		}
 		const textsToDisplaySearchItems = this.generateSettingsMenu(menuTextsToDisplaySearch, true)
 		// TODO: whatever is required to not force the WLC
-		textsToDisplaySearchItems[0]["disabled"] = true
+		// textsToDisplaySearchItems[0]["disabled"] = true
 
 		
 		const searchSettingsItems = [
