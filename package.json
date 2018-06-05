@@ -21,6 +21,7 @@
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
+    "abortcontroller-polyfill": "^1.1.9",
     "clone": "^2.1.1",
     "history": "^4.6.3",
     "is-equal": "^1.5.5",
