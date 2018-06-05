@@ -4,6 +4,7 @@ import RidView from 'components/RidView'
 import LicenseView from 'components/LicenseView'
 import ContentHeader from 'components/ContentHeader'
 import ApiRequest from 'util/ApiRequest'
+import { isNewTestament } from 'util/ReferenceHelper'
 
 class Content extends React.Component {
 	constructor(props) {
@@ -52,38 +53,47 @@ class Content extends React.Component {
 				return false
 			}
 			Object.keys(btextHighlight).forEach(rid => {
-				btextHighlight[rid].wlc.forEach((au, i) => {
-					au.forEach((wbit, j) => {
-						const hid = highlightID(wbit.wid)
-						if (hid !== false)
-							btextHighlight[rid].wlc[i][j]["searchHighlight"] = hid
+				// TODO: this could be a lot better I think but we'll worry when we need to highlight the lxx and sbl
+				if (btextHighlight[rid].hasOwnProperty("wlc")) {
+					btextHighlight[rid].wlc.forEach((au, i) => {
+						au.forEach((wbit, j) => {
+							const hid = highlightID(wbit.wid)
+							if (hid !== false)
+								btextHighlight[rid].wlc[i][j]["searchHighlight"] = hid
+						})
 					})
-				})
+				}
 			})
 		}
 		const licenseList = new Set()
 		Object.keys(btextHighlight).forEach(rid => 
 			Object.keys(btextHighlight[rid]).forEach(k => licenseList.add(k))
 		)
+		const ttd = DataFlow.get("textsToDisplayMain")
+		const orderedColumns = [...licenseList].sort((a, b) => ttd.indexOf(a) - ttd.indexOf(b) )
+		console.log(orderedColumns)
+		
+		const isNT = isNewTestament(DataFlow.get("reference"))
 		return (
 			<div style={{
 				margin: "auto",
 				maxWidth: "760px",
 				padding: "5px 20px 50px 20px",
-				direction: "rtl",
+				direction: licenseList.has("wlc") ? "rtl" : "ltr",
 				userSelect: DataFlow.get("screenSizeIndex") > 2 ? "text" : "none",
 				cursor: "text"
 				}}>
-				{this.state.screenSizeIndex > 1 ? <ContentHeader openColumns={Array.from(licenseList)} /> : null}
+				{this.state.screenSizeIndex > 1 ? <ContentHeader openColumns={orderedColumns} isNT={isNT} /> : null}
 				{Object.keys(btextHighlight).map(k => 
 					<RidView
 						key={k}
 						rid={+k}
 						ridData={btextHighlight[k]}
-						activeWid={this.state.activeWid} />
+						activeWid={this.state.activeWid}
+						columnOrder={orderedColumns} />
 				)}
 				<div style={{direction:"ltr", fontFamily:"sans-serif", fontSize: "x-small", marginTop: "40px", paddingTop: "10px", borderTop: "1px solid #aaa"}}>
-					<LicenseView license={Array.from(licenseList)} />
+					<LicenseView license={orderedColumns} />
 				</div>
 			</div>
 		)
