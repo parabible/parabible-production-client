@@ -19,6 +19,7 @@ import MediaBreakpoints from 'util/MediaBreakpoints'
 
 import DataFlow from 'util/DataFlow'
 import AppNotify from 'util/AppNotify'
+import TextDisplayManager from 'util/TextDisplayManager'
 
 class App extends React.Component {
 	constructor(props) {

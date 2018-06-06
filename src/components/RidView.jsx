@@ -57,13 +57,13 @@ const textHelper = {
 	}
 }
 // TODO: Do something actual with fonts for LXX
-const parallelView =({rid, activeWid, ridData, thisVerseActive, columnOrder}) => (
+const parallelView =({rid, activeWid, ridData, thisVerseActive}) => (
 	<div className="contiguousrid" data-rid={rid} id={thisVerseActive ? "activeVerse" : ""} style={{display: "table", tableLayout: "fixed", width: "100%", direction: "ltr", backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : "" }}>
-		{columnOrder.map(text => (
-			<div key={text} style={textHelper[text].styles}>
+		{DataFlow.get(rid >= 400000000 ? "textsToDisplayMainNT" : "textsToDisplayMainOT").map(text => 
+			ridData.hasOwnProperty(text) ? <div key={text} style={textHelper[text].styles}>
 				{textHelper[text].function(rid, ridData[text], activeWid)}
-			</div>
-		))}
+			</div> : <div key={text} style={textHelper[text].styles} />
+		)}
 		{/* {ridData.hasOwnProperty("wlc") ? (
 			<div style={{ display: "table-cell", verticalAlign: "top", direction: "rtl", fontSize: "x-large", padding: "3px 5px", fontFamily: fontSetting()}}>
 				{wlcDisplay(rid, ridData.wlc, activeWid)}
@@ -85,15 +85,16 @@ const parallelView =({rid, activeWid, ridData, thisVerseActive, columnOrder}) =>
 	</div>
 )
 
-const RidView = ({rid, ridData, activeWid, columnOrder}) => {
+const RidView = ({rid, ridData, activeWid}) => {
 	const ridDataKeys = Object.keys(ridData)
 	const activeVerse = DataFlow.get("activeVerse")
 	const thisVerseActive = activeVerse ?
 		rid === activeVerse.rid :
 		false
-	if (columnOrder.length > 1) {
+
+	if (ridDataKeys.length > 1) {
 		// PARALLEL
-		return parallelView({rid, ridData, activeWid, thisVerseActive, columnOrder})
+		return parallelView({rid, ridData, activeWid, thisVerseActive})
 	}
 	else {
 		// SINGLE TEXT

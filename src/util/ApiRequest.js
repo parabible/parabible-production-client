@@ -7,7 +7,18 @@ const chapterReload = () => {
 	ApiRequest("chapterText")
 }
 DataFlow
-	.watch("textsToDisplayMain", chapterReload)
+	.watch("textsToDisplayMainOT", () => {
+		const ref = DataFlow.get("reference")
+		if (!isNewTestament(ref)) {
+			chapterReload()
+		}
+	})
+	.watch("textsToDisplayMainNT", () => {
+		const ref = DataFlow.get("reference")
+		if (isNewTestament(ref)) {
+			chapterReload()
+		}
+	})
 	.watch("reference", () => {
 		chapterReload()
 		ga('send', {
@@ -64,14 +75,16 @@ const ApiRequest = (endpoint) => {
 			break
 		case "chapterText":
 			const ref = DataFlow.get("reference")
-			const texts = DataFlow.get("textsToDisplayMain")
+			let texts = []
 			if (isNewTestament(ref)) {
+				texts = DataFlow.get("textsToDisplayMainNT")
 				const need = !["net", "sbl"].reduce((a, t) => a || texts.includes(t), false)
 				if (need) {
 					texts.push("sbl")
 				}
 			}
 			else {
+				texts = DataFlow.get("textsToDisplayMainOT")
 				const need = !["net", "wlc", "lxx"].reduce((a, t) => a || texts.includes(t), false)
 				if (need) {
 					texts.push("wlc")
@@ -91,11 +104,12 @@ const ApiRequest = (endpoint) => {
 			})
 			break
 		case "termSearch":
+			const searchTexts = Array.from(new Set( DataFlow.get("textsToDisplayMainNT").concat(DataFlow.get("textsToDisplayMainOT"))))
 			payload = {
 				"query": DataFlow.get("searchTerms"),
 				"search_range": DataFlow.get("searchRangeSetting"),
 				"search_filter": searchFilterOptions(DataFlow.get("searchFilterSetting")),
-				"texts": DataFlow.get("textsToDisplaySearch")
+				"texts": searchTexts
 			}
 			DataFlow.set("lastSearch", payload)
 			if (!DataFlow.setWasEqual()) {

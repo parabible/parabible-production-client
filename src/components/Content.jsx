@@ -69,11 +69,10 @@ class Content extends React.Component {
 		Object.keys(btextHighlight).forEach(rid => 
 			Object.keys(btextHighlight[rid]).forEach(k => licenseList.add(k))
 		)
-		const ttd = DataFlow.get("textsToDisplayMain")
-		const orderedColumns = [...licenseList].sort((a, b) => ttd.indexOf(a) - ttd.indexOf(b) )
-		console.log(orderedColumns)
-		
 		const isNT = isNewTestament(DataFlow.get("reference"))
+		const ttd = DataFlow.get(isNT ? "textsToDisplayMainNT" : "textsToDisplayMainOT")
+		const orderedColumns = [...licenseList].sort((a, b) => ttd.indexOf(a) - ttd.indexOf(b) )
+		
 		return (
 			<div style={{
 				margin: "auto",
@@ -89,8 +88,7 @@ class Content extends React.Component {
 						key={k}
 						rid={+k}
 						ridData={btextHighlight[k]}
-						activeWid={this.state.activeWid}
-						columnOrder={orderedColumns} />
+						activeWid={this.state.activeWid} />
 				)}
 				<div style={{direction:"ltr", fontFamily:"sans-serif", fontSize: "x-small", marginTop: "40px", paddingTop: "10px", borderTop: "1px solid #aaa"}}>
 					<LicenseView license={orderedColumns} />

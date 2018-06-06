@@ -16,7 +16,9 @@ class ParabibleHeader extends React.Component {
 			"screenSizeIndex",
 			"reference",
 			"screenSizeIndex",
-			"searchTerms"
+			"searchTerms",
+			"textsToDisplayMainOT",
+			"textsToDisplayMainNT"
 		], this.setState.bind(this))
 	}
 	generateSettingsMenu(menuData, multiple=false) {
@@ -47,6 +49,7 @@ class ParabibleHeader extends React.Component {
 		return menuData.items.map(item => ({
 			key: item.name,
 			name: item.title,
+			disabled: item.disabled || false,
 			iconProps: {
 				iconName: isChecked(item.name) ? "CheckboxComposite" : "Checkbox"
 			},
@@ -204,29 +207,56 @@ class ParabibleHeader extends React.Component {
 		const searchFilterItems = this.generateSettingsMenu(menuFilter)
 
 
-		const menuTextsToDisplayMain = {
-			"field": "textsToDisplayMain",
-			"items": [
-				{ name: 'wlc', title: 'BHS (Hebrew)' },
-				{ name: 'lxx', title: 'LXX (Greek)' },
-				{ name: 'sbl', title: 'SBL GNT (Greek)' },
-				{ name: 'net', title: 'NET (English)' },
-			]
-		}
-		const textsToDisplayMainItems = this.generateSettingsMenu(menuTextsToDisplayMain, true)
 		// TODO: whatever is required to not force the WLC
-		textsToDisplayMainItems[0]["disabled"] = true
-
-		const menuTextsToDisplaySearch = {
-			"field": "textsToDisplaySearch",
-			"items": [
-				{ name: 'wlc', title: 'BHS (Hebrew)' },
-				{ name: 'lxx', title: 'LXX (Greek)' },
-				{ name: 'sbl', title: 'SBL GNT (Greek)' },
-				{ name: 'net', title: 'NET (English)' },
-			]
+		const otItems = [
+			{ name: 'wlc', title: 'BHS (Hebrew)' },
+			{ name: 'lxx', title: 'LXX (Greek)' },
+			{ name: 'net', title: 'NET (English)' },
+		]
+		const ntItems = [
+			{ name: 'sbl', title: 'SBL GNT (Greek)' },
+			{ name: 'net', title: 'NET (English)' },
+		]
+		if (this.state.textsToDisplayMainOT.length === 1) {
+			const requiredIndex = otItems.findIndex(i => i.name === this.state.textsToDisplayMainOT[0])
+			otItems[requiredIndex]["disabled"] = true
 		}
-		const textsToDisplaySearchItems = this.generateSettingsMenu(menuTextsToDisplaySearch, true)
+		if (this.state.textsToDisplayMainNT.length === 1) {
+			const requiredIndex = ntItems.findIndex(i => i.name === this.state.textsToDisplayMainNT[0])
+			ntItems[requiredIndex]["disabled"] = true
+		}
+		
+		const menuOTTextsToDisplayMain = {
+			"field": "textsToDisplayMainOT",
+			"items": otItems
+		}
+		const otTextsToDisplayMainItems = this.generateSettingsMenu(menuOTTextsToDisplayMain, true)
+		const menuNTTextsToDisplayMain = {
+			"field": "textsToDisplayMainNT",
+			"items": ntItems
+		}
+		const ntTextsToDisplayMainItems = this.generateSettingsMenu(menuNTTextsToDisplayMain, true)
+		const textsToDisplayMainItems = [{
+				key: 'section',
+				itemType: ContextualMenuItemType.Section,
+				sectionProps: {
+					topDivider: true,
+					bottomDivider: true,
+					title: 'Old Testament',
+					items: otTextsToDisplayMainItems
+				}
+			},
+			{
+				key: 'section',
+				itemType: ContextualMenuItemType.Section,
+				sectionProps: {
+					topDivider: true,
+					bottomDivider: true,
+					title: 'New Testament',
+					items: ntTextsToDisplayMainItems
+				}
+			}
+		]
 		// TODO: whatever is required to not force the WLC
 		// textsToDisplaySearchItems[0]["disabled"] = true
 

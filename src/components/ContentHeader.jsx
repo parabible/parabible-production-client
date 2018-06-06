@@ -1,5 +1,6 @@
 import React from 'react'
 import DataFlow from 'util/DataFlow'
+import { isNewTestament } from 'util/ReferenceHelper'
 
 const headerTitles = {
     "wlc": {name: "BHS", nt: false, ot: true},
@@ -36,7 +37,8 @@ const styles = {
 } 
 
 const toggleTextDisplay = ({text, on}) => {
-    const texts = DataFlow.get("textsToDisplayMain")
+    const ref = DataFlow.get("reference")
+    const texts = DataFlow.get(isNewTestament(ref) ? "textsToDisplayMainNT" : "textsToDisplayMainOT")
     if (on)  {
         texts.push(text)
     }
@@ -46,7 +48,7 @@ const toggleTextDisplay = ({text, on}) => {
           texts.splice(index, 1);
         }
     }
-    DataFlow.set("textsToDisplayMain", texts)
+    DataFlow.set(isNewTestament(ref) ? "textsToDisplayMainNT" : "textsToDisplayMainOT", texts)
 }
 
 const AddButton = ({text}) => {
@@ -81,7 +83,10 @@ const ExtraButtons = ({openColumns, isNT}) => (
     </span>
 )
 
-const showRemoveButton = (text) => DataFlow.get("textsToDisplayMain").includes(text)
+const showRemoveButton = (text) => {
+    const isNT = isNewTestament(DataFlow.get("reference"))
+    return DataFlow.get(isNT ? "textsToDisplayMainNT" : "textsToDisplayMainOT").includes(text)
+}
 const ContentHeader = ({openColumns, isNT}) => (
     <div style={styles.headerRowStyle}>
         {openColumns.map((c, i) => (

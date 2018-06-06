@@ -39,6 +39,7 @@
 	],
 	"screenSizeIndex": 0,
 	"fontSetting": "SBL Biblit",
-	"textsToDisplayMain": ["wlc"],
 	"textsToDisplaySearch": ["wlc", "net"]
+	"textsToDisplayMainNT": ["sbl"],
+	"textsToDisplayMainOT": ["wlc"]
 }
