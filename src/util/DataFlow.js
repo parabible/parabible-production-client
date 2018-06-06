@@ -6,7 +6,6 @@ import clone from 'clone'
 let appData = "flowdata"
 let ls = JSON.parse(localStorage.getItem(appData)) || {}
 
-
 let updatedDefaults = {}
 Object.keys(appDataDefaults).forEach(k => {
 	updatedDefaults[k] = ls.hasOwnProperty(k) ? ls[k] : appDataDefaults[k]
@@ -18,6 +17,7 @@ const DataFlow = {
 	_wasEqual: false,
 	_appData: updatedDefaults,
 	_watchers: {},
+	_allowSetHooks: {},
 	_valid(prop, validation) {
 		if (!this._appData.hasOwnProperty(prop))
 			console.error("Could not '" + validation + "' property: " + prop + " (not registered in appData)")
@@ -28,6 +28,10 @@ const DataFlow = {
 	},
 	set(prop, value) {
 		if (!this._valid(prop, "set")) return this
+		if (this._allowSetHooks.hasOwnProperty(prop) && !this._allowSetHooks[prop].reduce((a, f) => a && f(value), true)) {
+			console.log("disallowed set")
+			return this
+		}
 
 		this._wasEqual = true
 		if (!isEqual(this._appData[prop], value)) {
@@ -44,6 +48,13 @@ const DataFlow = {
 	renotify(prop) {
 		if (this._watchers.hasOwnProperty(prop))
 			this._watchers[prop].forEach((c) => c.func(this._appData[prop]))
+		return this
+	},
+	registerAllowSetHook(prop, callback) {
+		if (!this._valid(prop, "set")) return this
+		if (!this._allowSetHooks.hasOwnProperty(prop))
+			this._allowSetHooks[prop] = []
+		this._allowSetHooks[prop].push(callback)
 		return this
 	},
 	watch(prop, callback, byRefWatcherIdObject) {
