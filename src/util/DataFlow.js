@@ -6,9 +6,6 @@ import clone from 'clone'
 let appData = "flowdata"
 let ls = JSON.parse(localStorage.getItem(appData)) || {}
 
-if (!ls.hasOwnProperty("version") || ls["refresh_version"] !== appDataDefaults["version"]) {
-	ls = appDataDefaults
-}
 
 let updatedDefaults = {}
 Object.keys(appDataDefaults).forEach(k => {
