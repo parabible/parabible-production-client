@@ -1,10 +1,12 @@
 import React from 'react'
 import DataFlow from 'util/DataFlow'
+import { isNewTestament } from 'util/ReferenceHelper'
 
 const headerTitles = {
-    "wlc": "BHS",
-    "net": "NET",
-    "lxx": "LXX"
+    "wlc": {name: "BHS", nt: false, ot: true},
+    "net": {name: "NET", nt: true, ot: true},
+    "lxx": {name: "LXX", nt: false, ot: true},
+    "sbl": {name: "SBL GNT", nt: true, ot: false}
 }
 
 const defaultButtonStyle = {
@@ -27,14 +29,16 @@ const styles = {
         display: "table",
         tableLayout: "fixed",
         width: "100%",
-        direction: "ltr"
+        direction: "ltr",
+        userSelect: "none"
     },
     addButtonStyle: defaultButtonStyle,
     removeButtonStyle: defaultButtonStyle
 } 
 
 const toggleTextDisplay = ({text, on}) => {
-    const texts = DataFlow.get("textsToDisplayMain")
+    const ref = DataFlow.get("reference")
+    const texts = DataFlow.get(isNewTestament(ref) ? "textsToDisplayMainNT" : "textsToDisplayMainOT")
     if (on)  {
         texts.push(text)
     }
@@ -44,7 +48,7 @@ const toggleTextDisplay = ({text, on}) => {
           texts.splice(index, 1);
         }
     }
-    DataFlow.set("textsToDisplayMain", texts)
+    DataFlow.set(isNewTestament(ref) ? "textsToDisplayMainNT" : "textsToDisplayMainOT", texts)
 }
 
 const AddButton = ({text}) => {
@@ -55,7 +59,7 @@ const AddButton = ({text}) => {
             onMouseOut={out}
             style={styles.addButtonStyle}
             onClick={() => toggleTextDisplay({text, on: true})}
-            >+ {headerTitles[text]}</span>
+            >+ {headerTitles[text].name}</span>
 }
 const RemoveButton = ({text}) => {
     const over = (e) => { e.target.style.backgroundColor="#ffa0a0" }
@@ -68,23 +72,30 @@ const RemoveButton = ({text}) => {
             >–</span>
 }
 
-const ExtraButtons = ({openColumns}) => (
+const ExtraButtons = ({openColumns, isNT}) => (
     <span>
-    {Object.keys(headerTitles).filter(k => !openColumns.includes(k)).map(c => (
-        <AddButton key={c} text={c} />
-    ))}
+    {Object.keys(headerTitles).filter(k => !openColumns.includes(k)).map(c => 
+        (   (isNT && headerTitles[c].nt) ||
+            (!isNT && headerTitles[c].ot) ) ?
+                <AddButton key={c} text={c} />
+                : null
+    )}
     </span>
 )
 
-const ContentHeader = ({openColumns}) => (
+const showRemoveButton = (text) => {
+    const isNT = isNewTestament(DataFlow.get("reference"))
+    return DataFlow.get(isNT ? "textsToDisplayMainNT" : "textsToDisplayMainOT").includes(text)
+}
+const ContentHeader = ({openColumns, isNT}) => (
     <div style={styles.headerRowStyle}>
         {openColumns.map((c, i) => (
         <div key={c} style={styles.headerCellStyle}>
-            {headerTitles[c]}
+            {headerTitles[c].name}
             <div style={{display: "inline-block", float: "right"}}>
-            {c !== "wlc" ? <RemoveButton text={c} /> : null}
+            {showRemoveButton(c) && openColumns.length > 1 ? <RemoveButton text={c} /> : null}
             {i === openColumns.length - 1 ? (
-                <ExtraButtons openColumns={openColumns} />
+                <ExtraButtons openColumns={openColumns} isNT={isNT} />
             ) : null}
             </div>
         </div>

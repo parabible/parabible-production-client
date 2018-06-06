@@ -33,10 +33,12 @@
 		{"heading": "person","visible": true},
 		{"heading": "case","visible": true},
 		{"heading": "gender","visible": true},
-		{"heading": "number","visible": true}
+		{"heading": "number","visible": true},
+		{"heading": "gk_gloss","visible": true},
+		{"heading": "tc_note","visible": true}
 	],
 	"screenSizeIndex": 0,
 	"fontSetting": "SBL Biblit",
-	"textsToDisplayMain": ["wlc"],
-	"textsToDisplaySearch": ["wlc", "net"]
+	"textsToDisplayMainNT": ["sbl"],
+	"textsToDisplayMainOT": ["wlc"]
 }

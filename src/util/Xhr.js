@@ -1,3 +1,5 @@
+require('abortcontroller-polyfill')
+
 const apiRoot = "https://parabible.com/api"
 const apiUrl = {
 	"termSearch": "/term-search",

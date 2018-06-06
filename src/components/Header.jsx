@@ -16,7 +16,9 @@ class ParabibleHeader extends React.Component {
 			"screenSizeIndex",
 			"reference",
 			"screenSizeIndex",
-			"searchTerms"
+			"searchTerms",
+			"textsToDisplayMainOT",
+			"textsToDisplayMainNT"
 		], this.setState.bind(this))
 	}
 	generateSettingsMenu(menuData, multiple=false) {
@@ -47,6 +49,7 @@ class ParabibleHeader extends React.Component {
 		return menuData.items.map(item => ({
 			key: item.name,
 			name: item.title,
+			disabled: item.disabled || false,
 			iconProps: {
 				iconName: isChecked(item.name) ? "CheckboxComposite" : "Checkbox"
 			},
@@ -179,15 +182,16 @@ class ParabibleHeader extends React.Component {
 		const searchRangeItems = this.generateSettingsMenu(menuRange)
 
 
-		const menuType = {
-			"field": "searchTypeSetting",
-			"items": [
-				{ name: 'normal', title: 'Normal' },
-				// { name: 'collocation', title: 'Collocation' },
-				// { name: 'wordStudy', title: 'Word Study' }
-			]
-		}
-		const searchTypeItems = this.generateSettingsMenu(menuType)
+		// const menuType = {
+		// 	"field": "searchTypeSetting",
+		// 	"items": [
+		// 		{ name: 'normal', title: 'Normal' },
+		// 		//TODO: add these back in
+		// 		// { name: 'collocation', title: 'Collocation' },
+		// 		// { name: 'wordStudy', title: 'Word Study' }
+		// 	]
+		// }
+		// const searchTypeItems = this.generateSettingsMenu(menuType)
 
 
 		const menuFilter = {
@@ -204,29 +208,68 @@ class ParabibleHeader extends React.Component {
 		const searchFilterItems = this.generateSettingsMenu(menuFilter)
 
 
-		const menuTextsToDisplayMain = {
-			"field": "textsToDisplayMain",
-			"items": [
-				{ name: 'wlc', title: 'BHS (Hebrew)' },
-				{ name: 'net', title: 'NET (English)' },
-				{ name: 'lxx', title: 'LXX (Greek)' }
-			]
-		}
-		const textsToDisplayMainItems = this.generateSettingsMenu(menuTextsToDisplayMain, true)
 		// TODO: whatever is required to not force the WLC
-		textsToDisplayMainItems[0]["disabled"] = true
-
-		const menuTextsToDisplaySearch = {
-			"field": "textsToDisplaySearch",
-			"items": [
-				{ name: 'wlc', title: 'BHS (Hebrew)' },
-				{ name: 'net', title: 'NET (English)' },
-				{ name: 'lxx', title: 'LXX (Greek)' }
-			]
+		const otItems = [
+			{ name: 'wlc', title: 'BHS (Hebrew)' },
+			{ name: 'lxx', title: 'LXX (Greek)' },
+			{ name: 'net', title: 'NET (English)' },
+		]
+		const ntItems = [
+			{ name: 'sbl', title: 'SBL GNT (Greek)' },
+			{ name: 'net', title: 'NET (English)' },
+		]
+		if (this.state.textsToDisplayMainOT.length === 1) {
+			const requiredIndex = otItems.findIndex(i => i.name === this.state.textsToDisplayMainOT[0])
+			otItems[requiredIndex]["disabled"] = true
 		}
-		const textsToDisplaySearchItems = this.generateSettingsMenu(menuTextsToDisplaySearch, true)
+		if (this.state.textsToDisplayMainNT.length === 1) {
+			const requiredIndex = ntItems.findIndex(i => i.name === this.state.textsToDisplayMainNT[0])
+			ntItems[requiredIndex]["disabled"] = true
+		}
+		
+		const menuOTTextsToDisplayMain = {
+			"field": "textsToDisplayMainOT",
+			"items": otItems
+		}
+		const otTextsToDisplayMainItems = this.generateSettingsMenu(menuOTTextsToDisplayMain, true)
+		const menuNTTextsToDisplayMain = {
+			"field": "textsToDisplayMainNT",
+			"items": ntItems
+		}
+		const ntTextsToDisplayMainItems = this.generateSettingsMenu(menuNTTextsToDisplayMain, true)
+		const textsToDisplayMainItems = [{
+				key: 'section',
+				itemType: ContextualMenuItemType.Section,
+				sectionProps: {
+					topDivider: true,
+					bottomDivider: true,
+					title: 'Old Testament',
+					items: otTextsToDisplayMainItems
+				}
+			},
+			{
+				key: 'section',
+				itemType: ContextualMenuItemType.Section,
+				sectionProps: {
+					topDivider: true,
+					bottomDivider: true,
+					title: 'New Testament',
+					items: ntTextsToDisplayMainItems
+				}
+			}
+		]
+		// const menuTextsToDisplaySearch = { 
+		// 	"field": "textsToDisplaySearch", 
+		// 	"items": [ 
+		// 	  { name: 'wlc', title: 'BHS (Hebrew)' }, 
+		// 	  { name: 'lxx', title: 'LXX (Greek)' }, 
+		// 	  { name: 'sbl', title: 'SBL GNT (Greek)' }, 
+		// 	  { name: 'net', title: 'NET (English)' }, 
+		// 	]
+		// }
+		// const textsToDisplaySearchItems = this.generateSettingsMenu(menuTextsToDisplaySearch, true)
 		// TODO: whatever is required to not force the WLC
-		textsToDisplaySearchItems[0]["disabled"] = true
+		// textsToDisplaySearchItems[0]["disabled"] = true
 
 		
 		const searchSettingsItems = [
@@ -245,13 +288,13 @@ class ParabibleHeader extends React.Component {
 				},
 				subMenuProps: { items: searchFilterItems }
 			}, {
-				key: 'searchType',
-				name: 'Search Type',
-				iconProps: {
-					iconName: "Library"
-				},
-				subMenuProps: { items: searchTypeItems }
-			}, {
+			// 	key: 'searchType',
+			// 	name: 'Search Type',
+			// 	iconProps: {
+			// 		iconName: "Library"
+			// 	},
+			// 	subMenuProps: { items: searchTypeItems }
+			// }, {
 				key: 'highlight',
 				name: 'Highlight Terms',
 				iconProps: {
@@ -297,13 +340,13 @@ class ParabibleHeader extends React.Component {
 					iconName: "ListMirrored"
 				},
 				subMenuProps: { "items": textsToDisplayMainItems }
-			}, {
-				key: 'textViewSearchSettings',
-				name: 'Search Results Texts', //Parallel View? Syntax Diagram? Highlight Search Terms?
-				iconProps: {
-					iconName: "SetAction"
-				},
-				subMenuProps: { "items": textsToDisplaySearchItems }
+			// }, {
+			// 	key: 'textViewSearchSettings',
+			// 	name: 'Search Results Texts', //Parallel View? Syntax Diagram? Highlight Search Terms?
+			// 	iconProps: {
+			// 		iconName: "SetAction"
+			// 	},
+			// 	subMenuProps: { "items": textsToDisplaySearchItems }
 			}, {
 				key: 'morphologySettings',
 				name: 'Morphology Settings', //Which fields to show
@@ -330,29 +373,16 @@ class ParabibleHeader extends React.Component {
 		const rightItemList = [
 			{
 				key: "searchSettings",
-				name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "Search Options" : "",
+				name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "Search Tools" : "",
 				icon: "Settings",
 				subMenuProps: { items: searchSettingsItems }
 			},
 			{
 				key: "generalSettings",
-				name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "Settings" : "",
+				name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "View" : "",
 				icon: "ColumnOptions",
 				subMenuProps: { items: generalSettingsItems }
 			},
-			//  {
-			// 	key: 'about',
-			// 	name: 'About',
-			// 	iconProps: {
-			// 		iconName: "Info"
-			// 	}
-			// }, {
-			// 	key: 'help',
-			// 	name: 'Help',
-			// 	iconProps: {
-			// 		iconName: "Lifesaver"
-			// 	}
-			// }
 		]
 
 		var farItemList = {}

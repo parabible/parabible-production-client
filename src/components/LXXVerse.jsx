@@ -7,10 +7,10 @@ const LXXVerse = ({verseNumber, lxxVerse, activeWid}) => (
 			<span style={{
 					color: "#ea4300",
 					verticalAlign: "top",
-					fontSize: "35%",
+					fontSize: "8px",
 					fontWeight: "bold"
-				}}>
-				{verseNumber}&nbsp;
+				}} title={verseNumber}>
+				{verseNumber.replace(/\d+:/,"")}&nbsp;
 			</span>) : null}
 		{lxxVerse ? lxxVerse.map((lword, i) => {
 			const bit = {

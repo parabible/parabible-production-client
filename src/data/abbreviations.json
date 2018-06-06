@@ -30,7 +30,7 @@
 			"book": "Book",
 			"ch": "Chapter",
 			"v": "Verse",
-			"lexeme": "Lexeme (LXX)",
+			"lexeme": "Lexeme",
 			"morphology": "Morphology* (LXX)",
 
 			"pos": "Part of Speech",
@@ -42,7 +42,10 @@
 			"case": "Case",
 			"gender": "Gender",
 			"declension": "Declension",
-			"degree": "Degree"
+			"degree": "Degree",
+			"gk_gloss": "Gloss",
+
+			"tc_note": "Text Critical Note"
 		},
 		"is_definite": {
 			"det": "Yes",
