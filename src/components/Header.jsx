@@ -8,6 +8,8 @@ import ApiRequest from 'util/ApiRequest'
 import bookDetails from 'data/bookDetails'
 import AppNotify from 'util/AppNotify'
 
+import { isNewTestament } from 'util/ReferenceHelper'
+
 class ParabibleHeader extends React.Component {
 	constructor(props) {
 		super(props)
@@ -127,6 +129,42 @@ class ParabibleHeader extends React.Component {
 				onClick: () => this.moveChapter(1)
 			}
 		]
+
+		const externalLinkItems = [{
+				key: 'section',
+				itemType: ContextualMenuItemType.Header,
+				name: "Open Externally"
+			}, {
+				key: 'biblebento',
+				name: "BibleBento",
+				iconProps: {
+					iconName: 'Link'
+				},
+				onClick: () => {
+					const chapter = this.state.reference.chapter
+					const currentBookDetail = bookDetails.find(b => b.name == this.state.reference.book)
+					const bentoBook = currentBookDetail.bentoBook
+					window.open(`https://biblebento.com/index.html?bhs&${bentoBook}.${chapter}.1`,'_blank')
+				}
+			}
+		]
+		//Fixes #18
+		if (!isNewTestament(this.state.reference)) {
+			externalLinkItems.splice(1, 0, {
+				key: 'shebanq',
+				name: "Shebanq",
+				iconProps: {
+					iconName: 'Link'
+				},
+				onClick: () => {
+					const chapter = this.state.reference.chapter
+					const currentBookDetail = bookDetails.find(b => b.name == this.state.reference.book)
+					const shebanqBook = currentBookDetail.shebanqBook
+					window.open(`http://shebanq.ancient-data.org/hebrew/text?book=${shebanqBook}&chapter=${chapter}&mr=m`,'_blank')
+				}
+			})
+		}
+		
 		if (this.state.screenSizeIndex > 2) {
 			nearItemList.push({
 				key: 'external',
@@ -134,37 +172,7 @@ class ParabibleHeader extends React.Component {
 				iconProps: {
 					iconName: 'OpenInNewWindow'
 				},
-				subMenuProps: { items: [{
-						key: 'section',
-						itemType: ContextualMenuItemType.Header,
-						name: "Open Externally"
-					}, {
-						key: 'shebanq',
-						name: "Shebanq",
-						iconProps: {
-							iconName: 'Link'
-						},
-						onClick: () => {
-							const chapter = this.state.reference.chapter
-							const currentBookDetail = bookDetails.find(b => b.name == this.state.reference.book)
-							const shebanqBook = currentBookDetail.shebanqBook
-							window.open(`http://shebanq.ancient-data.org/hebrew/text?book=${shebanqBook}&chapter=${chapter}&mr=m`,'_blank')
-						}
-					}, {
-						key: 'biblebento',
-						name: "BibleBento",
-						iconProps: {
-							iconName: 'Link'
-						},
-						onClick: () => {
-							const chapter = this.state.reference.chapter
-							const currentBookDetail = bookDetails.find(b => b.name == this.state.reference.book)
-							const bentoBook = currentBookDetail.bentoBook
-							window.open(`https://biblebento.com/index.html?bhs&${bentoBook}.${chapter}.1`,'_blank')
-						}
-					},
-
-				]}
+				subMenuProps: { items: externalLinkItems}
 			})
 		}
 
