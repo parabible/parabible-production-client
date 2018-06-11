@@ -4,12 +4,12 @@ import licenses from 'data/licenses'
 const licenseContent = ({name, short_description, data_url}) => (
     <div>
         <b>{name}</b>: <span>{short_description}</span>&nbsp;
-        {data_url ? <a href={data_url}>↪</a> : null}
+        {data_url ? <a href={data_url} className="hrefLink">↪</a> : null}
     </div>
 )
 const licenseProper = ({name, license_url=null}) => (
     <div>{license_url ?
-        <a href={license_url}>{name}</a> :
+        <a href={license_url} className="hrefLink">{name}</a> :
         <span>{name}</span>}
     </div>
 )

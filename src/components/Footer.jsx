@@ -12,8 +12,8 @@ const Footer = () => {
 			textAlign: "right",
 			padding: "15px"
 		}}>
-			<a href="https://parabible.com">https://parabible.com</a> was built by <a href="https://jcuenod.github.io/">James Cuénod</a>.<br />
-			All the code is available at <a href="https://github.com/parabible">https://github.com/parabible/</a>
+			<a href="https://parabible.com" className="hrefLink">https://parabible.com</a> was built by <a href="https://jcuenod.github.io/" className="hrefLink">James Cuénod</a>.<br />
+			All the code is available at <a href="https://github.com/parabible" className="hrefLink">https://github.com/parabible/</a>
 		</div>
 		<div style={{
 			flex: 1,
