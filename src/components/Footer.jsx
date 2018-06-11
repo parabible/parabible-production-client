@@ -12,8 +12,8 @@ const Footer = () => {
 			textAlign: "right",
 			padding: "15px"
 		}}>
-			<a href="https://parabible.com">https://parabible.com</a> was built by James Cuénod.<br />
-			All the code is available on <a href="https://github.com/parabible">https://github.com/parabible</a>
+			<a href="https://parabible.com">https://parabible.com</a> was built by <a href="https://jcuenod.github.io/">James Cuénod</a>.<br />
+			All the code is available at <a href="https://github.com/parabible">https://github.com/parabible/</a>
 		</div>
 		<div style={{
 			flex: 1,
@@ -31,7 +31,7 @@ const Footer = () => {
 					padding: "5px 10px", fontSize: "12px", color: "#fff", textDecoration: "none"
 				}
 			}>
-				<div style={{ paddingRight: "5px", fontWeight: "bold" }}>
+				<div style={{ paddingRight: "5px", fontWeight: "bold", textAlign: "center" }}>
 					SUPPORT PARABIBLE
 				</div>
 				<div>
