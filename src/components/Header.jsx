@@ -246,7 +246,7 @@ class ParabibleHeader extends React.Component {
 		}
 		const ntTextsToDisplayMainItems = this.generateSettingsMenu(menuNTTextsToDisplayMain, true)
 		const textsToDisplayMainItems = [{
-				key: 'section',
+				key: 'otsection',
 				itemType: ContextualMenuItemType.Section,
 				sectionProps: {
 					topDivider: true,
@@ -256,7 +256,7 @@ class ParabibleHeader extends React.Component {
 				}
 			},
 			{
-				key: 'section',
+				key: 'ntsection',
 				itemType: ContextualMenuItemType.Section,
 				sectionProps: {
 					topDivider: true,
