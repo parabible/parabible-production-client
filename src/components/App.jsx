@@ -5,6 +5,7 @@ initializeIcons()
 
 import Header from 'components/Header'
 import Content from 'components/Content'
+import Footer from 'components/Footer'
 import MorphologySidebar from 'components/MorphologySidebar'
 import MorphologyPopup from 'components/MorphologyPopup'
 import MorphologySettings from 'components/MorphologySettings'
@@ -109,6 +110,7 @@ class App extends React.Component {
 							<Content />
 						</div>
 					</div>
+					<Footer />
 				</div>
 
 				{this.state.screenSizeIndex <= 1 && this.state.showMorphPopup ? (
