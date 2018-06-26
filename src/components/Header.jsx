@@ -343,7 +343,7 @@ class ParabibleHeader extends React.Component {
 			// },
 			{
 				key: 'textViewMainSettings',
-				name: 'Main View Texts', //Parallel View? Syntax Diagram? Highlight Search Terms?
+				name: 'Display Texts', //Parallel View? Syntax Diagram? Highlight Search Terms?
 				iconProps: {
 					iconName: "ListMirrored"
 				},
