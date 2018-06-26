@@ -21,16 +21,7 @@ const Footer = () => {
 			display: "flex",
 			alignItems: "center"
 		}}>
-			<a className="dbox-donation-button"
-				href="https://donorbox.org/support-parabible"
-				style={{
-					display: "flex", 
-					alignItems: "center", 
-					backgroundColor: "#2d81c5", 
-					borderRadius: "2px", 
-					padding: "5px 10px", fontSize: "12px", color: "#fff", textDecoration: "none"
-				}
-			}>
+			<a className="dbox-donation-button" href="https://donorbox.org/support-parabible">
 				<div style={{ paddingRight: "5px", fontWeight: "bold", textAlign: "center" }}>
 					SUPPORT PARABIBLE
 				</div>
