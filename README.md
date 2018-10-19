@@ -1,7 +1,5 @@
 # Parabible Client
 
----
-
 [![Parabible screenshot: Hebrew Genesis 1 morphology](parabible-screenshot.png)](https://parabible.com/)
 
 ## Introduction
@@ -13,7 +11,7 @@ This repository is a web client that interfaces with [`parabible-server`](https:
 - Build and describes queries visually.
 - Show search results and generate a page suitable for export to pdf/printing (complete with highlighted matching words & clauses, courtesy of `parabible-server`).
 
-![Parabible demo searching Ezekiel and finding Leviticus](parabible-demo.gif)
+See the bottom of the readme for a demo gif.
 
 ## Contributing
 
@@ -51,3 +49,7 @@ If you want to point your client to your own instance of `parabible-server`, tak
 - **Font:** Subset of [SBL Biblit](https://www.sbl-site.org/educational/BiblicalFonts_SBLBibLit.aspx) (+Microsoft stuff that’s part of Fabric)
 
 - Also, has good intentions of using DonorBox and UserReport to gather user feedback and $$$ (alas, to no avail).
+
+## Demo
+
+![Parabible demo searching Ezekiel and finding Leviticus](parabible-demo.gif)
