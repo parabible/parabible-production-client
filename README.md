@@ -15,9 +15,7 @@ See the bottom of the readme for a demo gif.
 
 ## Contributing
 
-**Note:** `parabible-client` is not really made for you to use in some kind of home-grown way. That said, the [`parabible-server`](https://github.com/parabible/parabible-server) API (if I can call it that) is configured with CORS and should support you running your own queries against it. So feel free to build a competing interface (how about a dedicated mobile interface :D)!
-
-**Much better though:** Make contributions to fix [known issues](https://github.com/parabible/parabible-client/issues/) or go ahead and implement new features..
+The [`parabible-server`](https://github.com/parabible/parabible-server) API (if I can call it that) is configured with CORS. This means that you should be able to run your own queries against it without being on the [parabible.com](https://parabible.com) domain. So feel free to build a competing interface (how about a dedicated mobile interface :D)!
 
 To get going you’re probably going to want to clone the repository and get the necessary npm modules:
 
@@ -28,7 +26,7 @@ npm install
 
 To run the client in development mode (with webpack):
 
-```null
+```
 npm start
 ```
 
@@ -37,6 +35,9 @@ To build:
 ```
 npm run build
 ```
+
+Feel free to make Pull Requests that fix [known issues](https://github.com/parabible/parabible-client/issues/) or go ahead and implement new features. I would suggest filing issues before Pull Requests though.
+
 
 If you want to point your client to your own instance of `parabible-server`, take a look at this line: [`src/util/Xhr.js`](https://github.com/parabible/parabible-client/blob/master/src/util/Xhr.js#L3)
 
