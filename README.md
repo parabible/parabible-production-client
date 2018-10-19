@@ -2,6 +2,8 @@
 
 ---
 
+[![Parabible screenshot: Hebrew Genesis 1 morphology](https://raw.githubusercontent.com/jcuenod/parabible-client/master/parabible-screenshot.png)](https://parabible.com/)
+
 ## Introduction
 
 This repository is a web client that interfaces with [`parabible-server`](https://github.com/parabible/parabible-server). Here is a sampling of the fantastic things it can do:
@@ -10,6 +12,8 @@ This repository is a web client that interfaces with [`parabible-server`](https:
 - Display various kinds of data: Hebrew, Greek, and English biblical text in parallel, morphological data.
 - Build and describes queries visually.
 - Show search results and generate a page suitable for export to pdf/printing (complete with highlighted matching words & clauses, courtesy of `parabible-server`).
+
+![Parabible demo searching Ezekiel and finding Leviticus](https://raw.githubusercontent.com/jcuenod/parabible-client/master/parabible-demo.gif)
 
 ## Contributing
 
