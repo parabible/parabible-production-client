@@ -2,7 +2,7 @@
 
 ---
 
-[![Parabible screenshot: Hebrew Genesis 1 morphology](https://github.com/jcuenod/parabible-client/raw/master/parabible-screenshot.png)](https://parabible.com/)
+[![Parabible screenshot: Hebrew Genesis 1 morphology](parabible-screenshot.png)](https://parabible.com/)
 
 ## Introduction
 
@@ -13,7 +13,7 @@ This repository is a web client that interfaces with [`parabible-server`](https:
 - Build and describes queries visually.
 - Show search results and generate a page suitable for export to pdf/printing (complete with highlighted matching words & clauses, courtesy of `parabible-server`).
 
-![Parabible demo searching Ezekiel and finding Leviticus](https://github.com/jcuenod/parabible-client/raw/master/parabible-demo.gif)
+![Parabible demo searching Ezekiel and finding Leviticus](parabible-demo.gif)
 
 ## Contributing
 
