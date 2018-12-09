@@ -40,5 +40,6 @@
 	"screenSizeIndex": 0,
 	"fontSetting": "SBL Biblit",
 	"textsToDisplayMainNT": ["sbl"],
-	"textsToDisplayMainOT": ["wlc"]
+	"textsToDisplayMainOT": ["wlc"],
+	"stripDiacritics": true
 }

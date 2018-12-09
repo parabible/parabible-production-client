@@ -20,7 +20,8 @@ class ParabibleHeader extends React.Component {
 			"screenSizeIndex",
 			"searchTerms",
 			"textsToDisplayMainOT",
-			"textsToDisplayMainNT"
+			"textsToDisplayMainNT",
+			"stripDiacritics"
 		], this.setState.bind(this))
 	}
 	generateSettingsMenu(menuData, multiple=false) {
@@ -361,6 +362,15 @@ class ParabibleHeader extends React.Component {
 				onClick: this.props.showMorphSettings,
 				iconProps: {
 					iconName: "GroupedList"
+				}
+			}, {
+				key: "stripDiacriticsToggle",
+				name: "Strip Diacritics (on copy)",
+				iconProps: {
+					iconName: this.state.stripDiacritics ? "CheckboxComposite" : "Checkbox"
+				},
+				onClick: function () {
+					DataFlow.set("stripDiacritics", !DataFlow.get("stripDiacritics"))
 				}
 			}
 		]
