@@ -13,7 +13,7 @@ const defaultButtonStyle = {
     background: "#eaeaea",
     margin: "0 2px",
     cursor: "pointer",
-    padding: "0 5px"
+    padding: "0 7px"
 }
 const styles = {
     headerCellStyle: {
@@ -21,15 +21,19 @@ const styles = {
         verticalAlign: "top",
         fontSize: "small",
         fontFamily:"sans-serif",
-        background: "#f4f4f4",
         textAlign: "center",
         padding: 0
     },
     headerRowStyle: {
+        position: "sticky",
+        top: "0px",
         display: "table",
         tableLayout: "fixed",
         width: "100%",
         direction: "ltr",
+        padding: "3px",
+        borderTop: "1px solid white",
+        background: "#f4f4f4",
         userSelect: "none"
     },
     addButtonStyle: defaultButtonStyle,
@@ -52,8 +56,14 @@ const toggleTextDisplay = ({text, on}) => {
 }
 
 const AddButton = ({text}) => {
-    const over = (e) => { e.target.style.backgroundColor="#deecf9" }
-    const out = (e) => { e.target.style.backgroundColor="#eaeaea" }
+    const over = (e) => {
+        e.target.style.backgroundColor="#0078d7"
+        e.target.style.color="#fff"
+    }
+    const out = (e) => {
+        e.target.style.backgroundColor="#eaeaea"
+        e.target.style.color="#000"
+    }
     return <span
             onMouseOver={over}
             onMouseOut={out}
