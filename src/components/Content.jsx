@@ -27,8 +27,12 @@ class Content extends React.Component {
 				const $vEl = document.querySelector("#activeVerse")
 				if ($vEl) {
 					$vEl.scrollIntoView(true)
+					// This is kind of hacky but I need to scroll this div a bit...
+					// The sticky header looks like its about 30px but it's got about 1px of margin
+					// 60 gives a bit of breathing room and makes it clear there's content above.
+					document.querySelector("#headerbar ~ div").scrollTop -= 60
 				}
-			}, 1000)
+			}, 700)
 		}
 	}
 	render() {
