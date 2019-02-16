@@ -26,7 +26,7 @@ class MorphologySidebar extends React.Component {
 					secondaryData = [wdata.vs, wdata.vt, wdata.gn + wdata.nu]
 				}
 				else {
-					secondaryData = [wdata.vs, wdata.vt, wdata.ps + wdata.gn + wdata.nu]
+					secondaryData = [wdata.vs, wdata.vt, wdata.ps[1] + wdata.gn + wdata.nu[0]]
 				}
 			}
 			else {
