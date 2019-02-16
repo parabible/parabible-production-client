@@ -48,7 +48,7 @@ class MorphologySidebar extends React.Component {
 					secondaryData = [wdata.tense, wdata.voice, wdata.mood, wdata.case, wdata.gender, wdata.number]
 				}
 				else {
-					secondaryData = [wdata.tense, wdata.voice, wdata.mood, (wdata.person ? wdata.person : "") + wdata.number]
+					secondaryData = [wdata.tense, wdata.voice, wdata.mood, (wdata.person ? wdata.person : "") + (wdata.number ? wdata.number : "")]
 				}
 			}
 			else {
