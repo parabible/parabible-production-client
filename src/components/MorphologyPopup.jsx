@@ -4,6 +4,13 @@ import Abbreviations from 'data/abbreviations'
 
 let watcherObject = {}
 
+const o = (obj, prop) => {
+	if (obj.hasOwnProperty(prop)) {
+		return obj[prop] ? obj[prop] : ""
+	}
+	return ""
+}
+
 class MorphologySidebar extends React.Component {
 	constructor(props) {
 		super(props)
@@ -19,40 +26,43 @@ class MorphologySidebar extends React.Component {
 		const primaryData = []
 		let secondaryData = []
 		if (wdata.hasOwnProperty("sp")) {
-			primaryData.push(wdata.voc_utf8, wdata.gloss)
+			primaryData.push(o(wdata, "voc_utf8"), o(wdata, "gloss"))
 			//It's a hebrew word - Greek words have "pos" for part of speech
-			if (wdata.sp == "verb") {
-				if (wdata.vt == "ptca" || wdata.vt == "ptcp") {
-					secondaryData = [wdata.vs, wdata.vt, wdata.gn + wdata.nu]
+			if (o(wdata, "sp") == "verb") {
+				if (o(wdata, "vt") == "ptca" || o(wdata, "vt") == "ptcp") {
+					secondaryData = [o(wdata, "vs"), o(wdata, "vt"), o(wdata, "gn") + o(wdata, "nu")]
+				}
+				else if (o(wdata, "vt") == "infa" || o(wdata, "vt") == "infc") {
+					secondaryData = [o(wdata, "vs"), o(wdata, "vt")]
 				}
 				else {
-					secondaryData = [wdata.vs, wdata.vt, wdata.ps + wdata.gn + wdata.nu]
+					secondaryData = [o(wdata, "vs"), o(wdata, "vt"), o(wdata, "ps")[1] + o(wdata, "gn") + o(wdata, "nu")[0]]
 				}
 			}
 			else {
-				secondaryData = [wdata.gn, wdata.nu]
+				secondaryData = [o(wdata, "gn"), o(wdata, "nu")]
 			}
 		}
 		else {
 			// It's a greek word   
-			primaryData.push(wdata.lexeme)
+			primaryData.push(o(wdata, "lexeme"))
 			// some words, like "Μωϋσῆς" don't have glosses in our data
-			if (wdata.gk_gloss)
-				primaryData.push(wdata.gk_gloss.includes(",") ? wdata.gk_gloss.split(",")[0] : wdata.gk_gloss)
+			if (o(wdata, "gk_gloss"))
+				primaryData.push(o(wdata, "gk_gloss").includes(",") ? o(wdata, "gk_gloss").split(",")[0] : o(wdata, "gk_gloss"))
 			// lxx uses gloss not gk_gloss *sigh*
-			else if (wdata.gloss)
-				primaryData.push(wdata.gloss.includes(",") ? wdata.gloss.split(",")[0] : wdata.gloss)
+			else if (o(wdata, "gloss"))
+				primaryData.push(o(wdata, "gloss").includes(",") ? o(wdata, "gloss").split(",")[0] : o(wdata, "gloss"))
 			
-			if (wdata.pos == "verb") {
-				if (wdata.mood == "ptcp") {
-					secondaryData = [wdata.tense, wdata.voice, wdata.mood, wdata.case, wdata.gender, wdata.number]
+			if (o(wdata, "pos") == "verb") {
+				if (o(wdata, "mood") == "ptcp") {
+					secondaryData = [o(wdata, "tense"), o(wdata, "voice"), o(wdata, "mood"), o(wdata, "case"), o(wdata, "gender"), o(wdata, "number")]
 				}
 				else {
-					secondaryData = [wdata.tense, wdata.voice, wdata.mood, (wdata.person ? wdata.person : "") + wdata.number]
+					secondaryData = [o(wdata, "tense"), o(wdata, "voice"), o(wdata, "mood"), (o(wdata, "person") ? o(wdata, "person") : "") + (o(wdata, "number") ? o(wdata, "number") : "")]
 				}
 			}
 			else {
-				secondaryData = [wdata.case, wdata.gender ? wdata.gender[0] : false, wdata.number]
+				secondaryData = [o(wdata, "case"), o(wdata, "gender") ? o(wdata, "gender")[0] : false, o(wdata, "number")]
 			}
 		}
 		const finalSecondaryData = secondaryData.reduce((a, v) => {
