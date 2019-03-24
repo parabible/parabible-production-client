@@ -38,7 +38,7 @@
 		{"heading": "tc_note","visible": true}
 	],
 	"screenSizeIndex": 0,
-	"fontSetting": "SBL Biblit",
+	"fontSetting": "SBL BibLit",
 	"textsToDisplayMainNT": ["sbl"],
 	"textsToDisplayMainOT": ["wlc"],
 	"stripDiacritics": true

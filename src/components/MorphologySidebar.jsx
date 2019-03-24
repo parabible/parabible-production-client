@@ -91,7 +91,7 @@ class MorphologySidebar extends React.Component {
 					fontSettings["fontSize"] = "large"
 				}
 				else if (greekCategories.indexOf(d.heading) > -1) {
-					fontSettings["fontFamily"] = "SBL Biblit, SBL Greek"
+					fontSettings["fontFamily"] = "SBL BibLit"
 					fontSettings["fontSize"] = "120%"
 				}
 				return <div key={i} className="mrow" style={Object.assign({
