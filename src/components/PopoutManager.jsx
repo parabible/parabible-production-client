@@ -5,9 +5,9 @@ import { Popout, insertPopoutStylesheetRule } from 'react-popout-component'
 import { generateReference, generateURL } from 'util/ReferenceHelper'
 
 //TODO: sanitize fontSetting in DataFlow so we don't get a quotation mark...
-const fontSetting = () => {
-	return `"${DataFlow.get("fontSetting")}", "SBL Biblit", "Open Sans", "Arial"`
-}
+// const fontSetting = () => {
+// 	return `"${DataFlow.get("fontSetting")}", "SBL Biblit", "Open Sans", "Arial"`
+// }
 
 const removeAccents = (s) => s.replace(/[\u0590-\u05AF\u05BD]/g,"")
 
@@ -66,7 +66,7 @@ const htmlTemplate = ({resultCount}) => `<!DOCTYPE>
 		td { border-right: 1px solid #ddd; border-bottom: 1px solid #aaa; padding: 10px; }
 		td:last-child { border-right: none; }
 		tr:last-child > td { border-bottom: none; }
-		td.hebrewText { direction: rtl; font-family: ${fontSetting()}; font-size: x-large; }
+		td.hebrewText { direction: rtl; font-family: ${DataFlow.get("fontSetting")}; font-size: x-large; }
 	</style>
 </head>
 <body></body>

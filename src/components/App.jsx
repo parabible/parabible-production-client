@@ -77,7 +77,7 @@ class App extends React.Component {
 
 		return (
 			<div style={{
-					fontFamily: `${DataFlow.get("fontSetting")}, "SBL Biblit", "Open Sans", "Arial"`,
+					fontFamily: `${DataFlow.get("fontSetting")}, "SBL BibLit", "Open Sans", "Arial"`,
 					fontSize: "xx-large",
 					lineHeight: 1.6,
 					height: "100%",
