@@ -32,7 +32,7 @@ class Content extends React.Component {
 					// 60 gives a bit of breathing room and makes it clear there's content above.
 					document.querySelector("#headerbar ~ div").scrollTop -= 60
 				}
-			}, 700)
+			}, 1000)
 		}
 	}
 	render() {
