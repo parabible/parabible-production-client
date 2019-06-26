@@ -22,7 +22,27 @@ import DataFlow from 'util/DataFlow'
 import AppNotify from 'util/AppNotify'
 import TextDisplayManager from 'util/TextDisplayManager'
 
+const ESCAPE_KEY = 27;
+
 class App extends React.Component {
+
+	_handleKeyup(event) {
+		switch (event.keyCode) {
+			case ESCAPE_KEY:
+				this.setState({ "showResults": false })
+				break
+			default:
+				break
+		}
+	}
+	// componentWillMount deprecated in React 16.3
+	componentDidMount() {
+		document.addEventListener("keyup", this._handleKeyup.bind(this))
+	}
+	componentWillUnmount() {
+		document.removeEventListener("keyup", this._handleKeyup.bind(this))
+	}
+
 	constructor(props) {
 		super(props)
 		this.state = {
