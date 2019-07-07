@@ -3,7 +3,7 @@ import WordBit from './WordBit'
 
 const AccentUnit = ({ verseNumber, accentUnit, activeWid }) => [
 	verseNumber !== false ? (
-		<span style={{
+		<span key={"v" + verseNumber} style={{
 			color: "#ea4300",
 			verticalAlign: "top",
 			fontSize: "35%",
