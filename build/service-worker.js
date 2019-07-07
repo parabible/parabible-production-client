@@ -1,5 +1,5 @@
 var CACHE = 'cache-and-update'
-var CACHE_VERSION = 2
+var CACHE_VERSION = 3
 var urlsToCache = [
 	'/bundle.js',
 	'/fonts/sblbiblit.css',
@@ -12,6 +12,7 @@ var urlsToCache = [
 
 // On install, cache some resources.
 self.addEventListener('install', event => {
+	self.skipWaiting();
 	console.log('The service worker is being installed.')
 	event.waitUntil(() => {
 		return caches.open(CACHE).then(cache => {
