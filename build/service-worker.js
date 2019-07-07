@@ -1,4 +1,5 @@
 var CACHE = 'cache-and-update'
+var CACHE_VERSION = 2
 var urlsToCache = [
 	'/bundle.js',
 	'/fonts/sblbiblit.css',
@@ -17,6 +18,21 @@ self.addEventListener('install', event => {
 			return cache.addAll(urlsToCache)
 		})
 	})
+})
+
+self.addEventListener('activate', function(event) {
+	event.waitUntil(
+		caches.keys().then(function(cacheNames) {
+			return Promise.all(
+				cacheNames.map(function(cacheName) {
+					if (CACHE === cacheName) {
+						console.log('Deleting out of date cache:', cacheName)
+						return caches.delete(cacheName)
+					}
+				})
+			)
+		})
+	)
 })
 
 self.addEventListener('fetch', event => {
