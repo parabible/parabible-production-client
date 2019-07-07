@@ -28,19 +28,19 @@ const lxxDisplay = (rid, lxx, activeWid) => (
 )
 const sblDisplay = (rid, sbl, activeWid) => (
 	sbl ? <SBLVerse
-			key={rid % 1000}
-			verseNumber={rid % 1000}
-			text={sbl}
-			activeWid={activeWid} />
-	: null
+		key={rid % 1000}
+		verseNumber={rid % 1000}
+		text={sbl}
+		activeWid={activeWid} />
+		: null
 )
 const netDisplay = (rid, net, activeWid) => {
-	return <div dangerouslySetInnerHTML={{ __html: net}} />
+	return <div dangerouslySetInnerHTML={{ __html: net }} />
 }
 
 const textHelper = {
 	"wlc": {
-		styles: { display: "table-cell", verticalAlign: "top", direction: "rtl", fontSize: "x-large", padding: "3px 5px", fontFamily: DataFlow.get("fontSetting")},
+		styles: { display: "table-cell", verticalAlign: "top", direction: "rtl", fontSize: "x-large", padding: "3px 5px", fontFamily: DataFlow.get("fontSetting") },
 		function: wlcDisplay
 	},
 	"sbl": {
@@ -57,9 +57,9 @@ const textHelper = {
 	}
 }
 // TODO: Do something actual with fonts for LXX
-const parallelView =({rid, activeWid, ridData, thisVerseActive}) => (
-	<div className="contiguousrid" data-rid={rid} id={thisVerseActive ? "activeVerse" : ""} style={{display: "table", tableLayout: "fixed", width: "100%", direction: "ltr", backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : "" }}>
-		{DataFlow.get(rid >= 400000000 ? "textsToDisplayMainNT" : "textsToDisplayMainOT").map(text => 
+const parallelView = ({ rid, activeWid, ridData, thisVerseActive }) => (
+	<div className="contiguousrid" data-rid={rid} id={thisVerseActive ? "activeVerse" : ""} style={{ display: "table", tableLayout: "fixed", width: "100%", direction: "ltr", backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : "" }}>
+		{DataFlow.get(rid >= 400000000 ? "textsToDisplayMainNT" : "textsToDisplayMainOT").map(text =>
 			ridData.hasOwnProperty(text) ? <div key={text} style={textHelper[text].styles}>
 				{textHelper[text].function(rid, ridData[text], activeWid)}
 			</div> : <div key={text} style={textHelper[text].styles} />
@@ -85,7 +85,8 @@ const parallelView =({rid, activeWid, ridData, thisVerseActive}) => (
 	</div>
 )
 
-const RidView = ({rid, ridData, activeWid}) => {
+const RidView = ({ rid, ridData, activeWid }) => {
+	delete ridData["rid"]
 	const ridDataKeys = Object.keys(ridData)
 	const activeVerse = DataFlow.get("activeVerse")
 	const thisVerseActive = activeVerse ?
@@ -94,43 +95,43 @@ const RidView = ({rid, ridData, activeWid}) => {
 
 	if (ridDataKeys.length > 1) {
 		// PARALLEL
-		return parallelView({rid, ridData, activeWid, thisVerseActive})
+		return parallelView({ rid, ridData, activeWid, thisVerseActive })
 	}
 	else {
 		// SINGLE TEXT
-		switch(ridDataKeys[0]) {
+		switch (ridDataKeys[0]) {
 			case "sbl":
 				return <div className="contiguousrid" id={thisVerseActive ? "activeVerse" : ""} style={{
-						display: "inline",
-						fontFamily: DataFlow.get("fontSetting"),
-						fontSize: '80%',
-						backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : ""
-					}} data-rid={rid}>
+					display: "inline",
+					fontFamily: DataFlow.get("fontSetting"),
+					fontSize: '80%',
+					backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : ""
+				}} data-rid={rid}>
 					{sblDisplay(rid, ridData.sbl, activeWid)}
 				</div>
 			case "lxx":
 				return <div className="contiguousrid" id={thisVerseActive ? "activeVerse" : ""} style={{
-						display: "inline",
-						fontFamily: DataFlow.get("fontSetting"),
-						fontSize: '80%',
-						backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : ""
-					}} data-rid={rid}>
+					display: "inline",
+					fontFamily: DataFlow.get("fontSetting"),
+					fontSize: '80%',
+					backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : ""
+				}} data-rid={rid}>
 					{lxxDisplay(rid, ridData.lxx, activeWid)}
 				</div>
 			case "net":
 				return <div className="contiguousrid" id={thisVerseActive ? "activeVerse" : ""} style={{
-						display: "inline",
-						fontSize: '80%',
-						backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : ""
-					}} data-rid={rid}>
-					<span dangerouslySetInnerHTML={{ __html: ridData.net}} />
+					display: "inline",
+					fontSize: '80%',
+					backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : ""
+				}} data-rid={rid}>
+					<span dangerouslySetInnerHTML={{ __html: ridData.net }} />
 				</div>
 			case "wlc":
 				return <div className="contiguousrid" id={thisVerseActive ? "activeVerse" : ""} style={{
-						display: "inline",
-						fontFamily: DataFlow.get("fontSetting"),
-						backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : ""
-					}} data-rid={rid}>
+					display: "inline",
+					fontFamily: DataFlow.get("fontSetting"),
+					backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : ""
+				}} data-rid={rid}>
 					{wlcDisplay(rid, ridData.wlc, activeWid)}
 				</div>
 			default:

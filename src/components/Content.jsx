@@ -56,27 +56,28 @@ class Content extends React.Component {
 				}
 				return false
 			}
-			Object.keys(btextHighlight).forEach(rid => {
+			btextHighlight.forEach(verse => {
 				// TODO: this could be a lot better I think but we'll worry when we need to highlight the lxx and sbl
-				if (btextHighlight[rid].hasOwnProperty("wlc")) {
-					btextHighlight[rid].wlc.forEach((au, i) => {
+				if (verse.rid.hasOwnProperty("wlc")) {
+					verse.rid.wlc.forEach((au, i) => {
 						au.forEach((wbit, j) => {
 							const hid = highlightID(wbit.wid)
 							if (hid !== false)
-								btextHighlight[rid].wlc[i][j]["searchHighlight"] = hid
+								btextHighlight[verse.rid].wlc[i][j]["searchHighlight"] = hid
 						})
 					})
 				}
 			})
 		}
 		const licenseList = new Set()
-		Object.keys(btextHighlight).forEach(rid => 
-			Object.keys(btextHighlight[rid]).forEach(k => licenseList.add(k))
+		btextHighlight.forEach(verse =>
+			Object.keys(verse).forEach(k => licenseList.add(k))
 		)
+		licenseList.delete("rid")
 		const isNT = isNewTestament(DataFlow.get("reference"))
 		const ttd = DataFlow.get(isNT ? "textsToDisplayMainNT" : "textsToDisplayMainOT")
-		const orderedColumns = [...licenseList].sort((a, b) => ttd.indexOf(a) - ttd.indexOf(b) )
-		
+		const orderedColumns = [...licenseList].sort((a, b) => ttd.indexOf(a) - ttd.indexOf(b))
+
 		return (
 			<div style={{
 				margin: "auto",
@@ -85,16 +86,16 @@ class Content extends React.Component {
 				direction: licenseList.has("wlc") ? "rtl" : "ltr",
 				userSelect: DataFlow.get("screenSizeIndex") > 2 ? "text" : "none",
 				cursor: "text"
-				}}>
+			}}>
 				{this.state.screenSizeIndex > 1 ? <ContentHeader openColumns={orderedColumns} isNT={isNT} /> : null}
-				{Object.keys(btextHighlight).map(k => 
+				{btextHighlight.map(verse =>
 					<RidView
-						key={k}
-						rid={+k}
-						ridData={btextHighlight[k]}
+						key={verse.rid}
+						rid={+verse.rid}
+						ridData={verse}
 						activeWid={this.state.activeWid} />
 				)}
-				<div style={{direction:"ltr", fontFamily:"sans-serif", fontSize: "x-small", marginTop: "40px", paddingTop: "10px", borderTop: "1px solid #aaa"}}>
+				<div style={{ direction: "ltr", fontFamily: "sans-serif", fontSize: "x-small", marginTop: "40px", paddingTop: "10px", borderTop: "1px solid #aaa" }}>
 					<LicenseView license={orderedColumns} />
 				</div>
 			</div>
