@@ -1,10 +1,10 @@
-import createHistory from 'history/createBrowserHistory'
+import { createBrowserHistory } from 'history'
 import ReferenceParser from 'referenceparser'
 import { generateRid } from 'util/ReferenceHelper'
 import DataFlow from 'util/DataFlow'
 
 const rp = new ReferenceParser()
-const history = createHistory()
+const history = createBrowserHistory()
 
 const setTitle = (reference = null) => {
 	if (!reference) {
@@ -29,7 +29,7 @@ const urlToReference = (urlString) => {
 let justPopped = false
 DataFlow.watch("reference", r => {
 	if (!justPopped) { // don't push if justPopped
-		history.push( referenceToUrl(r) )
+		history.push(referenceToUrl(r))
 		// I think we should not retain activeVerse when moving backwards and forwards through chapters...
 		DataFlow.set("activeVerse", false)
 	}
@@ -51,7 +51,7 @@ history.listen((location, action) => {
 if (location.pathname === "/") {
 	const newRef = referenceToUrl(DataFlow.get("reference"))
 	setTitle()
-	history.push( newRef )
+	history.push(newRef)
 }
 else {
 	const r = urlToReference(location.pathname + location.hash)

@@ -77,12 +77,12 @@ class App extends React.Component {
 
 		return (
 			<div style={{
-					fontFamily: `${DataFlow.get("fontSetting")}, "SBL BibLit", "Open Sans", "Arial"`,
-					fontSize: "xx-large",
-					lineHeight: 1.6,
-					height: "100%",
-					overflow: "hidden"
-				}}>
+				fontFamily: `${DataFlow.get("fontSetting")}, "SBL BibLit", "Open Sans", "Arial"`,
+				fontSize: "xx-large",
+				lineHeight: 1.6,
+				height: "100%",
+				overflow: "hidden"
+			}}>
 				<div id="headerbar">
 					<Header
 						showBookSelector={() => this.setPanelDisplay("bookSelector", true)}
@@ -96,17 +96,17 @@ class App extends React.Component {
 					bottom: 0,
 					overflowX: "hidden",
 					overflowY: "auto",
-					"-webkit-overflow-scrolling": "touch"
+					WebkitOverflowScrolling: "touch"
 				}}>
-					<div style={{display:"flex",maxWidth:mainMaxWidth,margin:"auto",paddingTop:10,verticalAlign:"top"}}>
+					<div style={{ display: "flex", maxWidth: mainMaxWidth, margin: "auto", paddingTop: 10, verticalAlign: "top" }}>
 						{this.state.screenSizeIndex > 1 ? (
-							<div style={{flex:1}}>
+							<div style={{ flex: 1 }}>
 								<div id="morphbar">
 									<MorphologySidebar />
 								</div>
 							</div>
 						) : null}
-						<div style={{flex:3}}>
+						<div style={{ flex: 3 }}>
 							<Content />
 						</div>
 					</div>
@@ -126,10 +126,10 @@ class App extends React.Component {
 				<MorphologySettings
 					panelIsVisible={this.state.showMorphSettings}
 					hidePanel={() => this.setPanelDisplay("morphSettings", false)} />
-				<ResultsOverlay 
+				<ResultsOverlay
 					panelIsVisible={this.state.showResults}
 					hideOverlay={() => this.setPanelDisplay("resultsOverlay", false)}
-					showPopout={() => this.setState({"showNewTabSearchResults": true})} />
+					showPopout={() => this.setState({ "showNewTabSearchResults": true })} />
 
 				{/* NOTIFICATIONS */}
 				<div style={{ position: "absolute", left: "50px", right: "50px", top: "50px", zIndex: 10 }}>
@@ -143,8 +143,8 @@ class App extends React.Component {
 
 				{/* POPOUT WINDOW*/}
 				{this.state.showNewTabSearchResults ?
-					<PopoutManager popoutExit={() => this.setState({"showNewTabSearchResults": false})}></PopoutManager>
-				: ""}
+					<PopoutManager popoutExit={() => this.setState({ "showNewTabSearchResults": false })}></PopoutManager>
+					: ""}
 			</div>
 		)
 	}

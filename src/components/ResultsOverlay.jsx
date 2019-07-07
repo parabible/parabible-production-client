@@ -5,7 +5,7 @@ import DataFlow from 'util/DataFlow'
 import { generateReference, generateURL } from 'util/ReferenceHelper'
 import RidView from './RidView'
 
-const ResultsOverlay = ({panelIsVisible, hideOverlay, showPopout}) => {
+const ResultsOverlay = ({ panelIsVisible, hideOverlay, showPopout }) => {
 	const searchResults = DataFlow.get("searchResults")
 	const multiline = DataFlow.get("screenSizeIndex") < 2
 	const useAbbreviation = DataFlow.get("screenSizeIndex") < 4 && !multiline ? true : false
@@ -21,15 +21,16 @@ const ResultsOverlay = ({panelIsVisible, hideOverlay, showPopout}) => {
 			right: 0,
 			background: "rgba(255, 255, 255, 0.9)",
 			overflowY: "scroll",
-			"-webkit-overflow-scrolling": "touch" }}>
+			WebkitOverflowScrolling: "touch"
+		}}>
 
 			<div style={{
 				fontFamily: "Open Sans",
 				fontSize: "large",
 				fontWeight: "bold",
-				textAlign:"center",
+				textAlign: "center",
 				padding: "5px"
-				}}>
+			}}>
 				Search Results ({resultCount})
 			</div>
 
@@ -37,7 +38,7 @@ const ResultsOverlay = ({panelIsVisible, hideOverlay, showPopout}) => {
 				position: "fixed",
 				top: 50,
 				right: 25
-				}}>
+			}}>
 				{!multiline ? <DefaultButton
 					onClick={showPopout}
 					iconProps={{ iconName: 'Print' }} /> : ""}
@@ -48,21 +49,24 @@ const ResultsOverlay = ({panelIsVisible, hideOverlay, showPopout}) => {
 
 			<span style={{
 				userSelect: DataFlow.get("screenSizeIndex") > 2 ? "text" : "none",
-				cursor: "text" }}>
+				cursor: "text"
+			}}>
 				<List
 					items={DataFlow.get("searchResults").results}
 					onRenderCell={(item, index) => (
-						<div style={{ display: "flex",
+						<div style={{
+							display: "flex",
 							flexDirection: multiline ? "column" : "row",
 							padding: multiline ? "5px" : "5px 15px",
-								cursor: "pointer" 
-							}} className="resultsRow">
+							cursor: "pointer"
+						}} className="resultsRow">
 							<div style={{
 								flexBasis: multiline ? "" : "100px",
 								fontFamily: "Open Sans",
 								fontSize: "small",
 								fontWeight: "bold",
-								textTransform: "uppercase" }}>
+								textTransform: "uppercase"
+							}}>
 								<a href={generateURL(item.verses[0])} className="verseUrl">
 									{generateReference(item.verses, useAbbreviation)}
 								</a>
