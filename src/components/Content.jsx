@@ -36,7 +36,7 @@ class Content extends React.Component {
 		}
 	}
 	render() {
-		if (!this.state.bibledata) {
+		if (!this.state.bibledata || !Array.isArray(DataFlow.get("bibledata"))) {
 			// We don't really want a blank slate...
 			ApiRequest("chapterText")
 			return <div />
