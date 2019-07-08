@@ -3,6 +3,7 @@ import AccentUnit from './AccentUnit'
 import LXXVerse from './LXXVerse'
 import SBLVerse from './SBLVerse'
 import DataFlow from 'util/DataFlow'
+import { generateReference } from 'util/ReferenceHelper'
 
 const fontSetting = () => {
 	return `"${DataFlow.get("fontSetting")}", "SBL Biblit", "Open Sans", "Arial"`
@@ -85,7 +86,11 @@ const parallelView = ({ rid, activeWid, ridData, thisVerseActive }) => (
 	</div>
 )
 
+const isObject = obj => Object.prototype.toString.call(obj).indexOf('Object') !== -1
 const RidView = ({ rid, ridData, activeWid }) => {
+	if (!isObject(ridData) || Object.keys(ridData).length === 0) {
+		return <div>{generateReference([rid])} -- No texts were returned for this verse, maybe something went wrong. Sorry! Please use the feedback button to let us know.</div>
+	}
 	delete ridData["rid"]
 	const ridDataKeys = Object.keys(ridData)
 	const activeVerse = DataFlow.get("activeVerse")
@@ -93,6 +98,9 @@ const RidView = ({ rid, ridData, activeWid }) => {
 		rid === activeVerse.rid :
 		false
 
+	if (ridDataKeys.length === 0) {
+		return <div>{generateReference([rid])} -- No texts were returned for this verse, maybe something went wrong. Sorry! Please use the feedback button to let us know.</div>
+	}
 	if (ridDataKeys.length > 1) {
 		// PARALLEL
 		return parallelView({ rid, ridData, activeWid, thisVerseActive })
