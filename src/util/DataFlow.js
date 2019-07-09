@@ -8,7 +8,6 @@ let ls = JSON.parse(localStorage.getItem(appData)) || {}
 
 const oldVersion = ls.version || 0
 const newVersion = appDataDefaults.version
-console.log(oldVersion, newVersion)
 if (oldVersion < newVersion) {
 	ls = appDataDefaults
 }
