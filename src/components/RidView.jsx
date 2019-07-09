@@ -87,11 +87,14 @@ const parallelView = ({ rid, activeWid, ridData, thisVerseActive }) => (
 )
 
 const isObject = obj => Object.prototype.toString.call(obj).indexOf('Object') !== -1
-const RidView = ({ rid, ridData, activeWid }) => {
+const RidView = ({ ridDataWithRid, activeWid }) => {
+	if (ridDataWithRid === undefined) {
+		return <div>The data for this verse looks empty</div>
+	}
+	const { rid, ...ridData } = ridDataWithRid
 	if (!isObject(ridData) || Object.keys(ridData).length === 0) {
 		return <div>{generateReference([rid])} -- No texts were returned for this verse, maybe something went wrong. Sorry! Please use the feedback button to let us know.</div>
 	}
-	delete ridData["rid"]
 	const ridDataKeys = Object.keys(ridData)
 	const activeVerse = DataFlow.get("activeVerse")
 	const thisVerseActive = activeVerse ?

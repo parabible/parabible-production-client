@@ -74,9 +74,7 @@ const ResultsOverlay = ({ panelIsVisible, hideOverlay, showPopout }) => {
 							<div style={{ flex: 1 }}>
 								{item.text.map(t => (
 									<RidView
-										key={t.rid}
-										rid={t.rid}
-										ridData={t}
+										ridDataWithRid={t}
 										activeWid={-1} />
 								))}
 							</div>
