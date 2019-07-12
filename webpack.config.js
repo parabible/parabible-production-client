@@ -24,10 +24,7 @@ let exportObject = {
 			{
 				test: /\.jsx?$/,
 				exclude: /node_modules/,
-				loader: 'babel-loader',
-				options: {
-					 presets: ['react', 'es2015']
-				}
+				loader: 'babel-loader'
 			}
 			// }, {
 			// 	test: /\.css$/,
@@ -51,14 +48,15 @@ if (process.env.NODE_ENV === 'production') {
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': '"production"'
 		}),
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false,
-				screw_ie8: true
-			},
-			comments: false,
-			sourceMap: true
-		}),
+		//config.optimization.minimize
+		// new webpack.optimize.UglifyJsPlugin({
+		// 	compress: {
+		// 		warnings: false,
+		// 		screw_ie8: true
+		// 	},
+		// 	comments: false,
+		// 	sourceMap: true
+		// }),
 		new webpack.optimize.AggressiveMergingPlugin()
 	)
 }

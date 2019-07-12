@@ -6,6 +6,12 @@ import clone from 'clone'
 let appData = "flowdata"
 let ls = JSON.parse(localStorage.getItem(appData)) || {}
 
+const oldVersion = ls.version || 0
+const newVersion = appDataDefaults.version
+if (oldVersion < newVersion) {
+	ls = appDataDefaults
+}
+
 let updatedDefaults = {}
 Object.keys(appDataDefaults).forEach(k => {
 	updatedDefaults[k] = ls.hasOwnProperty(k) ? ls[k] : appDataDefaults[k]
@@ -39,7 +45,7 @@ const DataFlow = {
 			this._appData[prop] = clone(value)
 			//TODO: only do local storage stuff if we are the controlling window/tab
 			localStorage.setItem(appData, JSON.stringify(this._appData))
-		
+
 			if (this._watchers.hasOwnProperty(prop))
 				this._watchers[prop].forEach((c) => c.func(value))
 		}

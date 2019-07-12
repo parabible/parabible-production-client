@@ -3,44 +3,22 @@ import DataFlow from 'util/DataFlow'
 import Abbreviations from 'data/abbreviations'
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'
-import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
 
-const SortableItem = SortableElement(({ value, checked, toggleCheck }) => {
+const OptionItem = ({ value, checked, toggleCheck }) => {
 	const translatedHeading = Abbreviations.termToEnglish.categories.hasOwnProperty(value) ?
 		Abbreviations.termToEnglish.categories[value] : value
 	return (
-		<div style={{padding: "5px 3px"}}>
+		<div style={{ padding: "5px 3px" }}>
 			<Checkbox
 				label={translatedHeading}
 				checked={checked}
 				onChange={(x, checked) => toggleCheck(value, checked)}
-				/>
+			/>
 		</div>
 	)
-})
+}
 
-const SortableList = SortableContainer(({ items, toggleCheck }) => {
-	return (
-		<div>
-			{items.map((item, index) => (
-				<SortableItem
-					key={index}
-					index={index}
-					checked={item.checked}
-					toggleCheck={toggleCheck}
-					value={item.value} />
-			))}
-		</div>
-	)
-})
-
-class SortableComponent extends React.Component {
-	onSortEnd ({ oldIndex, newIndex }) {
-		const morphSettings = DataFlow.get("morphSettings")
-		const newState = arrayMove(morphSettings, oldIndex, newIndex)
-		DataFlow.set("morphSettings", newState)
-		this.forceUpdate()
-	}
+class OptionComponent extends React.Component {
 	toggleCheck(value, checked) {
 		const morphSettings = DataFlow.get("morphSettings")
 		const newState = morphSettings.map(m => {
@@ -59,12 +37,15 @@ class SortableComponent extends React.Component {
 				checked: m.visible
 			}
 		})
-		return <SortableList
-			helperClass="sortableDrag"
-			items={items}
-			pressDelay={100}
-			toggleCheck={this.toggleCheck.bind(this)}
-			onSortEnd={this.onSortEnd.bind(this)} />
+		return <div>
+			{items.map((item, index) =>
+				<OptionItem
+					key={index}
+					value={item.value}
+					checked={item.checked}
+					toggleCheck={() => this.toggleCheck(item.value, item.checked)} />
+			)}
+		</div>
 	}
 }
 
@@ -92,7 +73,7 @@ class MorphologySettings extends React.Component {
 				headerText='Morphology Settings'
 				closeButtonAriaLabel='Close'>
 
-				<SortableComponent />
+				<OptionComponent />
 
 				<div style={{ height: "60px" }}></div>
 			</Panel>

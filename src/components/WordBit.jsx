@@ -1,5 +1,6 @@
 import React from 'react'
 import DataFlow from 'util/DataFlow'
+import HighlightManager from 'util/HighlightManager'
 
 const WordBit = ({ wbit, activeWid, keyIndex }) => {
 	const styles = { cursor: "pointer" }
@@ -9,13 +10,12 @@ const WordBit = ({ wbit, activeWid, keyIndex }) => {
 		else if (wbit.temperature == 1)
 			styles.color = "#004578"
 	}
-	if (wbit.hasOwnProperty("searchHighlight")) {
-		const term = DataFlow.get("searchTerms").find(st => st.uid === wbit.searchHighlight)
-		const color = term && term.hasOwnProperty("color") ? term.color : false
-		styles.color = color || "#ff8c00"
-	}
-	if (activeWid === wbit.wid)
+	else if (activeWid === wbit.wid) {
 		styles.color = "#0078d7"
+	}
+	else if (HighlightManager.shouldHighlight(wbit.wid)) {
+		styles.color = HighlightManager.getHighlightColor(wbit.wid)
+	}
 
 	return [
 		<span key={keyIndex} className="wbit" style={styles}

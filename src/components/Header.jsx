@@ -24,30 +24,30 @@ class ParabibleHeader extends React.Component {
 			"stripDiacritics"
 		], this.setState.bind(this))
 	}
-	generateSettingsMenu(menuData, multiple=false) {
+	generateSettingsMenu(menuData, multiple = false) {
 		const searchField = DataFlow.get(menuData.field)
 		const isChecked = (itemName) => {
-			return multiple ? 
+			return multiple ?
 				(searchField.indexOf(itemName) !== -1) :
 				(searchField == itemName)
 		}
 		const clickHandler = (itemName) => {
 			return multiple ? () => {
-					const index = searchField.indexOf(itemName)
-					if (index === -1) {
-						DataFlow.set(menuData.field, searchField.concat(itemName))
-					}
-					else {
-						var newArray = searchField.slice()
-						newArray.splice(index, 1)
-						DataFlow.set(menuData.field, newArray)
-					}
-					this.forceUpdate()
-				} : () => {
-					DataFlow.set(menuData.field, itemName)
-					this.forceUpdate()
+				const index = searchField.indexOf(itemName)
+				if (index === -1) {
+					DataFlow.set(menuData.field, searchField.concat(itemName))
 				}
-		} 
+				else {
+					var newArray = searchField.slice()
+					newArray.splice(index, 1)
+					DataFlow.set(menuData.field, newArray)
+				}
+				this.forceUpdate()
+			} : () => {
+				DataFlow.set(menuData.field, itemName)
+				this.forceUpdate()
+			}
+		}
 
 		return menuData.items.map(item => ({
 			key: item.name,
@@ -87,7 +87,7 @@ class ParabibleHeader extends React.Component {
 			return
 		}
 		const type = DataFlow.get("searchTypeSetting")
-		switch(type) {
+		switch (type) {
 			case "normal":
 				ApiRequest("termSearch")
 				break
@@ -103,51 +103,72 @@ class ParabibleHeader extends React.Component {
 	}
 
 	render() {
-		let nearItemList = [{
-				key: 'previousChapter',
-				name: "",
-				iconProps: {
-					iconName: 'ChevronLeftSmall'
-				},
-				onClick: () => this.moveChapter(-1)
-			}, {
-				key: 'location',
-				name: this.state.reference ? this.state.reference.book + " " + this.state.reference.chapter : "Select a chapter",
-				style: { fontWeight: "bold", fontSize: "large" },
-				iconProps: {
-					iconName: 'Dictionary',
-					style: {
-						color: 'black'
-					}
-				},
-				onClick: this.props.showBookSelector
-			}, {
-				key: 'nextChapter',
-				name: "",
-				iconProps: {
-					iconName: 'ChevronRightSmall'
-				},
-				onClick: () => this.moveChapter(1)
+		const referenceText = (currentReference, screenSizeIndex) => {
+			if (!currentReference) {
+				return "Select a chapter"
 			}
+			else {
+				const bk = currentReference.book
+				const ch = currentReference.chapter
+				if (screenSizeIndex < 2) {
+					return bookDetails.find(b => b.name === bk).abbreviation + " " + ch
+				}
+				else {
+					return bk + " " + ch
+				}
+			}
+		}
+
+		let nearItemList = [{
+			key: 'previousChapter',
+			name: "",
+			iconProps: {
+				iconName: 'ChevronLeftSmall'
+			},
+			onClick: () => this.moveChapter(-1)
+		}, {
+			key: 'location',
+			name: referenceText(this.state.reference, this.state.screenSizeIndex),
+			style: { fontWeight: "bold", fontSize: "large" },
+			iconProps: {
+				iconName: 'Dictionary',
+				style: {
+					color: 'black'
+				}
+			},
+			onClick: this.props.showBookSelector
+		}, {
+			key: 'nextChapter',
+			name: "",
+			iconProps: {
+				iconName: 'ChevronRightSmall'
+			},
+			onClick: () => this.moveChapter(1)
+		}
 		]
 
 		const externalLinkItems = [{
-				key: 'section',
-				itemType: ContextualMenuItemType.Header,
-				name: "Open Externally"
-			}, {
-				key: 'biblebento',
-				name: "BibleBento",
-				iconProps: {
-					iconName: 'Link'
-				},
-				onClick: () => {
-					const chapter = this.state.reference.chapter
-					const currentBookDetail = bookDetails.find(b => b.name == this.state.reference.book)
-					const bentoBook = currentBookDetail.bentoBook
-					window.open(`https://biblebento.com/index.html?bhs&${bentoBook}.${chapter}.1`,'_blank')
-				}
+			key: 'section',
+			itemType: ContextualMenuItemType.Header,
+			name: "Open Externally"
+		}, {
+			key: 'biblebento',
+			name: "BibleBento",
+			iconProps: {
+				iconName: 'Link'
+			},
+			onClick: () => {
+				const chapter = this.state.reference.chapter
+				const currentBookDetail = bookDetails.find(b => b.name == this.state.reference.book)
+				const bentoBook = currentBookDetail.bentoBook
+				window.open(`https://biblebento.com/index.html?bhs&${bentoBook}.${chapter}.1`, '_blank')
+				ga('send', {
+					hitType: 'event',
+					eventCategory: 'externalLink',
+					eventAction: "BibleBento"
+				})
 			}
+		}
 		]
 		//Fixes #18
 		if (!isNewTestament(this.state.reference)) {
@@ -161,11 +182,34 @@ class ParabibleHeader extends React.Component {
 					const chapter = this.state.reference.chapter
 					const currentBookDetail = bookDetails.find(b => b.name == this.state.reference.book)
 					const shebanqBook = currentBookDetail.shebanqBook
-					window.open(`http://shebanq.ancient-data.org/hebrew/text?book=${shebanqBook}&chapter=${chapter}&mr=m`,'_blank')
+					window.open(`http://shebanq.ancient-data.org/hebrew/text?book=${shebanqBook}&chapter=${chapter}&mr=m`, '_blank')
+					ga('send', {
+						hitType: 'event',
+						eventCategory: 'externalLink',
+						eventAction: "Shebanq"
+					})
 				}
 			})
 		}
-		
+
+		const youtubeTutorials = {
+			key: 'youtubeTutorials',
+			name: this.state.screenSizeIndex === 3 ? "" : "Tutorial Videos!",
+			iconProps: {
+				iconName: 'MSNVideosSolid',
+				style: {
+					color: '#A80000'
+				}
+			},
+			onClick: () => {
+				window.open(`https://www.youtube.com/watch?v=5QcU0HTP2yg&list=PLIgxXpfu-c4lFsUTsEXtDsbr6HxBzIcAf&index=2&t=0s`, '_blank')
+				ga('send', {
+					hitType: 'event',
+					eventCategory: 'externalLink',
+					eventAction: "youtubeTutorials"
+				})
+			}
+		}
 		if (this.state.screenSizeIndex > 2) {
 			nearItemList.push({
 				key: 'external',
@@ -173,11 +217,11 @@ class ParabibleHeader extends React.Component {
 				iconProps: {
 					iconName: 'OpenInNewWindow'
 				},
-				subMenuProps: { items: externalLinkItems}
-			})
+				subMenuProps: { items: externalLinkItems }
+			}, youtubeTutorials)
 		}
 
-		const searchTermMenuItems = this.state.searchTerms.map(t => generateSearchTermMenuItem({uid:t.uid}))
+		const searchTermMenuItems = this.state.searchTerms.map(t => generateSearchTermMenuItem({ uid: t.uid }))
 
 		const menuRange = {
 			"field": "searchRangeSetting",
@@ -235,7 +279,7 @@ class ParabibleHeader extends React.Component {
 			const requiredIndex = ntItems.findIndex(i => i.name === this.state.textsToDisplayMainNT[0])
 			ntItems[requiredIndex]["disabled"] = true
 		}
-		
+
 		const menuOTTextsToDisplayMain = {
 			"field": "textsToDisplayMainOT",
 			"items": otItems
@@ -247,25 +291,25 @@ class ParabibleHeader extends React.Component {
 		}
 		const ntTextsToDisplayMainItems = this.generateSettingsMenu(menuNTTextsToDisplayMain, true)
 		const textsToDisplayMainItems = [{
-				key: 'otsection',
-				itemType: ContextualMenuItemType.Section,
-				sectionProps: {
-					topDivider: true,
-					bottomDivider: true,
-					title: 'Old Testament',
-					items: otTextsToDisplayMainItems
-				}
-			},
-			{
-				key: 'ntsection',
-				itemType: ContextualMenuItemType.Section,
-				sectionProps: {
-					topDivider: true,
-					bottomDivider: true,
-					title: 'New Testament',
-					items: ntTextsToDisplayMainItems
-				}
+			key: 'otsection',
+			itemType: ContextualMenuItemType.Section,
+			sectionProps: {
+				topDivider: true,
+				bottomDivider: true,
+				title: 'Old Testament',
+				items: otTextsToDisplayMainItems
 			}
+		},
+		{
+			key: 'ntsection',
+			itemType: ContextualMenuItemType.Section,
+			sectionProps: {
+				topDivider: true,
+				bottomDivider: true,
+				title: 'New Testament',
+				items: ntTextsToDisplayMainItems
+			}
+		}
 		]
 		// const menuTextsToDisplaySearch = { 
 		// 	"field": "textsToDisplaySearch", 
@@ -280,7 +324,7 @@ class ParabibleHeader extends React.Component {
 		// TODO: whatever is required to not force the WLC
 		// textsToDisplaySearchItems[0]["disabled"] = true
 
-		
+
 		const searchSettingsItems = [
 			{
 				key: 'searchRange',
@@ -297,13 +341,13 @@ class ParabibleHeader extends React.Component {
 				},
 				subMenuProps: { items: searchFilterItems }
 			}, {
-			// 	key: 'searchType',
-			// 	name: 'Search Type',
-			// 	iconProps: {
-			// 		iconName: "Library"
-			// 	},
-			// 	subMenuProps: { items: searchTypeItems }
-			// }, {
+				// 	key: 'searchType',
+				// 	name: 'Search Type',
+				// 	iconProps: {
+				// 		iconName: "Library"
+				// 	},
+				// 	subMenuProps: { items: searchTypeItems }
+				// }, {
 				key: 'highlight',
 				name: 'Highlight Terms',
 				iconProps: {
@@ -349,13 +393,13 @@ class ParabibleHeader extends React.Component {
 					iconName: "ListMirrored"
 				},
 				subMenuProps: { "items": textsToDisplayMainItems }
-			// }, {
-			// 	key: 'textViewSearchSettings',
-			// 	name: 'Search Results Texts', //Parallel View? Syntax Diagram? Highlight Search Terms?
-			// 	iconProps: {
-			// 		iconName: "SetAction"
-			// 	},
-			// 	subMenuProps: { "items": textsToDisplaySearchItems }
+				// }, {
+				// 	key: 'textViewSearchSettings',
+				// 	name: 'Search Results Texts', //Parallel View? Syntax Diagram? Highlight Search Terms?
+				// 	iconProps: {
+				// 		iconName: "SetAction"
+				// 	},
+				// 	subMenuProps: { "items": textsToDisplaySearchItems }
 			}, {
 				key: 'morphologySettings',
 				name: 'Morphology Settings', //Which fields to show
@@ -388,6 +432,9 @@ class ParabibleHeader extends React.Component {
 			subMenuProps: { items: searchTermMenuItems }
 		}
 
+		if (this.state.screenSizeIndex <= 2) {
+			generalSettingsItems.push(youtubeTutorials)
+		}
 		const rightItemList = [
 			{
 				key: "searchSettings",
@@ -403,7 +450,7 @@ class ParabibleHeader extends React.Component {
 			},
 		]
 
-		var farItemList = {}
+		let farItemList = {}
 		switch (this.state.screenSizeIndex) {
 			case 0:
 			case 1:
@@ -411,11 +458,13 @@ class ParabibleHeader extends React.Component {
 					key: "faritems",
 					name: "",
 					icon: "Waffle",
-					subMenuProps: { items: [
-						searchMenuItem,
-						searchTermParentItem,
-						...rightItemList
-					]}
+					subMenuProps: {
+						items: [
+							searchMenuItem,
+							searchTermParentItem,
+							...rightItemList
+						]
+					}
 				}]
 				if (this.state.searchTerms.length === 0)
 					farItemList[0].subMenuProps.items.splice(1, 1)

@@ -32,51 +32,25 @@ class Content extends React.Component {
 					// 60 gives a bit of breathing room and makes it clear there's content above.
 					document.querySelector("#headerbar ~ div").scrollTop -= 60
 				}
-			}, 700)
+			}, 1000)
 		}
 	}
 	render() {
-		if (!this.state.bibledata) {
+		if (!this.state.bibledata || !Array.isArray(DataFlow.get("bibledata"))) {
 			// We don't really want a blank slate...
 			ApiRequest("chapterText")
 			return <div />
 		}
 		let btextHighlight = DataFlow.get("bibledata")
-		if (DataFlow.get("highlightTermsSetting") && DataFlow.get("searchHighlights")) {
-			const sh = DataFlow.get("searchHighlights")
-			const hSet = Object.keys(sh).reverse().map(k => ({
-				uid: k,
-				highlight: new Set(sh[k])
-			}))
-			const highlightID = (wid) => {
-				for (let h in hSet) {
-					if (hSet[h].highlight.has(wid)) {
-						return hSet[h].uid
-					}
-				}
-				return false
-			}
-			Object.keys(btextHighlight).forEach(rid => {
-				// TODO: this could be a lot better I think but we'll worry when we need to highlight the lxx and sbl
-				if (btextHighlight[rid].hasOwnProperty("wlc")) {
-					btextHighlight[rid].wlc.forEach((au, i) => {
-						au.forEach((wbit, j) => {
-							const hid = highlightID(wbit.wid)
-							if (hid !== false)
-								btextHighlight[rid].wlc[i][j]["searchHighlight"] = hid
-						})
-					})
-				}
-			})
-		}
 		const licenseList = new Set()
-		Object.keys(btextHighlight).forEach(rid => 
-			Object.keys(btextHighlight[rid]).forEach(k => licenseList.add(k))
+		btextHighlight.forEach(verse =>
+			Object.keys(verse).forEach(k => licenseList.add(k))
 		)
+		licenseList.delete("rid")
 		const isNT = isNewTestament(DataFlow.get("reference"))
 		const ttd = DataFlow.get(isNT ? "textsToDisplayMainNT" : "textsToDisplayMainOT")
-		const orderedColumns = [...licenseList].sort((a, b) => ttd.indexOf(a) - ttd.indexOf(b) )
-		
+		const orderedColumns = [...licenseList].sort((a, b) => ttd.indexOf(a) - ttd.indexOf(b))
+
 		return (
 			<div style={{
 				margin: "auto",
@@ -85,16 +59,15 @@ class Content extends React.Component {
 				direction: licenseList.has("wlc") ? "rtl" : "ltr",
 				userSelect: DataFlow.get("screenSizeIndex") > 2 ? "text" : "none",
 				cursor: "text"
-				}}>
+			}}>
 				{this.state.screenSizeIndex > 1 ? <ContentHeader openColumns={orderedColumns} isNT={isNT} /> : null}
-				{Object.keys(btextHighlight).map(k => 
+				{btextHighlight.map(verse =>
 					<RidView
-						key={k}
-						rid={+k}
-						ridData={btextHighlight[k]}
+						key={verse.rid}
+						ridDataWithRid={verse}
 						activeWid={this.state.activeWid} />
 				)}
-				<div style={{direction:"ltr", fontFamily:"sans-serif", fontSize: "x-small", marginTop: "40px", paddingTop: "10px", borderTop: "1px solid #aaa"}}>
+				<div style={{ direction: "ltr", fontFamily: "sans-serif", fontSize: "x-small", marginTop: "40px", paddingTop: "10px", borderTop: "1px solid #aaa" }}>
 					<LicenseView license={orderedColumns} />
 				</div>
 			</div>
