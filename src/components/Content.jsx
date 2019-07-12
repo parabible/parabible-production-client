@@ -42,33 +42,6 @@ class Content extends React.Component {
 			return <div />
 		}
 		let btextHighlight = DataFlow.get("bibledata")
-		if (DataFlow.get("highlightTermsSetting") && DataFlow.get("searchHighlights")) {
-			const sh = DataFlow.get("searchHighlights")
-			const hSet = Object.keys(sh).reverse().map(k => ({
-				uid: k,
-				highlight: new Set(sh[k])
-			}))
-			const highlightID = (wid) => {
-				for (let h in hSet) {
-					if (hSet[h].highlight.has(wid)) {
-						return hSet[h].uid
-					}
-				}
-				return false
-			}
-			btextHighlight.forEach(verse => {
-				// TODO: this could be a lot better I think but we'll worry when we need to highlight the lxx and sbl
-				if (verse.rid.hasOwnProperty("wlc")) {
-					verse.rid.wlc.forEach((au, i) => {
-						au.forEach((wbit, j) => {
-							const hid = highlightID(wbit.wid)
-							if (hid !== false)
-								btextHighlight[verse.rid].wlc[i][j]["searchHighlight"] = hid
-						})
-					})
-				}
-			})
-		}
 		const licenseList = new Set()
 		btextHighlight.forEach(verse =>
 			Object.keys(verse).forEach(k => licenseList.add(k))
