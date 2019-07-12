@@ -90,6 +90,7 @@ class Content extends React.Component {
 				{this.state.screenSizeIndex > 1 ? <ContentHeader openColumns={orderedColumns} isNT={isNT} /> : null}
 				{btextHighlight.map(verse =>
 					<RidView
+						key={verse.rid}
 						ridDataWithRid={verse}
 						activeWid={this.state.activeWid} />
 				)}
