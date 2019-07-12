@@ -11,12 +11,13 @@ class Content extends React.Component {
 		super(props)
 		this.state = DataFlow.bindState([
 			"bibledata",
-			"activeWid",
-			"searchTerms",
-			"searchHighlights",
-			"highlightTermsSetting",
+			"activeWid", ,
 			"screenSizeIndex"
 		], this.setState.bind(this))
+
+		DataFlow.watch("searchTerms", () => this.forceUpdate())
+		DataFlow.watch("searchHighlights", () => this.forceUpdate())
+		DataFlow.watch("highlightTermsSetting", () => this.forceUpdate())
 	}
 	componentDidMount() {
 		if (DataFlow.get("activeVerse")) {
