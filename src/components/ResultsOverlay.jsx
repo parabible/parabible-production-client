@@ -20,6 +20,8 @@ const ResultsOverlay = ({ panelIsVisible, hideOverlay, showPopout }) => {
 			left: 0,
 			right: 0,
 			background: "rgba(255, 255, 255, 0.9)",
+			userSelect: DataFlow.get("screenSizeIndex") > 2 ? "text" : "none",
+			cursor: "text",
 			overflowY: "scroll",
 			WebkitOverflowScrolling: "touch"
 		}}>
@@ -47,41 +49,36 @@ const ResultsOverlay = ({ panelIsVisible, hideOverlay, showPopout }) => {
 					iconProps={{ iconName: 'ChromeClose' }} />
 			</div>
 
-			<span style={{
-				userSelect: DataFlow.get("screenSizeIndex") > 2 ? "text" : "none",
-				cursor: "text"
-			}}>
-				<List
-					items={DataFlow.get("searchResults").results}
-					onRenderCell={(item, index) => (
+			<List
+				items={DataFlow.get("searchResults").results}
+				onRenderCell={(item, index) => (
+					<div style={{
+						display: "flex",
+						flexDirection: multiline ? "column" : "row",
+						padding: multiline ? "5px" : "5px 15px",
+						cursor: "pointer"
+					}} className="resultsRow">
 						<div style={{
-							display: "flex",
-							flexDirection: multiline ? "column" : "row",
-							padding: multiline ? "5px" : "5px 15px",
-							cursor: "pointer"
-						}} className="resultsRow">
-							<div style={{
-								flexBasis: multiline ? "" : "100px",
-								fontFamily: "Open Sans",
-								fontSize: "small",
-								fontWeight: "bold",
-								textTransform: "uppercase"
-							}}>
-								<a href={generateURL(item.verses[0])} className="verseUrl">
-									{generateReference(item.verses, useAbbreviation)}
-								</a>
-							</div>
-							<div style={{ flex: 1 }}>
-								{item.text.map(t => (
-									<RidView
-										ridDataWithRid={t}
-										activeWid={-1} />
-								))}
-							</div>
+							flexBasis: multiline ? "" : "100px",
+							fontFamily: "Open Sans",
+							fontSize: "small",
+							fontWeight: "bold",
+							textTransform: "uppercase"
+						}}>
+							<a href={generateURL(item.verses[0])} className="verseUrl">
+								{generateReference(item.verses, useAbbreviation)}
+							</a>
 						</div>
-					)}
-				/>
-			</span>
+						<div style={{ flex: 1 }}>
+							{item.text.map(t => (
+								<RidView
+									ridDataWithRid={t}
+									activeWid={-1} />
+							))}
+						</div>
+					</div>
+				)}
+			/>
 		</div>
 	)
 }
