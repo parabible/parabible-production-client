@@ -223,7 +223,7 @@ class ParabibleHeader extends React.Component {
 
 		const searchTermMenuItems = this.state.searchTerms.map(t => generateSearchTermMenuItem({ uid: t.uid }))
 
-		const menuRange = {
+		const menuSyntaxFilter = {
 			"field": "searchRangeSetting",
 			"items": [
 				{ name: 'phrase', title: 'Phrase' },
@@ -232,7 +232,7 @@ class ParabibleHeader extends React.Component {
 				{ name: 'verse', title: 'Verse' }
 			]
 		}
-		const searchRangeItems = this.generateSettingsMenu(menuRange)
+		const searchSyntaxFilterItems = this.generateSettingsMenu(menuSyntaxFilter)
 
 
 		// const menuType = {
@@ -247,7 +247,7 @@ class ParabibleHeader extends React.Component {
 		// const searchTypeItems = this.generateSettingsMenu(menuType)
 
 
-		const menuFilter = {
+		const menuCorpusFilter = {
 			"field": "searchFilterSetting",
 			"items": [
 				{ name: 'none', title: 'None' },
@@ -258,7 +258,7 @@ class ParabibleHeader extends React.Component {
 				// TODO: { name: 'custom', title: 'Custom' }
 			]
 		}
-		const searchFilterItems = this.generateSettingsMenu(menuFilter)
+		const searchCorpusFilterItems = this.generateSettingsMenu(menuCorpusFilter)
 
 
 		// TODO: whatever is required to not force the WLC
@@ -328,18 +328,18 @@ class ParabibleHeader extends React.Component {
 		const searchSettingsItems = [
 			{
 				key: 'searchRange',
-				name: 'Search Range',
+				name: 'Syntax Range',
 				iconProps: {
 					iconName: "Switch"
 				},
-				subMenuProps: { items: searchRangeItems }
+				subMenuProps: { items: searchSyntaxFilterItems }
 			}, {
 				key: 'searchFilter',
-				name: 'Search Filter',
+				name: 'Corpus Filter',
 				iconProps: {
 					iconName: "Filter"
 				},
-				subMenuProps: { items: searchFilterItems }
+				subMenuProps: { items: searchCorpusFilterItems }
 			}, {
 				// 	key: 'searchType',
 				// 	name: 'Search Type',
@@ -356,27 +356,6 @@ class ParabibleHeader extends React.Component {
 				onClick: () => DataFlow.set("highlightTermsSetting", !this.state.highlightTermsSetting)
 			}
 		]
-		if (this.state.searchTerms.length > 0) {
-			searchSettingsItems.push({
-				key: 'clearTerms',
-				name: 'Clear Search Terms',
-				iconProps: {
-					iconName: 'Trash',
-					style: {
-						color: 'red'
-					}
-				},
-				onClick: () => {
-					DataFlow.set("searchTerms", [])
-					this.forceUpdate()
-					ga('send', {
-						hitType: 'event',
-						eventCategory: 'searchTerms',
-						eventAction: "removeAll"
-					})
-				}
-			})
-		}
 		//TODO: Add font settings
 		const generalSettingsItems = [
 			// {
@@ -430,6 +409,33 @@ class ParabibleHeader extends React.Component {
 			name: this.state.screenSizeIndex < 2 ? "Search Terms" : "",
 			icon: "CollapseMenu",
 			subMenuProps: { items: searchTermMenuItems }
+		}
+		if (this.state.searchTerms.length > 0) {
+			const clearTerms = {
+				key: 'clearTerms',
+				name: 'Clear Search Terms',
+				iconProps: {
+					iconName: 'Trash',
+					style: {
+						color: 'red'
+					}
+				},
+				onClick: () => {
+					DataFlow.set("searchTerms", [])
+					this.forceUpdate()
+					ga('send', {
+						hitType: 'event',
+						eventCategory: 'searchTerms',
+						eventAction: "removeAll"
+					})
+				}
+			}
+			if (this.state.screenSizeIndex < 3) {
+				searchTermParentItem.subMenuProps.items.push(clearTerms)
+			}
+			else {
+				searchSettingsItems.push(clearTerms)
+			}
 		}
 
 		if (this.state.screenSizeIndex <= 2) {

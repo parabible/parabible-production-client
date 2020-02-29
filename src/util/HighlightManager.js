@@ -15,7 +15,7 @@ class HighlightManager {
     }
 
     shouldHighlight(wid) {
-        return _highlightMap.has(wid)
+        return _highlightMap.has(wid) && DataFlow.get("highlightTermsSetting")
     }
 
     getHighlightColor(wid) {
@@ -23,15 +23,18 @@ class HighlightManager {
     }
 
     updateHighlightMap() {
-        const search_terms_setting = DataFlow.get("searchTerms")
-        const search_highlights = DataFlow.get("searchHighlights")
+        const search_terms_setting = DataFlow.get("searchTerms") || []
+        const search_highlights = DataFlow.get("searchHighlights") || {}
         _highlightMap.clear()
         Object.keys(search_highlights).reverse().forEach(hKey => {
             const term = search_terms_setting.find(st => st.uid === hKey)
-            const color = term && term.hasOwnProperty("color") ? term.color : DEFAULT_COLOR
-            search_highlights[hKey].forEach(wid => {
-                _highlightMap.set(wid, color)
-            })
+            if (term) {
+                // The search term has probably been deleted
+                const color = term.hasOwnProperty("color") ? term.color : DEFAULT_COLOR
+                search_highlights[hKey].forEach(wid => {
+                    _highlightMap.set(wid, color)
+                })
+            }
         })
     }
 }

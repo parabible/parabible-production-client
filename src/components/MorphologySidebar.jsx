@@ -100,7 +100,7 @@ class MorphologySidebar extends React.Component {
 						alignItems: "center",
 						padding: "3px 10px",
 						cursor: "pointer",
-						userSelect: "none"
+						userSelect: "text"
 					}, highlightData)}
 					onClick={() => this.toggleTermProperties(d)}>
 					<div className="mheading" style={{
