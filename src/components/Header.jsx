@@ -328,14 +328,14 @@ class ParabibleHeader extends React.Component {
 		const searchSettingsItems = [
 			{
 				key: 'searchRange',
-				name: 'Syntax Range',
+				name: 'Syntax',
 				iconProps: {
 					iconName: "Switch"
 				},
 				subMenuProps: { items: searchSyntaxFilterItems }
 			}, {
 				key: 'searchFilter',
-				name: 'Corpus Filter',
+				name: 'Corpus',
 				iconProps: {
 					iconName: "Filter"
 				},
