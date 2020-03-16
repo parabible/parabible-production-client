@@ -8,8 +8,7 @@ document.addEventListener('copy', (e) => {
 	//                         [but the C range includes stuff like sof pasuq and sin/shin dots])
 	// 05BD      = Meteg
 	// 05C0      = PASEQ {legarmeh}
-	// 05C7      = Qamats Qatan
-    const strippedText = selectedText.replace(/[\u0590-\u05AF\u05BD\u05C0\u05C7]/g,"")
+    const strippedText = selectedText.replace(/[\u0590-\u05AF\u05BD\u05C0]/g,"")
 
     e.clipboardData.setData('text/plain', strippedText)
 
