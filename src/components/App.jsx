@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { registerIcons } from '@uifabric/styling'
+import { registerIcons, loadTheme } from '@uifabric/styling'
 import {
 	ChevronLeft as ChevronLeftIcon,
 	ChevronRight as ChevronRightIcon,
@@ -70,6 +70,33 @@ registerIcons({
 		Info: <InfoIcon width="16" height="100%" />,
 	}
 })
+
+const myTheme = loadTheme({
+	palette: {
+		themePrimary: '#106ebe',
+		themeLighterAlt: '#f3f8fc',
+		themeLighter: '#d1e4f5',
+		themeLight: '#abcdec',
+		themeTertiary: '#61a1d9',
+		themeSecondary: '#267cc7',
+		themeDarkAlt: '#0e62ac',
+		themeDark: '#0c5391',
+		themeDarker: '#093d6b',
+		neutralLighterAlt: '#eeeeee',
+		neutralLighter: '#eaeaea',
+		neutralLight: '#e1e1e1',
+		neutralQuaternaryAlt: '#d1d1d1',
+		neutralQuaternary: '#c8c8c8',
+		neutralTertiaryAlt: '#c0c0c0',
+		neutralTertiary: '#a19f9d',
+		neutralSecondary: '#605e5c',
+		neutralPrimaryAlt: '#3b3a39',
+		neutralPrimary: '#323130',
+		neutralDark: '#201f1e',
+		black: '#000000',
+		white: '#f4f4f4',
+	}
+});
 
 import Header from 'components/Header'
 import Content from 'components/Content'
