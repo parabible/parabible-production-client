@@ -3,6 +3,54 @@ import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar'
 import { ContextualMenuItemType } from 'office-ui-fabric-react/lib/ContextualMenu'
 import generateSearchTermMenuItem from './SearchTermMenuItem'
 
+import { registerIcons } from '@uifabric/styling'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+	faYoutube,
+} from '@fortawesome/free-brands-svg-icons'
+import {
+	faSquare,
+	faCheckSquare,
+} from '@fortawesome/free-regular-svg-icons'
+import {
+	faTimes,
+	faChevronLeft,
+	faChevronRight,
+	faChevronDown,
+	faPlus,
+	faColumns,
+	faTasks,
+	faFilter,
+	faRulerHorizontal,
+	faExternalLinkAlt,
+	faBible,
+	faPrint,
+} from '@fortawesome/free-solid-svg-icons'
+
+registerIcons({
+  icons: {
+    Clear: <FontAwesomeIcon icon={faTimes} />,
+    Close: <FontAwesomeIcon icon={faTimes} />,
+    Chromeclose: <FontAwesomeIcon icon={faTimes} />,
+    Square: <FontAwesomeIcon icon={faSquare} />,
+    CheckSquare: <FontAwesomeIcon icon={faCheckSquare} />,
+	ChevronLeftSmall: <FontAwesomeIcon icon={faChevronLeft} />,
+	ChevronLeft: <FontAwesomeIcon icon={faChevronLeft} />,
+	ChevronRightSmall: <FontAwesomeIcon icon={faChevronRight} />,
+	ChevronRight: <FontAwesomeIcon icon={faChevronRight} />,
+	ChevronDown: <FontAwesomeIcon icon={faChevronDown} />,
+	Add: <FontAwesomeIcon icon={faPlus} />,
+	Columns: <FontAwesomeIcon icon={faColumns} />,
+	Tasks: <FontAwesomeIcon icon={faTasks} />,
+	Filter: <FontAwesomeIcon icon={faFilter} />,
+	Switch: <FontAwesomeIcon icon={faRulerHorizontal} />,
+	OpenInNewWindow: <FontAwesomeIcon icon={faExternalLinkAlt} />,
+	Dictionary: <FontAwesomeIcon icon={faBible} />,
+	Youtube: <FontAwesomeIcon icon={faYoutube} />,
+	Print: <FontAwesomeIcon icon={faPrint} />,
+  }
+});
+
 import DataFlow from 'util/DataFlow'
 import ApiRequest from 'util/ApiRequest'
 import bookDetails from 'data/bookDetails'
@@ -53,9 +101,8 @@ class ParabibleHeader extends React.Component {
 			key: item.name,
 			name: item.title,
 			disabled: item.disabled || false,
-			iconProps: {
-				iconName: isChecked(item.name) ? "CheckboxComposite" : "Checkbox"
-			},
+			iconProps: { iconName: isChecked(item.name) ? "CheckSquare" : "Square" }
+			,
 			onClick: clickHandler(item.name)
 		}))
 	}
@@ -196,7 +243,7 @@ class ParabibleHeader extends React.Component {
 			key: 'youtubeTutorials',
 			name: this.state.screenSizeIndex === 3 ? "" : "Tutorial Videos!",
 			iconProps: {
-				iconName: 'MSNVideosSolid',
+				iconName: 'Youtube',
 				style: {
 					color: '#A80000'
 				}
@@ -351,7 +398,7 @@ class ParabibleHeader extends React.Component {
 				key: 'highlight',
 				name: 'Highlight Terms',
 				iconProps: {
-					iconName: this.state.highlightTermsSetting ? "CheckboxComposite" : "Checkbox"
+					iconName: this.state.highlightTermsSetting ? "CheckSquare" : "Square"
 				},
 				onClick: () => DataFlow.set("highlightTermsSetting", !this.state.highlightTermsSetting)
 			}
@@ -369,7 +416,7 @@ class ParabibleHeader extends React.Component {
 				key: 'textViewMainSettings',
 				name: 'Display Texts', //Parallel View? Syntax Diagram? Highlight Search Terms?
 				iconProps: {
-					iconName: "ListMirrored"
+					iconName: "Columns"
 				},
 				subMenuProps: { "items": textsToDisplayMainItems }
 				// }, {
@@ -384,13 +431,13 @@ class ParabibleHeader extends React.Component {
 				name: 'Morphology Settings', //Which fields to show
 				onClick: this.props.showMorphSettings,
 				iconProps: {
-					iconName: "GroupedList"
+					iconName: "Tasks"
 				}
 			}, {
 				key: "stripDiacriticsToggle",
 				name: "Strip Diacritics (on copy)",
 				iconProps: {
-					iconName: this.state.stripDiacritics ? "CheckboxComposite" : "Checkbox"
+					iconName: this.state.stripDiacritics ? "CheckSquare" : "Square"
 				},
 				onClick: function () {
 					DataFlow.set("stripDiacritics", !DataFlow.get("stripDiacritics"))
