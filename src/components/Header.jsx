@@ -3,54 +3,6 @@ import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar'
 import { ContextualMenuItemType } from 'office-ui-fabric-react/lib/ContextualMenu'
 import generateSearchTermMenuItem from './SearchTermMenuItem'
 
-import { registerIcons } from '@uifabric/styling'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-	faYoutube,
-} from '@fortawesome/free-brands-svg-icons'
-import {
-	faSquare,
-	faCheckSquare,
-} from '@fortawesome/free-regular-svg-icons'
-import {
-	faTimes,
-	faChevronLeft,
-	faChevronRight,
-	faChevronDown,
-	faPlus,
-	faColumns,
-	faTasks,
-	faFilter,
-	faRulerHorizontal,
-	faExternalLinkAlt,
-	faBible,
-	faPrint,
-} from '@fortawesome/free-solid-svg-icons'
-
-registerIcons({
-  icons: {
-    Clear: <FontAwesomeIcon icon={faTimes} />,
-    Close: <FontAwesomeIcon icon={faTimes} />,
-    Chromeclose: <FontAwesomeIcon icon={faTimes} />,
-    Square: <FontAwesomeIcon icon={faSquare} />,
-    CheckSquare: <FontAwesomeIcon icon={faCheckSquare} />,
-	ChevronLeftSmall: <FontAwesomeIcon icon={faChevronLeft} />,
-	ChevronLeft: <FontAwesomeIcon icon={faChevronLeft} />,
-	ChevronRightSmall: <FontAwesomeIcon icon={faChevronRight} />,
-	ChevronRight: <FontAwesomeIcon icon={faChevronRight} />,
-	ChevronDown: <FontAwesomeIcon icon={faChevronDown} />,
-	Add: <FontAwesomeIcon icon={faPlus} />,
-	Columns: <FontAwesomeIcon icon={faColumns} />,
-	Tasks: <FontAwesomeIcon icon={faTasks} />,
-	Filter: <FontAwesomeIcon icon={faFilter} />,
-	Switch: <FontAwesomeIcon icon={faRulerHorizontal} />,
-	OpenInNewWindow: <FontAwesomeIcon icon={faExternalLinkAlt} />,
-	Dictionary: <FontAwesomeIcon icon={faBible} />,
-	Youtube: <FontAwesomeIcon icon={faYoutube} />,
-	Print: <FontAwesomeIcon icon={faPrint} />,
-  }
-});
-
 import DataFlow from 'util/DataFlow'
 import ApiRequest from 'util/ApiRequest'
 import bookDetails from 'data/bookDetails'
@@ -448,13 +400,13 @@ class ParabibleHeader extends React.Component {
 		const searchMenuItem = {
 			key: "search",
 			name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "Search" : "",
-			icon: "Search",
+			iconProps: { iconName: "Search" },
 			onClick: this.doSearch.bind(this)
 		}
 		const searchTermParentItem = {
 			key: "searchTerms",
 			name: this.state.screenSizeIndex < 2 ? "Search Terms" : "",
-			icon: "CollapseMenu",
+			iconProps: { iconName: "CollapseMenu" },
 			subMenuProps: { items: searchTermMenuItems }
 		}
 		if (this.state.searchTerms.length > 0) {
@@ -492,13 +444,13 @@ class ParabibleHeader extends React.Component {
 			{
 				key: "searchSettings",
 				name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "Search Tools" : "",
-				icon: "Settings",
+				iconProps: { iconName: "Settings" },
 				subMenuProps: { items: searchSettingsItems }
 			},
 			{
 				key: "generalSettings",
 				name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "View" : "",
-				icon: "ColumnOptions",
+				iconProps: { iconName: "ColumnOptions" },
 				subMenuProps: { items: generalSettingsItems }
 			},
 		]
@@ -510,7 +462,7 @@ class ParabibleHeader extends React.Component {
 				farItemList = [{
 					key: "faritems",
 					name: "",
-					icon: "Waffle",
+					iconProps: { iconName: "CollapseMenu" },
 					subMenuProps: {
 						items: [
 							searchMenuItem,

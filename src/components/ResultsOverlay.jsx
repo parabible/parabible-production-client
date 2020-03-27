@@ -46,7 +46,7 @@ const ResultsOverlay = ({ panelIsVisible, hideOverlay, showPopout }) => {
 					iconProps={{ iconName: 'Print' }} /> : ""}
 				<PrimaryButton
 					onClick={hideOverlay}
-					iconProps={{ iconName: 'ChromeClose' }} />
+					iconProps={{ iconName: 'Close' }} />
 			</div>
 
 			<List
