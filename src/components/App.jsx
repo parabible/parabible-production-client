@@ -72,6 +72,10 @@ registerIcons({
 })
 
 const myTheme = loadTheme({
+	defaultFontStyle: { 
+		fontFamily: 'SelawikRegular'
+		/* can add stuff like font-weight here as well */
+	},
 	palette: {
 		themePrimary: '#106ebe',
 		themeLighterAlt: '#f3f8fc',
