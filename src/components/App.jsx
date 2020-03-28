@@ -11,6 +11,8 @@ import {
 	Square as CheckboxEmptyIcon,
 	XSquare as CheckboxCheckedIcon,
 
+	Check as CheckIcon,
+
 	Columns as ColumnsIcon,
 	Edit3 as EditIcon,
 	Trash2 as TrashIcon,
@@ -42,11 +44,14 @@ registerIcons({
 		ChevronDown: <ChevronDownIcon width="16" height="100%" />,
 
 		Close: <CloseIcon width="16" height="100%" />,
+		Cancel: <CloseIcon width="16" height="100%" />,
 		Clear: <CloseIcon width="16" height="100%" />,
 		Print: <PrintIcon width="16" height="100%" />,
 
 		CheckSquare: <CheckboxCheckedIcon width="16" height="100%" />,
 		Square: <CheckboxEmptyIcon width="16" height="100%" />,
+
+		CheckMark: <CheckIcon width="16" height="100%" />,
 
 		OpenInNewWindow: <ExternalLinkIcon width="16" height="100%" />,
 		Youtube: <YoutubeIcon width="16" height="100%" />,
