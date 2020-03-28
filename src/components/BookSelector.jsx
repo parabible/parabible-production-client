@@ -43,7 +43,9 @@ class BookSelector extends React.Component {
 				onDismiss={this.props.hidePanel}
 				type={PanelType.smallFixedNear}
 				isLightDismiss={true}
+				isHiddenOnDismiss={true}
 				headerText='Choose New Chapter'
+				headerTextProps={{ style: { fontSize: "medium", fontWeight: 400 } }}
 				closeButtonAriaLabel='Close'
 			>
 				<Nav
