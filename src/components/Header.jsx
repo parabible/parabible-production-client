@@ -53,9 +53,8 @@ class ParabibleHeader extends React.Component {
 			key: item.name,
 			name: item.title,
 			disabled: item.disabled || false,
-			iconProps: {
-				iconName: isChecked(item.name) ? "CheckboxComposite" : "Checkbox"
-			},
+			iconProps: { iconName: isChecked(item.name) ? "CheckSquare" : "Square" }
+			,
 			onClick: clickHandler(item.name)
 		}))
 	}
@@ -129,7 +128,7 @@ class ParabibleHeader extends React.Component {
 		}, {
 			key: 'location',
 			name: referenceText(this.state.reference, this.state.screenSizeIndex),
-			style: { fontWeight: "bold", fontSize: "large" },
+			style: { fontSize: "130%" },
 			iconProps: {
 				iconName: 'Dictionary',
 				style: {
@@ -196,7 +195,7 @@ class ParabibleHeader extends React.Component {
 			key: 'youtubeTutorials',
 			name: this.state.screenSizeIndex === 3 ? "" : "Tutorial Videos!",
 			iconProps: {
-				iconName: 'MSNVideosSolid',
+				iconName: 'Youtube',
 				style: {
 					color: '#A80000'
 				}
@@ -351,7 +350,7 @@ class ParabibleHeader extends React.Component {
 				key: 'highlight',
 				name: 'Highlight Terms',
 				iconProps: {
-					iconName: this.state.highlightTermsSetting ? "CheckboxComposite" : "Checkbox"
+					iconName: this.state.highlightTermsSetting ? "CheckSquare" : "Square"
 				},
 				onClick: () => DataFlow.set("highlightTermsSetting", !this.state.highlightTermsSetting)
 			}
@@ -369,7 +368,7 @@ class ParabibleHeader extends React.Component {
 				key: 'textViewMainSettings',
 				name: 'Display Texts', //Parallel View? Syntax Diagram? Highlight Search Terms?
 				iconProps: {
-					iconName: "ListMirrored"
+					iconName: "Columns"
 				},
 				subMenuProps: { "items": textsToDisplayMainItems }
 				// }, {
@@ -384,13 +383,13 @@ class ParabibleHeader extends React.Component {
 				name: 'Morphology Settings', //Which fields to show
 				onClick: this.props.showMorphSettings,
 				iconProps: {
-					iconName: "GroupedList"
+					iconName: "Tasks"
 				}
 			}, {
 				key: "stripDiacriticsToggle",
 				name: "Strip Diacritics (on copy)",
 				iconProps: {
-					iconName: this.state.stripDiacritics ? "CheckboxComposite" : "Checkbox"
+					iconName: this.state.stripDiacritics ? "CheckSquare" : "Square"
 				},
 				onClick: function () {
 					DataFlow.set("stripDiacritics", !DataFlow.get("stripDiacritics"))
@@ -401,13 +400,13 @@ class ParabibleHeader extends React.Component {
 		const searchMenuItem = {
 			key: "search",
 			name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "Search" : "",
-			icon: "Search",
+			iconProps: { iconName: "Search" },
 			onClick: this.doSearch.bind(this)
 		}
 		const searchTermParentItem = {
 			key: "searchTerms",
 			name: this.state.screenSizeIndex < 2 ? "Search Terms" : "",
-			icon: "CollapseMenu",
+			iconProps: { iconName: "CollapseMenu" },
 			subMenuProps: { items: searchTermMenuItems }
 		}
 		if (this.state.searchTerms.length > 0) {
@@ -445,13 +444,13 @@ class ParabibleHeader extends React.Component {
 			{
 				key: "searchSettings",
 				name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "Search Tools" : "",
-				icon: "Settings",
+				iconProps: { iconName: "Settings" },
 				subMenuProps: { items: searchSettingsItems }
 			},
 			{
 				key: "generalSettings",
 				name: this.state.screenSizeIndex < 2 || this.state.screenSizeIndex == 4 ? "View" : "",
-				icon: "ColumnOptions",
+				iconProps: { iconName: "ColumnOptions" },
 				subMenuProps: { items: generalSettingsItems }
 			},
 		]
@@ -463,7 +462,7 @@ class ParabibleHeader extends React.Component {
 				farItemList = [{
 					key: "faritems",
 					name: "",
-					icon: "Waffle",
+					iconProps: { iconName: "CollapseMenu" },
 					subMenuProps: {
 						items: [
 							searchMenuItem,

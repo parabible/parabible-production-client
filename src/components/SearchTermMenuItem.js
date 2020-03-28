@@ -5,7 +5,6 @@ import { ContextualMenuItemType } from 'office-ui-fabric-react/lib/ContextualMen
 import { SwatchColorPicker } from 'office-ui-fabric-react/lib/SwatchColorPicker'
 import { ColorPicker } from 'office-ui-fabric-react/lib/ColorPicker'
 
-
 const menuText = (term_data) => {
 	let ret_text = "?"
 	if (term_data.hasOwnProperty("voc_utf8"))
@@ -132,7 +131,7 @@ const generateSearchTermMenuItem = ({ uid }) => {
 					key: 'invert',
 					name: 'Invert',
 					iconProps: {
-						iconName: term.invert ? "CheckboxComposite" : "Checkbox"
+						iconName: term.invert ? "CheckSquare" : "Square"
 					},
 					onClick: () => {
 						const st = DataFlow.get("searchTerms").slice()
