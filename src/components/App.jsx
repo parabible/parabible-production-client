@@ -73,7 +73,7 @@ registerIcons({
 
 const myTheme = loadTheme({
 	defaultFontStyle: { 
-		fontFamily: 'SelawikRegular'
+		fontFamily: 'Ubuntu'
 		/* can add stuff like font-weight here as well */
 	},
 	palette: {

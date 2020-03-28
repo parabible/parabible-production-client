@@ -128,7 +128,7 @@ class ParabibleHeader extends React.Component {
 		}, {
 			key: 'location',
 			name: referenceText(this.state.reference, this.state.screenSizeIndex),
-			style: { fontWeight: "bold", fontSize: "large" },
+			style: { fontSize: "130%" },
 			iconProps: {
 				iconName: 'Dictionary',
 				style: {
