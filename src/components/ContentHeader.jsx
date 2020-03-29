@@ -43,7 +43,7 @@ const styles = {
 const toggleTextDisplay = ({text, on}) => {
     const ref = DataFlow.get("reference")
     const texts = DataFlow.get(isNewTestament(ref) ? "textsToDisplayMainNT" : "textsToDisplayMainOT")
-    if (on)  {
+    if (on && !texts.includes(text))  {
         texts.push(text)
     }
     else {

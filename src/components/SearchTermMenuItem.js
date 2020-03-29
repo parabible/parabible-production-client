@@ -3,8 +3,7 @@ import DataFlow from 'util/DataFlow'
 
 import { ContextualMenuItemType } from 'office-ui-fabric-react/lib/ContextualMenu'
 import { SwatchColorPicker } from 'office-ui-fabric-react/lib/SwatchColorPicker'
-import { ColorPicker } from 'office-ui-fabric-react/lib/ColorPicker'
-
+// import { ColorPicker } from 'office-ui-fabric-react/lib/ColorPicker'
 
 const menuText = (term_data) => {
 	let ret_text = "?"
@@ -39,100 +38,107 @@ const generateSearchTermMenuItem = ({ uid }) => {
 	const menu_text = menuText(term.data)
 
 	const colorMenuSection = [{
-			key: 'section',
-			itemType: ContextualMenuItemType.Divider
-		}, {
-			key: 'color',
-			name: 'Highlight Colour',
-			iconProps: {
-				iconName: 'Trash',
-				style: {
-					color: 'red'
-				}
-			},
-			onRender: () => {
-				let colorOptions = [
-					{ id: 'default', color: "#FF8C00" },
-					{ id: 'green', color: '#107C10' },
-					{ id: 'blue', color: '#00B294' },
-					{ id: 'red', color: '#A80000' }
-				]
-				let selectedId = "default"
-				const customColor = DataFlow.get("searchTerms").find(st => st.uid === uid).color
-				if (customColor) {
-					const idx = colorOptions.findIndex(c => c.color === customColor)
-					if (idx >= 0) {
-						selectedId = colorOptions[idx].id
-						colorOptions.push({ id: 'custom', color: "#888888" })
-					}
-					else {
-						selectedId = "custom"
-						colorOptions.push({ id: 'custom', color: customColor })
-					}
-				}
-				else {
-					selectedId = "default"
+		key: 'section',
+		itemType: ContextualMenuItemType.Divider
+	}, {
+		key: 'color',
+		name: 'Highlight Colour',
+		iconProps: {
+			iconName: 'Trash',
+			style: {
+				color: 'red'
+			}
+		},
+		onRender: () => {
+			let colorOptions = [
+				{ id: 'default', color: "#FF8C00" },
+				{ id: 'green', color: '#107C10' },
+				{ id: 'blue', color: '#00B294' },
+				{ id: 'red', color: '#A80000' }
+			]
+			let selectedId = "default"
+			const customColor = DataFlow.get("searchTerms").find(st => st.uid === uid).color
+			if (customColor) {
+				const idx = colorOptions.findIndex(c => c.color === customColor)
+				if (idx >= 0) {
+					selectedId = colorOptions[idx].id
 					colorOptions.push({ id: 'custom', color: "#888888" })
 				}
-				return <SwatchColorPicker
-							key='scp'
-							columnCount={ 10 }
-							cellShape={ 'square' }
-							colorCells={colorOptions}
-							onColorChanged={(id, color) => {
-								const st = DataFlow.get("searchTerms").slice()
-								const index = st.findIndex(st => st.uid === uid)
-								st[index].color = color
-								DataFlow.set("searchTerms", st)
-							}}
-							selectedId={selectedId}
-							/>
+				else {
+					selectedId = "custom"
+					colorOptions.push({ id: 'custom', color: customColor })
+				}
 			}
-		}, {
-			name: 'Custom Color',
-			key: 'customColor',
-			iconProps: {
-				iconName: 'Color'
-			},
-			subMenuProps: {
-				items: [
-					{
-						key: "customColorPicker",
-						onRender: () => <ColorPicker
-							key='sp'
-							color={DataFlow.get("searchTerms").find(st => st.uid === uid).color || "#888"}
-							alphaSliderHidden={true}
-							onColorChanged={(color) => {
-								const st = DataFlow.get("searchTerms").slice()
-								const index = st.findIndex(st => st.uid === uid)
-								st[index].color = color
-								DataFlow.set("searchTerms", st)
-							}}
-						/>
-					}
-				]
+			else {
+				selectedId = "default"
+				colorOptions.push({ id: 'custom', color: "#888888" })
 			}
+			return <SwatchColorPicker
+				key='scp'
+				columnCount={10}
+				cellShape={'square'}
+				colorCells={colorOptions}
+				onColorChanged={(id, color) => {
+					const st = DataFlow.get("searchTerms").slice()
+					const index = st.findIndex(st => st.uid === uid)
+					st[index].color = color
+					DataFlow.set("searchTerms", st)
+					ga('send', {
+						hitType: 'event',
+						eventCategory: 'swatchColorPick',
+						eventAction: color
+					})
+				}}
+				selectedId={selectedId}
+			/>
 		}
+	},
+		// {
+		// 	name: 'Custom Color',
+		// 	key: 'customColor',
+		// 	iconProps: {
+		// 		iconName: 'Color'
+		// 	},
+		// 	subMenuProps: {
+		// 		items: [
+		// 			{
+		// 				key: "customColorPicker",
+		// 				onRender: () => <ColorPicker
+		// 					key='sp'
+		// 					color={DataFlow.get("searchTerms").find(st => st.uid === uid).color || "#888"}
+		// 					alphaSliderHidden={true}
+		// 					onColorChanged={(color) => {
+		// 						const st = DataFlow.get("searchTerms").slice()
+		// 						const index = st.findIndex(st => st.uid === uid)
+		// 						st[index].color = color
+		// 						DataFlow.set("searchTerms", st)
+		// 					}}
+		// 				/>
+		// 			}
+		// 		]
+		// 	}
+		// }
 	]
 	let menuItem = {
 		key: uid,
 		name: menu_text,
 		subMenuProps: {
 			items: [
+				// {
+				// 	key: 'edit',
+				// 	name: 'Modify',
+				// 	iconProps: {
+				// 		iconName: 'Edit'
+				// 	},
+				// 	onClick: () => {
+				// 		console.log("Modify!!!")
+				// 	}
+				// },
 				{
-					key: 'edit',
-					name: 'Modify',
-					iconProps: {
-						iconName: 'Edit'
-					},
-					onClick: () => {
-						console.log("Modify!!!")
-					}
-				}, {
 					key: 'invert',
 					name: 'Invert',
 					iconProps: {
-						iconName: term.invert ? "CheckboxComposite" : "Checkbox"
+						iconName: term.invert ? "CheckSquare" : "Square"
 					},
 					onClick: () => {
 						const st = DataFlow.get("searchTerms").slice()
