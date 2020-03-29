@@ -124,16 +124,17 @@ const generateSearchTermMenuItem = ({ uid }) => {
 		name: menu_text,
 		subMenuProps: {
 			items: [
+				// {
+				// 	key: 'edit',
+				// 	name: 'Modify',
+				// 	iconProps: {
+				// 		iconName: 'Edit'
+				// 	},
+				// 	onClick: () => {
+				// 		console.log("Modify!!!")
+				// 	}
+				// },
 				{
-					key: 'edit',
-					name: 'Modify',
-					iconProps: {
-						iconName: 'Edit'
-					},
-					onClick: () => {
-						console.log("Modify!!!")
-					}
-				}, {
 					key: 'invert',
 					name: 'Invert',
 					iconProps: {
