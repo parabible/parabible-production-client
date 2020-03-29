@@ -9,7 +9,7 @@ import { generateReference, generateURL } from 'util/ReferenceHelper'
 // 	return `"${DataFlow.get("fontSetting")}", "SBL Biblit", "Open Sans", "Arial"`
 // }
 
-const removeAccents = (s) => s.replace(/[\u0590-\u05AF\u05BD]/g,"")
+const removeAccents = (s) => s.replace(/[\u0590-\u05AF\u05BD]/g, "")
 
 import AccentUnit from './AccentUnit'
 import LXXVerse from './LXXVerse'
@@ -31,17 +31,17 @@ const lxxDisplay = (rid, lxx, activeWid) => (
 	)) : null
 )
 
-const TableRow = ({result}) => {
+const TableRow = ({ result }) => {
 	const wlcTextArray = []
 	const netTextArray = []
 	const lxxTextArray = []
 	result.verses.forEach(v => {
 		const t = result.text[v]
 		if (t.hasOwnProperty("wlc")) {
-			const wlc_no_accents = t.wlc.map(au => au.map(({wid, trailer, temperature, word}) => ({wid, trailer, temperature, word: removeAccents(word)})))
+			const wlc_no_accents = t.wlc.map(au => au.map(({ wid, trailer, temperature, word }) => ({ wid, trailer, temperature, word: removeAccents(word) })))
 			wlcTextArray.push(wlcDisplay(v, wlc_no_accents, -1))
 		}
-		if (t.hasOwnProperty("net")) netTextArray.push(<span key={v} dangerouslySetInnerHTML={{ __html: t.net}}></span>)
+		if (t.hasOwnProperty("net")) netTextArray.push(<span key={v} dangerouslySetInnerHTML={{ __html: t.net }}></span>)
 		if (t.hasOwnProperty("lxx")) lxxTextArray.push(lxxDisplay(v, t.lxx, -1))
 	})
 	const tds = []
@@ -54,7 +54,7 @@ const TableRow = ({result}) => {
 	)
 }
 
-const htmlTemplate = ({resultCount}) => `<!DOCTYPE>
+const htmlTemplate = ({ resultCount }) => `<!DOCTYPE>
 <html lang="en" dir="ltr">
 <head>
 	<title>Parabible - Search Results (${resultCount})</title>
@@ -73,11 +73,11 @@ const htmlTemplate = ({resultCount}) => `<!DOCTYPE>
 </html>
 `
 
-const PopoutManager = ({popoutExit}) => {
+const PopoutManager = ({ popoutExit }) => {
 	const rObj = DataFlow.get("searchResults")
 	const rCount = rObj.results.length
 	const countString = rObj.truncated ? `${rCount}/${rObj.truncated}` : rCount
-	return <Popout onClose={popoutExit} html={htmlTemplate({resultCount: countString})}>
+	return <Popout onClose={popoutExit} html={htmlTemplate({ resultCount: countString })}>
 		<table>
 			<caption><b>Search Results ({countString})</b></caption>
 			<tbody>
