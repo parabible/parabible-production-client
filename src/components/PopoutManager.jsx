@@ -36,7 +36,7 @@ const TableRow = ({ result }) => {
 	const netTextArray = []
 	const lxxTextArray = []
 	result.verses.forEach(v => {
-		const t = result.text[v]
+		const t = result.text.find(rt => rt.rid === v)
 		if (t.hasOwnProperty("wlc")) {
 			const wlc_no_accents = t.wlc.map(au => au.map(({ wid, trailer, temperature, word }) => ({ wid, trailer, temperature, word: removeAccents(word) })))
 			wlcTextArray.push(wlcDisplay(v, wlc_no_accents, -1))
