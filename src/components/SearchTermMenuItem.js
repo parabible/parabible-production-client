@@ -83,6 +83,11 @@ const generateSearchTermMenuItem = ({ uid }) => {
 					const index = st.findIndex(st => st.uid === uid)
 					st[index].color = color
 					DataFlow.set("searchTerms", st)
+					ga('send', {
+						hitType: 'event',
+						eventCategory: 'swatchColorPick',
+						eventAction: color
+					})
 				}}
 				selectedId={selectedId}
 			/>
