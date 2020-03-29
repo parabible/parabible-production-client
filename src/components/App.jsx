@@ -77,7 +77,7 @@ registerIcons({
 })
 
 const myTheme = loadTheme({
-	defaultFontStyle: { 
+	defaultFontStyle: {
 		fontFamily: 'Ubuntu'
 		/* can add stuff like font-weight here as well */
 	},
@@ -105,7 +105,7 @@ const myTheme = loadTheme({
 		black: '#000000',
 		white: '#f4f4f4',
 	}
-});
+})
 
 import Header from 'components/Header'
 import Content from 'components/Content'
