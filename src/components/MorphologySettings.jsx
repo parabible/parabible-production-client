@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import DataFlow from 'util/DataFlow'
 import Abbreviations from 'data/abbreviations'
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';

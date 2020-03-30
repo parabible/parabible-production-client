@@ -2,7 +2,6 @@ import React from 'react'
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel'
 import { Nav } from 'office-ui-fabric-react/lib/Nav'
 import DataFlow from 'util/DataFlow'
-import ApiRequest from 'util/ApiRequest'
 import bookDetails from 'data/bookDetails'
 
 class BookSelector extends React.Component {
@@ -20,7 +19,7 @@ class BookSelector extends React.Component {
 					url: '',
 					key: `${bkD.name}${i + 1}`,
 					onClick: () => {
-						DataFlow.set("reference", { "book": bkD.name, "chapter": i+1 })
+						DataFlow.set("reference", { "book": bkD.name, "chapter": i + 1 })
 						this.props.hidePanel()
 					}
 				}
@@ -36,7 +35,7 @@ class BookSelector extends React.Component {
 				isExpanded: this.state.reference.book == bkD.name
 			}
 		})
-		return(
+		return (
 			<Panel
 				isBlocking={true}
 				isOpen={this.props.panelIsVisible}
@@ -58,7 +57,7 @@ class BookSelector extends React.Component {
 					}
 					selectedKey={this.state.reference.book + (this.state.reference.chapter)}
 				/>
-				<div style={{height:"60px"}}></div>
+				<div style={{ height: "60px" }}></div>
 			</Panel>
 		)
 	}
