@@ -53,8 +53,7 @@ class ParabibleHeader extends React.Component {
 			key: item.name,
 			name: item.title,
 			disabled: item.disabled || false,
-			iconProps: { iconName: isChecked(item.name) ? "CheckSquare" : "Square" }
-			,
+			iconProps: { iconName: isChecked(item.name) ? "CheckSquare" : "Square" },
 			onClick: clickHandler(item.name)
 		}))
 	}
