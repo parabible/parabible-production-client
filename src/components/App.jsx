@@ -76,7 +76,7 @@ registerIcons({
 	}
 })
 
-const myTheme = loadTheme({
+loadTheme({
 	defaultFontStyle: {
 		fontFamily: 'Ubuntu'
 		/* can add stuff like font-weight here as well */
@@ -121,11 +121,11 @@ import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBa
 
 // This just executes and should run before DataFlow
 import MediaBreakpoints from 'util/MediaBreakpoints'
+MediaBreakpoints.init()
 
 import DataFlow from 'util/DataFlow'
 import AppNotify from 'util/AppNotify'
-import TextDisplayManager from 'util/TextDisplayManager'
-
+util / unused - TextDisplayManager
 const ESCAPE_KEY = 27;
 
 class App extends React.Component {
@@ -189,8 +189,8 @@ class App extends React.Component {
 	}
 	render() {
 		const mainMaxWidth = this.state.screenSizeIndex == 4 ? "1050px" : "760px"
-		const morphWidth = this.state.screenSizeIndex == 4 ? "290px" :
-			this.state.screenSizeIndex == 3 ? "210px" : "160px"
+		// const morphWidth = this.state.screenSizeIndex == 4 ? "290px" :
+		// 	this.state.screenSizeIndex == 3 ? "210px" : "160px"
 
 		return (
 			<div style={{
