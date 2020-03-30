@@ -53,8 +53,7 @@ class ParabibleHeader extends React.Component {
 			key: item.name,
 			name: item.title,
 			disabled: item.disabled || false,
-			iconProps: { iconName: isChecked(item.name) ? "CheckSquare" : "Square" }
-			,
+			iconProps: { iconName: isChecked(item.name) ? "CheckSquare" : "Square" },
 			onClick: clickHandler(item.name)
 		}))
 	}
@@ -357,13 +356,6 @@ class ParabibleHeader extends React.Component {
 		]
 		//TODO: Add font settings
 		const generalSettingsItems = [
-			// {
-			// 	key: 'fontSettings',
-			// 	name: 'Font Settings',
-			// 	iconProps: {
-			// 		iconName: "Font"
-			// 	}
-			// },
 			{
 				key: 'textViewMainSettings',
 				name: 'Display Texts', //Parallel View? Syntax Diagram? Highlight Search Terms?

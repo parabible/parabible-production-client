@@ -2,8 +2,6 @@ import React from 'react'
 import DataFlow from '../util/DataFlow'
 import Abbreviations from 'data/abbreviations'
 
-let watcherObject = {}
-
 const o = (obj, prop) => {
 	if (obj.hasOwnProperty(prop)) {
 		return obj[prop] ? obj[prop] : ""
@@ -14,12 +12,8 @@ const o = (obj, prop) => {
 class MorphologySidebar extends React.Component {
 	constructor(props) {
 		super(props)
-		DataFlow.watch("worddata", () => {
-			this.forceUpdate()
-		}, watcherObject)
-	}
-	componentWillUnmount() {
-		DataFlow.unwatch("worddata", watcherObject.worddata)
+		this.state = {}
+		DataFlow.bindState("worddata", this.setState)
 	}
 	render() {
 		const wdata = DataFlow.get("worddata")
@@ -52,7 +46,7 @@ class MorphologySidebar extends React.Component {
 			// lxx uses gloss not gk_gloss *sigh*
 			else if (o(wdata, "gloss"))
 				primaryData.push(o(wdata, "gloss").includes(",") ? o(wdata, "gloss").split(",")[0] : o(wdata, "gloss"))
-			
+
 			if (o(wdata, "pos") == "verb") {
 				if (o(wdata, "mood") == "ptcp") {
 					secondaryData = [o(wdata, "tense"), o(wdata, "voice"), o(wdata, "mood"), o(wdata, "case"), o(wdata, "gender"), o(wdata, "number")]
@@ -75,28 +69,31 @@ class MorphologySidebar extends React.Component {
 			primary: primaryData,
 			secondary: finalSecondaryData.length ? finalSecondaryData : [Abbreviations.termToEnglish.sp[wdata.sp]]
 		}
-		return <div style={{
+		return (
+			<div style={{
 				display: "flex",
 				fontSize: "medium",
 				width: "100%",
-				backfaceVisibility: "hidden"}}>
-			{dataToUse.primary.map((d, i) => (
-				<div key={i} style={{
+				backfaceVisibility: "hidden"
+			}}>
+				{dataToUse.primary.map((d, i) => (
+					<div key={i} style={{
 						padding: "5px 15px",
 						fontWeight: "bold",
 						flex: 1,
 						display: "inline-block",
 						textAlign: "center",
-						fontFamily: i == 0 ? DataFlow.get("fontSetting") : "inherit"
+						fontFamily: i == 0 ? "SBL Biblit" : "inherit"
 					}}>{d}</div>
-			))}
-			<div style={{ padding: "5px 15px", flex: 1, display: "inline-block", textAlign: "center"}}>
-				{dataToUse.secondary.join(" ")}
+				))}
+				<div style={{ padding: "5px 15px", flex: 1, display: "inline-block", textAlign: "center" }}>
+					{dataToUse.secondary.join(" ")}
+				</div>
+				<div style={{ padding: "5px 10px", flexShrink: 1 }} onClick={this.props.hidePopup}>
+					<i className="ms-Icon ms-Icon--ChromeClose" style={{ color: "darkred" }} aria-hidden="true"></i>
+				</div>
 			</div>
-			<div style={{ padding: "5px 10px", flexShrink: 1 }} onClick={this.props.hidePopup}>
-				<i className="ms-Icon ms-Icon--ChromeClose" style={{color: "darkred"}} aria-hidden="true"></i>
-			</div>
-		</div>
+		)
 	}
 }
 export default MorphologySidebar
