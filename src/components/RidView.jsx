@@ -5,10 +5,6 @@ import SBLVerse from './SBLVerse'
 import DataFlow from 'util/DataFlow'
 import { generateReference } from 'util/ReferenceHelper'
 
-const fontSetting = () => {
-	return `"${DataFlow.get("fontSetting")}", "SBL Biblit", "Open Sans", "Arial"`
-}
-
 const wlcDisplay = (rid, wlc, activeWid) => (
 	wlc.map((accentUnit, i) =>
 		<AccentUnit
@@ -41,11 +37,11 @@ const netDisplay = (rid, net, activeWid) => {
 
 const textHelper = {
 	"wlc": {
-		styles: { display: "table-cell", verticalAlign: "top", direction: "rtl", fontSize: "x-large", padding: "3px 5px", fontFamily: DataFlow.get("fontSetting") },
+		styles: { display: "table-cell", verticalAlign: "top", direction: "rtl", fontSize: "x-large", padding: "3px 5px", fontFamily: "SBL Biblit" },
 		function: wlcDisplay
 	},
 	"sbl": {
-		styles: { display: "table-cell", verticalAlign: "top", padding: "3px 5px", fontSize: "large", fontFamily: DataFlow.get("fontSetting") },
+		styles: { display: "table-cell", verticalAlign: "top", padding: "3px 5px", fontSize: "large", fontFamily: "SBL Biblit" },
 		function: sblDisplay
 	},
 	"net": {
@@ -53,7 +49,7 @@ const textHelper = {
 		function: netDisplay
 	},
 	"lxx": {
-		styles: { display: "table-cell", verticalAlign: "top", padding: "3px 5px", fontSize: "large", fontFamily: DataFlow.get("fontSetting") },
+		styles: { display: "table-cell", verticalAlign: "top", padding: "3px 5px", fontSize: "large", fontFamily: "SBL Biblit" },
 		function: lxxDisplay
 	}
 }
@@ -114,7 +110,7 @@ const RidView = ({ ridDataWithRid, activeWid }) => {
 			case "sbl":
 				return <div className="contiguousrid" id={thisVerseActive ? "activeVerse" : ""} style={{
 					display: "inline",
-					fontFamily: DataFlow.get("fontSetting"),
+					fontFamily: "SBL Biblit",
 					fontSize: '80%',
 					backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : ""
 				}} data-rid={rid}>
@@ -123,7 +119,7 @@ const RidView = ({ ridDataWithRid, activeWid }) => {
 			case "lxx":
 				return <div className="contiguousrid" id={thisVerseActive ? "activeVerse" : ""} style={{
 					display: "inline",
-					fontFamily: DataFlow.get("fontSetting"),
+					fontFamily: "SBL Biblit",
 					fontSize: '80%',
 					backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : ""
 				}} data-rid={rid}>
@@ -140,7 +136,7 @@ const RidView = ({ ridDataWithRid, activeWid }) => {
 			case "wlc":
 				return <div className="contiguousrid" id={thisVerseActive ? "activeVerse" : ""} style={{
 					display: "inline",
-					fontFamily: DataFlow.get("fontSetting"),
+					fontFamily: "SBL Biblit",
 					backgroundColor: thisVerseActive ? "rgba(255,255,0,0.3)" : ""
 				}} data-rid={rid}>
 					{wlcDisplay(rid, ridData.wlc, activeWid)}

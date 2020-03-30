@@ -357,13 +357,6 @@ class ParabibleHeader extends React.Component {
 		]
 		//TODO: Add font settings
 		const generalSettingsItems = [
-			// {
-			// 	key: 'fontSettings',
-			// 	name: 'Font Settings',
-			// 	iconProps: {
-			// 		iconName: "Font"
-			// 	}
-			// },
 			{
 				key: 'textViewMainSettings',
 				name: 'Display Texts', //Parallel View? Syntax Diagram? Highlight Search Terms?

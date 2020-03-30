@@ -153,10 +153,6 @@ class App extends React.Component {
 			showBookSelector: false,
 			showMorphSettings: false,
 			appMessages: DataFlow.get("appMessages"),
-			reference: {
-				"book": "Genesis",
-				"chapter": 1,
-			},
 			screenSizeIndex: DataFlow.get("screenSizeIndex"),
 			showMorphPopup: false,
 			showResults: false,
@@ -191,9 +187,6 @@ class App extends React.Component {
 		state[panelNames[panel]] = visibile
 		this.setState(state)
 	}
-	removeMessage(index) {
-		this.setState({ messages: this.state.appMessages.filter((v, i) => i !== index) })
-	}
 	render() {
 		const mainMaxWidth = this.state.screenSizeIndex == 4 ? "1050px" : "760px"
 		const morphWidth = this.state.screenSizeIndex == 4 ? "290px" :
@@ -201,7 +194,7 @@ class App extends React.Component {
 
 		return (
 			<div style={{
-				fontFamily: `${DataFlow.get("fontSetting")}, "SBL BibLit", "Open Sans", "Arial"`,
+				fontFamily: "SBL Biblit",
 				fontSize: "xx-large",
 				lineHeight: 1.6,
 				height: "100%",

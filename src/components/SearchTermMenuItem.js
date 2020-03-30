@@ -56,7 +56,7 @@ const generateSearchTermMenuItem = ({ uid }) => {
 				{ id: 'blue', color: '#00B294' },
 				{ id: 'red', color: '#A80000' }
 			]
-			let selectedId = "default"
+			let selectedId
 			const customColor = DataFlow.get("searchTerms").find(st => st.uid === uid).color
 			if (customColor) {
 				const idx = colorOptions.findIndex(c => c.color === customColor)
@@ -173,7 +173,7 @@ const generateSearchTermMenuItem = ({ uid }) => {
 	if (DataFlow.get("highlightTermsSetting"))
 		menuItem["subMenuProps"]["items"].push(...colorMenuSection)
 	if (/[\u0590-\u05fe]/.test(menu_text))
-		menuItem["style"] = { fontSize: "x-large", fontFamily: DataFlow.get("fontSetting") }
+		menuItem["style"] = { fontSize: "x-large", fontFamily: "SBL Biblit" }
 	return menuItem
 }
 export default generateSearchTermMenuItem
