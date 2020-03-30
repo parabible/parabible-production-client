@@ -125,7 +125,8 @@ MediaBreakpoints.init()
 
 import DataFlow from 'util/DataFlow'
 import AppNotify from 'util/AppNotify'
-util / unused - TextDisplayManager
+//  import TextDisplayManager from 'util/TextDisplayManager'
+
 const ESCAPE_KEY = 27;
 
 class App extends React.Component {
