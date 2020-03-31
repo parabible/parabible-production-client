@@ -231,11 +231,9 @@ class App extends React.Component {
 					<Footer />
 				</div>
 
-				{this.state.screenSizeIndex <= 1 && this.state.showMorphPopup ? (
-					<div id="morphpopup">
-						<MorphologyPopup hidePopup={() => this.setState({ showMorphPopup: false })} />
-					</div>
-				) : null}
+				<MorphologyPopup
+					show={this.state.showMorphPopup}
+					hidePopup={() => this.setState({ showMorphPopup: false })} />
 
 				{/* PANELS */}
 				<BookSelector
