@@ -210,7 +210,7 @@ class App extends React.Component {
 					position: "fixed",
 					left: 0,
 					right: 0,
-					top: 40,
+					top: 44,
 					bottom: 0,
 					overflowX: "hidden",
 					overflowY: "auto",
