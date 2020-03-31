@@ -162,7 +162,7 @@ class App extends React.Component {
 		DataFlow.watch("screenSizeIndex", n => {
 			this.setState({ "screenSizeIndex": n })
 		}).watch("worddata", () => {
-			this.setState({ showMorphPopup: true })
+			this.setState({ showMorphPopup: true && DataFlow.get("screenSizeIndex") < 2 })
 		}).watch("searchResults", () => {
 			const r = DataFlow.get("searchResults")
 			if (r && Object.keys(r).length > 0) {
