@@ -125,7 +125,8 @@ MediaBreakpoints.init()
 
 import DataFlow from 'util/DataFlow'
 import AppNotify from 'util/AppNotify'
-util / unused - TextDisplayManager
+//  import TextDisplayManager from 'util/TextDisplayManager'
+
 const ESCAPE_KEY = 27;
 
 class App extends React.Component {
@@ -161,7 +162,7 @@ class App extends React.Component {
 		DataFlow.watch("screenSizeIndex", n => {
 			this.setState({ "screenSizeIndex": n })
 		}).watch("worddata", () => {
-			this.setState({ showMorphPopup: true })
+			this.setState({ showMorphPopup: true && DataFlow.get("screenSizeIndex") < 2 })
 		}).watch("searchResults", () => {
 			const r = DataFlow.get("searchResults")
 			if (r && Object.keys(r).length > 0) {
@@ -209,7 +210,7 @@ class App extends React.Component {
 					position: "fixed",
 					left: 0,
 					right: 0,
-					top: 40,
+					top: 44,
 					bottom: 0,
 					overflowX: "hidden",
 					overflowY: "auto",
@@ -230,11 +231,9 @@ class App extends React.Component {
 					<Footer />
 				</div>
 
-				{this.state.screenSizeIndex <= 1 && this.state.showMorphPopup ? (
-					<div id="morphpopup">
-						<MorphologyPopup hidePopup={() => this.setState({ showMorphPopup: false })} />
-					</div>
-				) : null}
+				<MorphologyPopup
+					show={this.state.showMorphPopup}
+					hidePopup={() => this.setState({ showMorphPopup: false })} />
 
 				{/* PANELS */}
 				<BookSelector

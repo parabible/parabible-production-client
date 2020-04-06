@@ -12,11 +12,11 @@ const o = (obj, prop) => {
 class MorphologySidebar extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {}
-		DataFlow.bindState("worddata", this.setState)
+		this.state = { "worddata": {} }
+		DataFlow.bindState(["worddata"], this.setState.bind(this))
 	}
 	render() {
-		const wdata = DataFlow.get("worddata")
+		const wdata = this.state.worddata
 		const primaryData = []
 		let secondaryData = []
 		if (wdata.hasOwnProperty("sp")) {
@@ -70,12 +70,7 @@ class MorphologySidebar extends React.Component {
 			secondary: finalSecondaryData.length ? finalSecondaryData : [Abbreviations.termToEnglish.sp[wdata.sp]]
 		}
 		return (
-			<div style={{
-				display: "flex",
-				fontSize: "medium",
-				width: "100%",
-				backfaceVisibility: "hidden"
-			}}>
+			<div id="morphpopup" className={this.props.show ? "" : "hidden"}>
 				{dataToUse.primary.map((d, i) => (
 					<div key={i} style={{
 						padding: "5px 15px",
