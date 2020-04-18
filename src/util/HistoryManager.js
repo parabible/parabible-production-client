@@ -34,6 +34,11 @@ export default {
 				history.push(referenceToUrl(r))
 				// I think we should not retain activeVerse when moving backwards and forwards through chapters...
 				DataFlow.set("activeVerse", false)
+				window.goatcounter.count({
+					path: 'navigate',
+					title: referenceToUrl(r),
+					event: true,
+				})
 			}
 			justPopped = false
 			setTitle(r)

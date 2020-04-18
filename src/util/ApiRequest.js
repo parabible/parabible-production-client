@@ -41,11 +41,19 @@ DataFlow
 			hitType: 'event',
 			eventCategory: 'word'
 		})
+		if (!("wordlookupcounter" in window))
+			window.wordlookupcounter = 0
+		window.wordlookupcounter++
+
+		window.goatcounter.count({
+			path: 'WordLookup',
+			title: `count: ${window.wordlookupcounter}`,
+			event: true,
+		})
 	})
 	.watch("searchResults", (sr) => {
 		/* This function is just to notify the user when results are truncated */
-		if (sr.truncated)
-		{
+		if (sr.truncated) {
 			AppNotify.send({
 				type: "warning",
 				message: `Your search returned too many results so we're only displaying ${sr.results.length} of them.`
@@ -104,7 +112,7 @@ const ApiRequest = (endpoint) => {
 			})
 			break
 		case "termSearch":
-			const searchTexts = Array.from(new Set( DataFlow.get("textsToDisplayMainNT").concat(DataFlow.get("textsToDisplayMainOT"))))
+			const searchTexts = Array.from(new Set(DataFlow.get("textsToDisplayMainNT").concat(DataFlow.get("textsToDisplayMainOT"))))
 			payload = {
 				"query": DataFlow.get("searchTerms"),
 				"search_range": DataFlow.get("searchRangeSetting"),
@@ -127,6 +135,11 @@ const ApiRequest = (endpoint) => {
 				hitType: 'event',
 				eventCategory: 'search',
 				eventAction: endpoint
+			})
+			window.goatcounter.count({
+				path: 'Search',
+				title: endpoint,
+				event: true,
 			})
 			break
 		default:
