@@ -35,7 +35,7 @@ export default {
 				// I think we should not retain activeVerse when moving backwards and forwards through chapters...
 				DataFlow.set("activeVerse", false)
 				window.goatcounter.count({
-					path: 'navigate',
+					path: 'Navigate',
 					title: referenceToUrl(r),
 					event: true,
 				})
