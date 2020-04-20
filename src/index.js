@@ -10,6 +10,12 @@ HistoryManager.init()
 import ClipboardHelper from 'util/ClipboardHelper'
 ClipboardHelper.init()
 
+if (!("goatcounter" in window)) {
+	window.goatcounter = {
+		count: () => { console.error("Failed to hit goatcoutner. GC loaded too late (I think).") }
+	}
+}
+
 render(
 	<App />,
 	document.getElementById('app')
