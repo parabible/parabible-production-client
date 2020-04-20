@@ -5,7 +5,7 @@ const Footer = () => {
 		fontFamily: "Open Sans, sans",
 		fontSize: "10px",
 		display: "flex",
-		backgroundColor: "#d0d0d0"
+		backgroundColor: "#f4f4f4"
 	}}>
 		<div style={{
 			flex: 1,
