@@ -1,13 +1,14 @@
 var CACHE = 'cache-and-update'
-var CACHE_VERSION = 3
+var CACHE_VERSION = 4
 var urlsToCache = [
 	'/bundle.js',
 	'/fonts/sblbiblit.css',
-	'/fonts/hinted-subset-SBLBibLit.eot',
-	'/fonts/hinted-subset-SBLBibLit.ttf',
-	'/fonts/hinted-subset-SBLBibLit.woff',
+	'/fonts/fonts.css',
+	'/fonts/sbl_blit-webfont.woff',
+	'/fonts/sbl_blit-webfont.woff2',
 	'https://fonts.googleapis.com/css?family=Open+Sans:400,700',
-	'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/5.0.1/css/fabric.min.css'
+	'https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap',
+	'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css'
 ]
 
 // On install, cache some resources.
