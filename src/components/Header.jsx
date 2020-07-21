@@ -98,6 +98,11 @@ class ParabibleHeader extends React.Component {
 			eventCategory: 'search',
 			eventAction: type
 		})
+		window.goatcounter.count({
+			path: 'Search',
+			title: type,
+			event: true,
+		})
 	}
 
 	render() {
@@ -165,6 +170,11 @@ class ParabibleHeader extends React.Component {
 					eventCategory: 'externalLink',
 					eventAction: "BibleBento"
 				})
+				window.goatcounter.count({
+					path: 'ExternalLink',
+					title: 'BibleBento',
+					event: true,
+				})
 			}
 		}
 		]
@@ -186,6 +196,11 @@ class ParabibleHeader extends React.Component {
 						eventCategory: 'externalLink',
 						eventAction: "Shebanq"
 					})
+					window.goatcounter.count({
+						path: 'ExternalLink',
+						title: 'Shebanq',
+						event: true,
+					})
 				}
 			})
 		}
@@ -205,6 +220,11 @@ class ParabibleHeader extends React.Component {
 					hitType: 'event',
 					eventCategory: 'externalLink',
 					eventAction: "youtubeTutorials"
+				})
+				window.goatcounter.count({
+					path: 'ExternalLink',
+					title: 'YoutubeTutorials',
+					event: true,
 				})
 			}
 		}
@@ -418,6 +438,11 @@ class ParabibleHeader extends React.Component {
 						hitType: 'event',
 						eventCategory: 'searchTerms',
 						eventAction: "removeAll"
+					})
+					window.goatcounter.count({
+						path: 'SearchTerms',
+						title: 'RemoveAll',
+						event: true,
 					})
 				}
 			}

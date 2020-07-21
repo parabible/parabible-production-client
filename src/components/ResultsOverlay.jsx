@@ -15,7 +15,7 @@ const ResultsOverlay = ({ panelIsVisible, hideOverlay, showPopout }) => {
 		<div style={{
 			visibility: panelIsVisible ? "visible" : "hidden",
 			position: "fixed",
-			top: 40,
+			top: 44,
 			bottom: 0,
 			left: 0,
 			right: 0,
