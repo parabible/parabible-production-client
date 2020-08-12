@@ -26,7 +26,7 @@ const Footer = () => {
 					SUPPORT PARABIBLE
 				</div>
 				<div>
-					<img src="https://d1iczxrky3cnb2.cloudfront.net/red_logo.png" />
+					<img src="/images/donorbox_logo.png" />
 				</div>
 			</a>
 		</div>
