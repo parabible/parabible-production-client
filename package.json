@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server -d --content-base build --hot --inline --port 1234",
-    "build": "NODE_ENV=production webpack --progress -p"
+    "build": "NODE_ENV=production npx webpack --progress -p"
   },
   "author": "James Cuénod",
   "license": "ISC",
