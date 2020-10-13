@@ -21,7 +21,8 @@ class ParabibleHeader extends React.Component {
 			"searchTerms",
 			"textsToDisplayMainOT",
 			"textsToDisplayMainNT",
-			"stripDiacritics"
+			"stripDiacritics",
+			"stripPointing"
 		], this.setState.bind(this))
 	}
 	generateSettingsMenu(menuData, multiple = false) {
@@ -399,12 +400,27 @@ class ParabibleHeader extends React.Component {
 				}
 			}, {
 				key: "stripDiacriticsToggle",
-				name: "Strip Diacritics (on copy)",
+				name: "Remove Diacritics (on copy)",
 				iconProps: {
 					iconName: this.state.stripDiacritics ? "CheckSquare" : "Square"
 				},
 				onClick: function () {
 					DataFlow.set("stripDiacritics", !DataFlow.get("stripDiacritics"))
+					if (DataFlow.get("stripDiacritics")) {
+						DataFlow.set("stripPointing", false)
+					}
+				}
+			}, {
+				key: "stripPointingToggle",
+				name: "Remove Pointing (on copy)",
+				iconProps: {
+					iconName: this.state.stripPointing ? "CheckSquare" : "Square"
+				},
+				onClick: function () {
+					DataFlow.set("stripPointing", !DataFlow.get("stripPointing"))
+					if (DataFlow.get("stripPointing")) {
+						DataFlow.set("stripDiacritics", false)
+					}
 				}
 			}
 		]
