@@ -398,9 +398,13 @@ class ParabibleHeader extends React.Component {
 				iconProps: {
 					iconName: "Tasks"
 				}
+			},
+			{
+				key: 'divider_copypaste',
+				itemType: ContextualMenuItemType.Divider
 			}, {
 				key: "stripDiacriticsToggle",
-				name: "Remove Diacritics (on copy)",
+				name: "Remove Accents (on copy)",
 				iconProps: {
 					iconName: this.state.stripDiacritics ? "CheckSquare" : "Square"
 				},
@@ -412,7 +416,7 @@ class ParabibleHeader extends React.Component {
 				}
 			}, {
 				key: "stripPointingToggle",
-				name: "Remove Pointing (on copy)",
+				name: "Remove All Pointing (on copy)",
 				iconProps: {
 					iconName: this.state.stripPointing ? "CheckSquare" : "Square"
 				},
