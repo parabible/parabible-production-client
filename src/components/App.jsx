@@ -17,6 +17,7 @@ import {
 	Edit3 as EditIcon,
 	Trash2 as TrashIcon,
 
+	MessageSquare as FeedbackIcon,
 	Youtube as YoutubeIcon,
 
 	Link as LinkIcon,
@@ -54,6 +55,7 @@ registerIcons({
 		CheckMark: <CheckIcon width="16" height="100%" />,
 
 		OpenInNewWindow: <ExternalLinkIcon width="16" height="100%" />,
+		Feedback: <FeedbackIcon width="16" height="100%" />,
 		Youtube: <YoutubeIcon width="16" height="100%" />,
 		Link: <LinkIcon width="16" height="100%" />,
 		Add: <AddIcon width="16" height="100%" />,

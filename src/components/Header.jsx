@@ -206,6 +206,27 @@ class ParabibleHeader extends React.Component {
 			})
 		}
 
+
+		const feedbackButton = {
+			key: 'feedbackForm',
+			name: this.state.screenSizeIndex > 2 ? "" : "Give Feedback",
+			iconProps: {
+				iconName: 'Feedback',
+			},
+			onClick: () => {
+				window.open(`https://forms.gle/wWydR2UBkRaxZBL59`, '_blank')
+				ga('send', {
+					hitType: 'event',
+					eventCategory: 'externalLink',
+					eventAction: "feedbackForm"
+				})
+				window.goatcounter.count({
+					path: 'ExternalLink',
+					title: 'FeedbackForm',
+					event: true,
+				})
+			}
+		}
 		const youtubeTutorials = {
 			key: 'youtubeTutorials',
 			name: this.state.screenSizeIndex === 3 ? "" : "Tutorial Videos!",
@@ -237,7 +258,7 @@ class ParabibleHeader extends React.Component {
 					iconName: 'OpenInNewWindow'
 				},
 				subMenuProps: { items: externalLinkItems }
-			}, youtubeTutorials)
+			}, feedbackButton, youtubeTutorials)
 		}
 
 		const searchTermMenuItems = this.state.searchTerms.map(t => generateSearchTermMenuItem({ uid: t.uid }))
@@ -475,7 +496,12 @@ class ParabibleHeader extends React.Component {
 		}
 
 		if (this.state.screenSizeIndex <= 2) {
+			generalSettingsItems.push({
+				key: 'divider_post_copypaste',
+				itemType: ContextualMenuItemType.Divider
+			})
 			generalSettingsItems.push(youtubeTutorials)
+			generalSettingsItems.push(feedbackButton)
 		}
 		const rightItemList = [
 			{
