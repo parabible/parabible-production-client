@@ -21,8 +21,8 @@ class ParabibleHeader extends React.Component {
 			"searchTerms",
 			"textsToDisplayMainOT",
 			"textsToDisplayMainNT",
-			"stripDiacritics",
-			"stripPointing"
+			"copyVowels",
+			"copyPointing"
 		], this.setState.bind(this))
 	}
 	generateSettingsMenu(menuData, multiple = false) {
@@ -424,27 +424,27 @@ class ParabibleHeader extends React.Component {
 				key: 'divider_copypaste',
 				itemType: ContextualMenuItemType.Divider
 			}, {
-				key: "stripDiacriticsToggle",
-				name: "Remove Accents (on copy)",
+				key: "copyVowelsToggle",
+				name: "Copy Vowels",
 				iconProps: {
-					iconName: this.state.stripDiacritics ? "CheckSquare" : "Square"
+					iconName: this.state.copyVowels ? "CheckSquare" : "Square"
 				},
 				onClick: function () {
-					DataFlow.set("stripDiacritics", !DataFlow.get("stripDiacritics"))
-					if (DataFlow.get("stripDiacritics")) {
-						DataFlow.set("stripPointing", false)
+					DataFlow.set("copyVowels", !DataFlow.get("copyVowels"))
+					if (!DataFlow.get("copyVowels")) {
+						DataFlow.set("copyPointing", false)
 					}
 				}
 			}, {
-				key: "stripPointingToggle",
-				name: "Remove All Pointing (on copy)",
+				key: "copyPointingToggle",
+				name: "Copy All Pointing",
 				iconProps: {
-					iconName: this.state.stripPointing ? "CheckSquare" : "Square"
+					iconName: this.state.copyPointing ? "CheckSquare" : "Square"
 				},
 				onClick: function () {
-					DataFlow.set("stripPointing", !DataFlow.get("stripPointing"))
-					if (DataFlow.get("stripPointing")) {
-						DataFlow.set("stripDiacritics", false)
+					DataFlow.set("copyPointing", !DataFlow.get("copyPointing"))
+					if (DataFlow.get("copyPointing")) {
+						DataFlow.set("copyVowels", true)
 					}
 				}
 			}

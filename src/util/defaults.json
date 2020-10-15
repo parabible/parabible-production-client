@@ -107,6 +107,6 @@
 	"fontSetting": "SBL BibLit",
 	"textsToDisplayMainNT": ["sbl"],
 	"textsToDisplayMainOT": ["wlc"],
-	"stripDiacritics": true,
-	"stripPointing": false
+	"copyVowels": true,
+	"copyPointing": false
 }
