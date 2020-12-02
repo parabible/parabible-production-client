@@ -44,12 +44,6 @@ DataFlow
 		if (!("wordlookupcounter" in window))
 			window.wordlookupcounter = 0
 		window.wordlookupcounter++
-
-		window.goatcounter.count({
-			path: 'WordLookup',
-			title: `count: ${window.wordlookupcounter}`,
-			event: true,
-		})
 	})
 	.watch("searchResults", (sr) => {
 		/* This function is just to notify the user when results are truncated */
@@ -135,11 +129,6 @@ const ApiRequest = (endpoint) => {
 				hitType: 'event',
 				eventCategory: 'search',
 				eventAction: endpoint
-			})
-			window.goatcounter.count({
-				path: 'Search',
-				title: endpoint,
-				event: true,
 			})
 			break
 		default:

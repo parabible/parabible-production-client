@@ -57,11 +57,6 @@ class MorphologySidebar extends React.Component {
 			eventCategory: 'searchTerms',
 			eventAction: "add"
 		})
-		window.goatcounter.count({
-			path: 'SearchTerms',
-			title: 'Add',
-			event: true,
-		})
 	}
 	render() {
 		const wdata = DataFlow.get("worddata")

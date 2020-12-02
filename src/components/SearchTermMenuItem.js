@@ -88,11 +88,6 @@ const generateSearchTermMenuItem = ({ uid }) => {
 						eventCategory: 'swatchColorPick',
 						eventAction: color
 					})
-					window.goatcounter.count({
-						path: 'SwatchColorPick',
-						title: color,
-						event: true,
-					})
 				}}
 				selectedId={selectedId}
 			/>
@@ -169,11 +164,6 @@ const generateSearchTermMenuItem = ({ uid }) => {
 							hitType: 'event',
 							eventCategory: 'searchTerms',
 							eventAction: "remove"
-						})
-						window.goatcounter.count({
-							path: 'SearchTerms',
-							title: 'Remove',
-							event: true,
 						})
 					}
 				}
