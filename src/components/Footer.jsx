@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
 	return <div style={{
-		fontFamily: "Open Sans, sans",
+		fontFamily: "Ubuntu, sans-serif",
 		fontSize: "10px",
 		display: "flex",
 		backgroundColor: "#f4f4f4"

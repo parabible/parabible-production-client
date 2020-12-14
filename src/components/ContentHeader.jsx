@@ -20,7 +20,7 @@ const styles = {
         display: "table-cell",
         verticalAlign: "top",
         fontSize: "small",
-        fontFamily:"sans-serif",
+        fontFamily: "Ubuntu, sans-serif",
         textAlign: "center",
         padding: 0
     },

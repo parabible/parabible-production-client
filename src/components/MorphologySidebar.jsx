@@ -73,7 +73,7 @@ class MorphologySidebar extends React.Component {
 			maxHeight: "calc(100vh - 65px)",
 			overflow: "auto",
 			fontSize: "small",
-			fontFamily: "Open Sans"
+			fontFamily: "Ubuntu"
 		}}>
 			{dataToDisplay.map((d, i) => {
 				const highlightData = selectedValues.indexOf(d.heading) > -1 ? {

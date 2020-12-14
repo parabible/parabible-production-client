@@ -27,7 +27,7 @@ const ResultsOverlay = ({ panelIsVisible, hideOverlay, showPopout }) => {
 		}}>
 
 			<div style={{
-				fontFamily: "Open Sans",
+				fontFamily: "Ubuntu",
 				fontSize: "large",
 				fontWeight: "bold",
 				textAlign: "center",
@@ -60,7 +60,7 @@ const ResultsOverlay = ({ panelIsVisible, hideOverlay, showPopout }) => {
 					}} className="resultsRow">
 						<div style={{
 							flexBasis: multiline ? "" : "100px",
-							fontFamily: "Open Sans",
+							fontFamily: "Ubuntu",
 							fontSize: "small",
 							fontWeight: "bold",
 							textTransform: "uppercase"

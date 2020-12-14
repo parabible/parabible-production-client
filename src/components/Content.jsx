@@ -68,7 +68,7 @@ class Content extends React.Component {
 						ridDataWithRid={verse}
 						activeWid={this.state.activeWid} />
 				)}
-				<div style={{ direction: "ltr", fontFamily: "sans-serif", fontSize: "x-small", marginTop: "40px", paddingTop: "10px", borderTop: "1px solid #aaa" }}>
+				<div style={{ direction: "ltr", fontFamily: "Ubuntu, sans-serif", fontSize: "x-small", marginTop: "40px", paddingTop: "10px", borderTop: "1px solid #aaa" }}>
 					<LicenseView license={orderedColumns} />
 				</div>
 			</div>
