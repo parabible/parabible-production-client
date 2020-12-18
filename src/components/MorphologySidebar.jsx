@@ -46,7 +46,7 @@ class MorphologySidebar extends React.Component {
 		let newT = DataFlow.get("searchTerms")
 		newT.push({
 			"uid": Date.now().toString(),
-			"inverted": false,
+			"invert": false,
 			"data": DataFlow.get("termConstruction")
 		})
 		DataFlow.set("searchTerms", newT)
