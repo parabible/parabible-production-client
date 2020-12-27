@@ -61,24 +61,6 @@ const parallelView = ({ rid, activeWid, ridData, thisVerseActive }) => (
 				{textHelper[text].function(rid, ridData[text], activeWid)}
 			</div> : <div key={text} style={textHelper[text].styles} />
 		)}
-		{/* {ridData.hasOwnProperty("wlc") ? (
-			<div style={{ display: "table-cell", verticalAlign: "top", direction: "rtl", fontSize: "x-large", padding: "3px 5px", fontFamily: fontSetting()}}>
-				{wlcDisplay(rid, ridData.wlc, activeWid)}
-			</div>
-		) : ""}
-		{ridData.hasOwnProperty("sbl") ? (
-			<div style={{ }>
-				{sblDisplay(rid, ridData.sbl, activeWid)}
-			</div>
-		) : ""}
-		{ridData.hasOwnProperty("net") ? (
-			
-		) : ""}
-		{ridData.hasOwnProperty("lxx") ? (
-			<div style={}>
-				{lxxDisplay(rid, ridData.lxx, activeWid)}
-			</div>
-		) : ""} */}
 	</div>
 )
 
