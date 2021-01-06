@@ -53,6 +53,8 @@
 		}
 
 		.chapterPicker {
+			height: 0;
+			pointer-events: none;
 			opacity: 0;
 			transform: translateY(-1em);
 			transition: transform 200ms ease,
@@ -60,6 +62,8 @@
 		}
 
 		.chapterPicker.show {
+			height: inherit;
+			pointer-events: all;
 			transform: translateY(0);
 			opacity: 1;
 		}
@@ -274,7 +278,7 @@
 			</div>
 		</div>
 	</div>
-	<script src="/bundle.js"></script>
+	<script src="https://parabible.com/bundle.js"></script>
 	<script src="https://donorbox.org/install-popup-button.js" type="text/javascript" defer></script>
 	<script>
 		window.DonorBox = {
