@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ActionButton, Panel, PanelType, Nav } from 'office-ui-fabric-react/'
 import DataFlow from 'util/DataFlow'
 import bookDetails from 'data/bookDetails'
@@ -11,28 +11,28 @@ const bookButtons = [{
 		})
 	)
 }]
-const chapterButtons = chapterCount => [{
-	links: Array.from(new Array(chapterCount)).map((_, i) =>
-		({
-			name: i + 1,
-			key: i,
-		})
-	)
-}]
 
 const getChaptersFromBookName = name =>
 	bookDetails.find(b => b.name === name)?.chapters || 10
 
+const navigateTo = reference =>
+	DataFlow.set("reference", reference)
 
 const BookSelector = ({ panelIsVisible, hidePanel }) => {
-	const [state, setState] = useState({
-		reference: DataFlow.get("reference"),
-		newBook: DataFlow.get("reference").book,
-		showChapters: false
+	const [newBookState, setNewBookState] = useState(DataFlow.get("reference").book)
+	const [showChapterState, setShowChapterState] = useState(false)
+	DataFlow.watch("reference", reference => {
+		setNewBookState(reference.book)
+		setShowChapterState(false)
 	})
-	DataFlow.watch("reference", reference => setState({ reference }))
 
-	const chapterCount = getChaptersFromBookName(state.newBook)
+	useEffect(() => {
+		if (!panelIsVisible) {
+			setShowChapterState(false)
+		}
+	}, [panelIsVisible])
+
+	const chapterCount = getChaptersFromBookName(newBookState)
 
 	return (
 		<Panel
@@ -47,16 +47,31 @@ const BookSelector = ({ panelIsVisible, hidePanel }) => {
 			closeButtonAriaLabel='Close'
 		>
 			<div>
-				<div style={{ display: state.showChapters ? "none" : "inherit" }}>
+				<div style={{ display: showChapterState ? "none" : "inherit" }}>
 					<Nav
 						// ariaLabel=""
-						selectedKey={state.newBook}
-						onLinkClick={(_, item) => setState({ newBook: item.name, showChapters: true })}
+						selectedKey={newBookState}
+						onLinkClick={(_, item) => {
+							setNewBookState(item.name)
+							setShowChapterState(true)
+						}}
 						groups={bookButtons} />
 				</div>
-				<div style={{ display: state.showChapters ? "inherit" : "none" }}>
+				<div style={{ display: showChapterState ? "inherit" : "none" }}>
 					{Array.from(new Array(chapterCount)).map((_, i) =>
-						<ActionButton text={i + 1} />
+						<ActionButton
+							key={i}
+							text={i + 1}
+							onClick={() => {
+								navigateTo({ book: newBookState, chapter: i + 1 })
+								hidePanel()
+							}}
+							styles={{
+								rootHovered: { backgroundColor: "rgb(234, 234, 234)" },
+								textContainer: { minWidth: "2em", textAlign: "center" },
+								rootPressed: { backgroundColor: "#ddd" }
+							}}
+						/>
 					)}
 				</div>
 			</div>
