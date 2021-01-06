@@ -1,65 +1,66 @@
-import React from 'react'
-import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel'
-import { Nav } from 'office-ui-fabric-react/lib/Nav'
+import React, { useState } from 'react'
+import { ActionButton, Panel, PanelType, Nav } from 'office-ui-fabric-react/'
 import DataFlow from 'util/DataFlow'
 import bookDetails from 'data/bookDetails'
 
-class BookSelector extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = DataFlow.bindState([
-			"reference"
-		], this.setState.bind(this))
-	}
-	render() {
-		const bookChapterLinks = bookDetails.map(bkD => {
-			const chapterLinks = Array.from({ length: bkD.chapters }, (v, i) => {
-				return {
-					name: `Chapter ${i + 1}`,
-					url: '',
-					key: `${bkD.name}${i + 1}`,
-					onClick: () => {
-						DataFlow.set("reference", { "book": bkD.name, "chapter": i + 1 })
-						this.props.hidePanel()
-					}
-				}
-			})
-			return {
-				name: bkD.name,
-				url: '',
-				key: bkD.name,
-				links: chapterLinks,
-				onClick: () => this.state.reference.book == bkD.name ?
-					this.setState({ reference: false }) :
-					this.setState({ reference: { "book": bkD.name } }),
-				isExpanded: this.state.reference.book == bkD.name
-			}
+const bookButtons = [{
+	links: bookDetails.map((b, i) =>
+		({
+			name: b.name,
+			key: b.name,
 		})
-		return (
-			<Panel
-				isBlocking={true}
-				isOpen={this.props.panelIsVisible}
-				onDismiss={this.props.hidePanel}
-				type={PanelType.smallFixedNear}
-				isLightDismiss={true}
-				isHiddenOnDismiss={true}
-				headerText='Choose New Chapter'
-				headerTextProps={{ style: { fontSize: "medium", fontWeight: 400 } }}
-				closeButtonAriaLabel='Close'
-			>
-				<Nav
-					groups={
-						[
-							{
-								links: bookChapterLinks
-							}
-						]
-					}
-					selectedKey={this.state.reference.book + (this.state.reference.chapter)}
-				/>
-				<div style={{ height: "60px" }}></div>
-			</Panel>
-		)
-	}
+	)
+}]
+const chapterButtons = chapterCount => [{
+	links: Array.from(new Array(chapterCount)).map((_, i) =>
+		({
+			name: i + 1,
+			key: i,
+		})
+	)
+}]
+
+const getChaptersFromBookName = name =>
+	bookDetails.find(b => b.name === name)?.chapters || 10
+
+
+const BookSelector = ({ panelIsVisible, hidePanel }) => {
+	const [state, setState] = useState({
+		reference: DataFlow.get("reference"),
+		newBook: DataFlow.get("reference").book,
+		showChapters: false
+	})
+	DataFlow.watch("reference", reference => setState({ reference }))
+
+	const chapterCount = getChaptersFromBookName(state.newBook)
+
+	return (
+		<Panel
+			isBlocking={true}
+			isOpen={panelIsVisible}
+			onDismiss={hidePanel}
+			type={PanelType.smallFixedNear}
+			isLightDismiss={true}
+			isHiddenOnDismiss={true}
+			headerText='Navigate'
+			headerTextProps={{ style: { fontSize: "medium", fontWeight: 400 } }}
+			closeButtonAriaLabel='Close'
+		>
+			<div>
+				<div style={{ display: state.showChapters ? "none" : "inherit" }}>
+					<Nav
+						// ariaLabel=""
+						selectedKey={state.newBook}
+						onLinkClick={(_, item) => setState({ newBook: item.name, showChapters: true })}
+						groups={bookButtons} />
+				</div>
+				<div style={{ display: state.showChapters ? "inherit" : "none" }}>
+					{Array.from(new Array(chapterCount)).map((_, i) =>
+						<ActionButton text={i + 1} />
+					)}
+				</div>
+			</div>
+		</Panel>
+	)
 }
 export default BookSelector

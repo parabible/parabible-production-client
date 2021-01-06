@@ -131,6 +131,11 @@ import AppNotify from 'util/AppNotify'
 
 const ESCAPE_KEY = 27;
 
+const panelNames = {
+	"bookSelector": "showBookSelector",
+	"morphSettings": "showMorphSettings",
+	"resultsOverlay": "showResults"
+}
 class App extends React.Component {
 
 	_handleKeyup(event) {
@@ -181,14 +186,9 @@ class App extends React.Component {
 		})
 	}
 	setPanelDisplay(panel, visibile) {
-		const panelNames = {
-			"bookSelector": "showBookSelector",
-			"morphSettings": "showMorphSettings",
-			"resultsOverlay": "showResults"
-		}
-		const state = {}
-		state[panelNames[panel]] = visibile
-		this.setState(state)
+		this.setState({
+			[panelNames[panel]]: visibile
+		})
 	}
 	render() {
 		const mainMaxWidth = this.state.screenSizeIndex == 4 ? "1050px" : "760px"
