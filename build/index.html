@@ -52,6 +52,18 @@
 			transform: translateY(100%);
 		}
 
+		.chapterPicker {
+			opacity: 0;
+			transform: translateY(-1em);
+			transition: transform 200ms ease,
+				opacity 200ms ease;
+		}
+
+		.chapterPicker.show {
+			transform: translateY(0);
+			opacity: 1;
+		}
+
 		/* here for psuedo-selectors */
 		.contiguousrid:hover {
 			background-color: #f2f2f2;

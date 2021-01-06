@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { ActionButton, Panel, PanelType, Nav } from 'office-ui-fabric-react/'
+import {
+	ActionButton,
+	DefaultButton,
+	Panel,
+	PanelType,
+	Nav,
+} from 'office-ui-fabric-react/'
 import DataFlow from 'util/DataFlow'
 import bookDetails from 'data/bookDetails'
 
@@ -57,7 +63,16 @@ const BookSelector = ({ panelIsVisible, hidePanel }) => {
 						}}
 						groups={bookButtons} />
 				</div>
-				<div style={{ display: showChapterState ? "inherit" : "none" }}>
+				<div className={"chapterPicker" + (showChapterState ? " show" : "")}>
+					<div style={{ margin: "0.3em" }}>
+						<DefaultButton
+							iconProps={{ iconName: "ArrowLeftCircle" }}
+							text={newBookState}
+							onClick={() => {
+								setShowChapterState(false)
+							}}
+							styles={{ root: { width: "100%" } }} />
+					</div>
 					{Array.from(new Array(chapterCount)).map((_, i) =>
 						<ActionButton
 							key={i}
@@ -68,7 +83,7 @@ const BookSelector = ({ panelIsVisible, hidePanel }) => {
 							}}
 							styles={{
 								rootHovered: { backgroundColor: "rgb(234, 234, 234)" },
-								textContainer: { minWidth: "2em", textAlign: "center" },
+								textContainer: { minWidth: "1.9em", textAlign: "center" },
 								rootPressed: { backgroundColor: "#ddd" }
 							}}
 						/>

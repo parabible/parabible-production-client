@@ -35,6 +35,8 @@ import {
 	Sliders as SlidersIcon,
 	Menu as MenuIcon,
 	Info as InfoIcon,
+
+	ArrowLeftCircle as ArrowLeftCircleIcon
 } from 'react-feather'
 registerIcons({
 	icons: {
@@ -75,6 +77,8 @@ registerIcons({
 		ColumnOptions: <SlidersIcon width="16" height="100%" />,
 		CollapseMenu: <MenuIcon width="16" height="100%" />,
 		Info: <InfoIcon width="16" height="100%" />,
+
+		ArrowLeftCircle: <ArrowLeftCircleIcon width="16" height="100%" />,
 	}
 })
 
