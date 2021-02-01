@@ -1,65 +1,96 @@
-import React from 'react'
-import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel'
-import { Nav } from 'office-ui-fabric-react/lib/Nav'
+import React, { useState, useEffect } from 'react'
+import {
+	ActionButton,
+	DefaultButton,
+	Panel,
+	PanelType,
+	Nav,
+} from 'office-ui-fabric-react/'
 import DataFlow from 'util/DataFlow'
 import bookDetails from 'data/bookDetails'
 
-class BookSelector extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = DataFlow.bindState([
-			"reference"
-		], this.setState.bind(this))
-	}
-	render() {
-		const bookChapterLinks = bookDetails.map(bkD => {
-			const chapterLinks = Array.from({ length: bkD.chapters }, (v, i) => {
-				return {
-					name: `Chapter ${i + 1}`,
-					url: '',
-					key: `${bkD.name}${i + 1}`,
-					onClick: () => {
-						DataFlow.set("reference", { "book": bkD.name, "chapter": i + 1 })
-						this.props.hidePanel()
-					}
-				}
-			})
-			return {
-				name: bkD.name,
-				url: '',
-				key: bkD.name,
-				links: chapterLinks,
-				onClick: () => this.state.reference.book == bkD.name ?
-					this.setState({ reference: false }) :
-					this.setState({ reference: { "book": bkD.name } }),
-				isExpanded: this.state.reference.book == bkD.name
-			}
+const bookButtons = [{
+	links: bookDetails.map((b, i) =>
+		({
+			name: b.name,
+			key: b.name,
 		})
-		return (
-			<Panel
-				isBlocking={true}
-				isOpen={this.props.panelIsVisible}
-				onDismiss={this.props.hidePanel}
-				type={PanelType.smallFixedNear}
-				isLightDismiss={true}
-				isHiddenOnDismiss={true}
-				headerText='Choose New Chapter'
-				headerTextProps={{ style: { fontSize: "medium", fontWeight: 400 } }}
-				closeButtonAriaLabel='Close'
-			>
-				<Nav
-					groups={
-						[
-							{
-								links: bookChapterLinks
-							}
-						]
-					}
-					selectedKey={this.state.reference.book + (this.state.reference.chapter)}
-				/>
-				<div style={{ height: "60px" }}></div>
-			</Panel>
-		)
-	}
+	)
+}]
+
+const getChaptersFromBookName = name =>
+	bookDetails.find(b => b.name === name)?.chapters || 10
+
+const navigateTo = reference =>
+	DataFlow.set("reference", reference)
+
+const BookSelector = ({ panelIsVisible, hidePanel }) => {
+	const [newBookState, setNewBookState] = useState(DataFlow.get("reference").book)
+	const [showChapterState, setShowChapterState] = useState(false)
+	DataFlow.watch("reference", reference => {
+		setNewBookState(reference.book)
+		setShowChapterState(false)
+	})
+
+	useEffect(() => {
+		if (!panelIsVisible) {
+			setShowChapterState(false)
+		}
+	}, [panelIsVisible])
+
+	const chapterCount = getChaptersFromBookName(newBookState)
+
+	return (
+		<Panel
+			isBlocking={true}
+			isOpen={panelIsVisible}
+			onDismiss={hidePanel}
+			type={PanelType.smallFixedNear}
+			isLightDismiss={true}
+			isHiddenOnDismiss={true}
+			headerText='Navigate'
+			headerTextProps={{ style: { fontSize: "medium", fontWeight: 400 } }}
+			closeButtonAriaLabel='Close'
+		>
+			<div>
+				<div style={{ display: showChapterState ? "none" : "inherit" }}>
+					<Nav
+						// ariaLabel=""
+						selectedKey={newBookState}
+						onLinkClick={(_, item) => {
+							setNewBookState(item.name)
+							setShowChapterState(true)
+						}}
+						groups={bookButtons} />
+				</div>
+				<div className={"chapterPicker" + (showChapterState ? " show" : "")}>
+					<div style={{ margin: "0.3em" }}>
+						<DefaultButton
+							iconProps={{ iconName: "ArrowLeftCircle" }}
+							text={newBookState}
+							onClick={() => {
+								setShowChapterState(false)
+							}}
+							styles={{ root: { width: "100%" } }} />
+					</div>
+					{Array.from(new Array(chapterCount)).map((_, i) =>
+						<ActionButton
+							key={i}
+							text={i + 1}
+							onClick={() => {
+								navigateTo({ book: newBookState, chapter: i + 1 })
+								hidePanel()
+							}}
+							styles={{
+								rootHovered: { backgroundColor: "rgb(234, 234, 234)" },
+								textContainer: { minWidth: "1.9em", textAlign: "center" },
+								rootPressed: { backgroundColor: "#ddd" }
+							}}
+						/>
+					)}
+				</div>
+			</div>
+		</Panel>
+	)
 }
 export default BookSelector

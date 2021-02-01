@@ -35,6 +35,8 @@ import {
 	Sliders as SlidersIcon,
 	Menu as MenuIcon,
 	Info as InfoIcon,
+
+	ArrowLeftCircle as ArrowLeftCircleIcon
 } from 'react-feather'
 registerIcons({
 	icons: {
@@ -75,6 +77,8 @@ registerIcons({
 		ColumnOptions: <SlidersIcon width="16" height="100%" />,
 		CollapseMenu: <MenuIcon width="16" height="100%" />,
 		Info: <InfoIcon width="16" height="100%" />,
+
+		ArrowLeftCircle: <ArrowLeftCircleIcon width="16" height="100%" />,
 	}
 })
 
@@ -131,6 +135,11 @@ import AppNotify from 'util/AppNotify'
 
 const ESCAPE_KEY = 27;
 
+const panelNames = {
+	"bookSelector": "showBookSelector",
+	"morphSettings": "showMorphSettings",
+	"resultsOverlay": "showResults"
+}
 class App extends React.Component {
 
 	_handleKeyup(event) {
@@ -181,14 +190,9 @@ class App extends React.Component {
 		})
 	}
 	setPanelDisplay(panel, visibile) {
-		const panelNames = {
-			"bookSelector": "showBookSelector",
-			"morphSettings": "showMorphSettings",
-			"resultsOverlay": "showResults"
-		}
-		const state = {}
-		state[panelNames[panel]] = visibile
-		this.setState(state)
+		this.setState({
+			[panelNames[panel]]: visibile
+		})
 	}
 	render() {
 		const mainMaxWidth = this.state.screenSizeIndex == 4 ? "1050px" : "760px"

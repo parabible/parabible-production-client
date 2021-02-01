@@ -17,8 +17,6 @@
 	<link rel="preload" href="fonts/sbl_blit-webfont.woff2" as="font" type="font/woff2" crossorigin>
 	<link rel="stylesheet" href="/fonts/fonts.css" type="text/css" charset="utf-8">
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap" rel="stylesheet">
-	<link rel="stylesheet"
-		href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css" />
 	<style type="text/css">
 		/* for vendor prefixes*/
 		#headerbar {
@@ -52,6 +50,22 @@
 
 		#morphpopup.hidden {
 			transform: translateY(100%);
+		}
+
+		.chapterPicker {
+			height: 0;
+			pointer-events: none;
+			opacity: 0;
+			transform: translateY(-1em);
+			transition: transform 200ms ease,
+				opacity 200ms ease;
+		}
+
+		.chapterPicker.show {
+			height: inherit;
+			pointer-events: all;
+			transform: translateY(0);
+			opacity: 1;
 		}
 
 		/* here for psuedo-selectors */
@@ -264,7 +278,7 @@
 			</div>
 		</div>
 	</div>
-	<script src="/bundle.js"></script>
+	<script src="https://parabible.com/bundle.js"></script>
 	<script src="https://donorbox.org/install-popup-button.js" type="text/javascript" defer></script>
 	<script>
 		window.DonorBox = {
