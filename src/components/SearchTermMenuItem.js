@@ -89,7 +89,7 @@ const generateSearchTermMenuItem = ({ uid }) => {
 						eventAction: color
 					})
 					window.ackeeInstance.action('ea00c596-66c8-4ed4-8e2f-e3ae11ec8f80', {
-						key: color,
+						key: id,
 						value: 1
 					})
 				}}

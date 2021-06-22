@@ -3,6 +3,24 @@ import { Xhr, apiEndpoints } from './Xhr'
 import AppNotify from 'util/AppNotify'
 import { isNewTestament } from 'util/ReferenceHelper'
 
+
+import bookDetails from 'data/bookDetails'
+const referenceText = (currentReference, screenSizeIndex) => {
+	if (!currentReference) {
+		return "Select a chapter"
+	}
+	else {
+		const bk = currentReference.book
+		const ch = currentReference.chapter
+		if (screenSizeIndex < 2) {
+			return bookDetails.find(b => b.name === bk).abbreviation + " " + ch
+		}
+		else {
+			return bk + " " + ch
+		}
+	}
+}
+
 const chapterReload = () => {
 	ApiRequest("chapterText")
 }
@@ -46,7 +64,7 @@ DataFlow
 			eventCategory: 'word'
 		})
 		window.ackeeInstance.action('a4c709c8-081e-4bef-93c8-4825d7f283bf', {
-			key: DataFlow.get("activeWid"),
+			key: "wid-" + DataFlow.get("activeWid"),
 			value: 1
 		})
 		if (!("wordlookupcounter" in window))
