@@ -25,6 +25,10 @@ DataFlow
 			hitType: 'event',
 			eventCategory: 'navigate'
 		})
+		window.ackeeInstance.action('3133ae59-b238-4752-82e4-7f7c9022cd4a', {
+			key: 'navigate-' + referenceText(this.state.reference, 0),
+			value: 1
+		})
 	})
 	.watch("searchTerms", () => {
 		// TODO: just reload highlights... (not redownload whole chapter)
@@ -40,6 +44,10 @@ DataFlow
 		ga('send', {
 			hitType: 'event',
 			eventCategory: 'word'
+		})
+		window.ackeeInstance.action('a4c709c8-081e-4bef-93c8-4825d7f283bf', {
+			key: DataFlow.get("activeWid"),
+			value: 1
 		})
 		if (!("wordlookupcounter" in window))
 			window.wordlookupcounter = 0
@@ -129,6 +137,10 @@ const ApiRequest = (endpoint) => {
 				hitType: 'event',
 				eventCategory: 'search',
 				eventAction: endpoint
+			})
+			window.ackeeInstance.action('a8d6da10-b385-4eb3-8382-ed1b299b6f93', {
+				key: 'terms-' + DataFlow.get("searchTerms").length,
+				value: 1
 			})
 			break
 		default:

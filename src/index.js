@@ -1,6 +1,11 @@
 import RegisterServiceWorker from 'util/RegisterServiceWorker.js'
 RegisterServiceWorker.register()
 
+import * as ackeeTracker from 'ackee-tracker'
+window.ackeeInstance = ackeeTracker.create('https://ackee.server.parabible.com', {
+	ignoreLocalhost: false
+}).record('bfd6b998-4003-4784-bb03-8b5683d24b42')
+
 import React from 'react'
 import { render } from 'react-dom'
 import App from 'components/App'

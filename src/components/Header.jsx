@@ -5,10 +5,26 @@ import generateSearchTermMenuItem from './SearchTermMenuItem'
 
 import DataFlow from 'util/DataFlow'
 import ApiRequest from 'util/ApiRequest'
-import bookDetails from 'data/bookDetails'
 import AppNotify from 'util/AppNotify'
 
 import { isNewTestament } from 'util/ReferenceHelper'
+
+import bookDetails from 'data/bookDetails'
+const referenceText = (currentReference, screenSizeIndex) => {
+	if (!currentReference) {
+		return "Select a chapter"
+	}
+	else {
+		const bk = currentReference.book
+		const ch = currentReference.chapter
+		if (screenSizeIndex < 2) {
+			return bookDetails.find(b => b.name === bk).abbreviation + " " + ch
+		}
+		else {
+			return bk + " " + ch
+		}
+	}
+}
 
 class ParabibleHeader extends React.Component {
 	constructor(props) {
@@ -75,6 +91,10 @@ class ParabibleHeader extends React.Component {
 			hitType: 'event',
 			eventCategory: 'navigate',
 		})
+		window.ackeeInstance.action('3133ae59-b238-4752-82e4-7f7c9022cd4a', {
+			key: 'navigate-' + referenceText(this.state.reference, 0),
+			value: 1
+		})
 	}
 
 	doSearch() {
@@ -99,25 +119,13 @@ class ParabibleHeader extends React.Component {
 			eventCategory: 'search',
 			eventAction: type
 		})
+		window.ackeeInstance.action('a8d6da10-b385-4eb3-8382-ed1b299b6f93', {
+			key: 'terms-' + DataFlow.get("searchTerms").length,
+			value: 1
+		})
 	}
 
 	render() {
-		const referenceText = (currentReference, screenSizeIndex) => {
-			if (!currentReference) {
-				return "Select a chapter"
-			}
-			else {
-				const bk = currentReference.book
-				const ch = currentReference.chapter
-				if (screenSizeIndex < 2) {
-					return bookDetails.find(b => b.name === bk).abbreviation + " " + ch
-				}
-				else {
-					return bk + " " + ch
-				}
-			}
-		}
-
 		let nearItemList = [{
 			key: 'previousChapter',
 			name: "",
@@ -166,6 +174,10 @@ class ParabibleHeader extends React.Component {
 					eventCategory: 'externalLink',
 					eventAction: "BibleBento"
 				})
+				window.ackeeInstance.action('cd056a65-15fe-4f50-826e-b083da2cd968', {
+					key: 'link-bible-bento',
+					value: 1
+				})
 			}
 		}
 		]
@@ -187,6 +199,10 @@ class ParabibleHeader extends React.Component {
 						eventCategory: 'externalLink',
 						eventAction: "Shebanq"
 					})
+					window.ackeeInstance.action('cd056a65-15fe-4f50-826e-b083da2cd968', {
+						key: 'link-shebanq',
+						value: 1
+					})
 				}
 			})
 		}
@@ -205,6 +221,10 @@ class ParabibleHeader extends React.Component {
 					eventCategory: 'externalLink',
 					eventAction: "feedbackForm"
 				})
+				window.ackeeInstance.action('cd056a65-15fe-4f50-826e-b083da2cd968', {
+					key: 'link-feedback',
+					value: 1
+				})
 			}
 		}
 		const youtubeTutorials = {
@@ -222,6 +242,10 @@ class ParabibleHeader extends React.Component {
 					hitType: 'event',
 					eventCategory: 'externalLink',
 					eventAction: "youtubeTutorials"
+				})
+				window.ackeeInstance.action('cd056a65-15fe-4f50-826e-b083da2cd968', {
+					key: 'link-youtube',
+					value: 1
 				})
 			}
 		}
@@ -455,6 +479,10 @@ class ParabibleHeader extends React.Component {
 						eventCategory: 'searchTerms',
 						eventAction: "removeAll"
 					})
+					window.ackeeInstance.action('98f81d28-d2fd-4985-84a5-378c9255f9f5', {
+						key: 'remove-search-terms',
+						value: 1
+					})
 				}
 			}
 			if (this.state.screenSizeIndex < 3) {
@@ -506,7 +534,7 @@ class ParabibleHeader extends React.Component {
 				}]
 				if (this.state.searchTerms.length === 0)
 					farItemList[0].subMenuProps.items.splice(1, 1)
-				break;
+				break
 			case 2:
 				farItemList = [
 					searchMenuItem,
@@ -515,21 +543,21 @@ class ParabibleHeader extends React.Component {
 				]
 				if (this.state.searchTerms.length === 0)
 					farItemList.splice(1, 1)
-				break;
+				break
 			case 3:
 				farItemList = [
 					searchMenuItem,
 					...searchTermMenuItems,
 					...rightItemList
 				]
-				break;
+				break
 			case 4:
 				farItemList = [
 					searchMenuItem,
 					...searchTermMenuItems,
 					...rightItemList
 				]
-				break;
+				break
 		}
 
 		return <CommandBar

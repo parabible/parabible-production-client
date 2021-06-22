@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "abortcontroller-polyfill": "^1.4.0",
+    "ackee-tracker": "^5.1.0",
     "clone": "^2.1.2",
     "history": "^4.10.1",
     "is-equal": "^1.6.1",

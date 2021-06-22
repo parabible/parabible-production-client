@@ -57,6 +57,10 @@ class MorphologySidebar extends React.Component {
 			eventCategory: 'searchTerms',
 			eventAction: "add"
 		})
+		window.ackeeInstance.action('66f63baf-e914-421c-b68c-e5f744aaf4cd', {
+			key: JSON.stringify(newT[newT.length - 1].data),
+			value: 1
+		})
 	}
 	render() {
 		const wdata = DataFlow.get("worddata")
