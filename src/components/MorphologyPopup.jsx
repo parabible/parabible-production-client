@@ -1,6 +1,8 @@
 import React from 'react'
 import DataFlow from '../util/DataFlow'
 import Abbreviations from 'data/abbreviations'
+import { X as CloseIcon } from 'react-feather'
+
 
 const o = (obj, prop) => {
 	if (obj.hasOwnProperty(prop)) {
@@ -84,8 +86,8 @@ class MorphologySidebar extends React.Component {
 				<div style={{ padding: "5px 15px", flex: 1, display: "inline-block", textAlign: "center" }}>
 					{dataToUse.secondary.join(" ")}
 				</div>
-				<div style={{ padding: "5px 10px", flexShrink: 1 }} onClick={this.props.hidePopup}>
-					<i className="ms-Icon ms-Icon--ChromeClose" style={{ color: "darkred" }} aria-hidden="true"></i>
+				<div style={{ padding: "5px 10px", cursor: "pointer", flexShrink: 1 }} onClick={this.props.hidePopup}>
+					<CloseIcon width="16" height="100%" style={{ color: "darkred" }} />
 				</div>
 			</div>
 		)
