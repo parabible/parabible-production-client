@@ -47,6 +47,8 @@ DataFlow
 			key: 'navigate-' + referenceText(DataFlow.get("reference"), 0),
 			value: 1
 		})
+		window.ackeeInstance.stop()
+		window.ackeeInstance = ackeeTracker.create('https://ackee.server.parabible.com', { detailed: true })
 	})
 	.watch("searchTerms", () => {
 		// TODO: just reload highlights... (not redownload whole chapter)

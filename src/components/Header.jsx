@@ -95,6 +95,8 @@ class ParabibleHeader extends React.Component {
 			key: 'navigate-' + referenceText(this.state.reference, 0),
 			value: 1
 		})
+		window.ackeeInstance.stop()
+		window.ackeeInstance = ackeeTracker.create('https://ackee.server.parabible.com', { detailed: true })
 	}
 
 	doSearch() {
