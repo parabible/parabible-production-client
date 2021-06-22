@@ -44,7 +44,7 @@ DataFlow
 			eventCategory: 'navigate'
 		})
 		window.ackeeInstance.action('3133ae59-b238-4752-82e4-7f7c9022cd4a', {
-			key: 'navigate-' + referenceText(this.state.reference, 0),
+			key: 'navigate-' + referenceText(DataFlow.get("reference"), 0),
 			value: 1
 		})
 	})
