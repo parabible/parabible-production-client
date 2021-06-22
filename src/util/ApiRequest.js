@@ -47,7 +47,7 @@ DataFlow
 			key: 'navigate-' + referenceText(DataFlow.get("reference"), 0),
 			value: 1
 		})
-		window.ackeeStop()
+		window.ackeeStop.stop()
 		window.ackeeStop = window.ackeeInstance.record('bfd6b998-4003-4784-bb03-8b5683d24b42')
 	})
 	.watch("searchTerms", () => {
