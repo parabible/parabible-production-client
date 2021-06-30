@@ -75,7 +75,7 @@ class MorphologySidebar extends React.Component {
 			<div id="morphpopup" className={this.props.show ? "" : "hidden"}>
 				{dataToUse.primary.map((d, i) => (
 					<div key={i} style={{
-						padding: "5px 15px",
+						padding: "5px 5px",
 						fontWeight: "bold",
 						flex: 1,
 						display: "inline-block",
@@ -86,8 +86,8 @@ class MorphologySidebar extends React.Component {
 				<div style={{ padding: "5px 15px", flex: 1, display: "inline-block", textAlign: "center" }}>
 					{dataToUse.secondary.join(" ")}
 				</div>
-				<div style={{ padding: "5px 10px", cursor: "pointer", flexShrink: 1 }} onClick={this.props.hidePopup}>
-					<CloseIcon width="16" height="100%" style={{ color: "darkred" }} />
+				<div style={{ padding: "9px 9px", cursor: "pointer", flexShrink: 1 }} onClick={this.props.hidePopup}>
+					<CloseIcon size={24} style={{ color: "darkred" }} />
 				</div>
 			</div>
 		)
