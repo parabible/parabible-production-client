@@ -1,16 +1,13 @@
 import RegisterServiceWorker from 'util/RegisterServiceWorker.js'
 RegisterServiceWorker.register()
 
+import * as ackeeTracker from 'ackee-tracker'
+window.ackeeInstance = ackeeTracker.create('https://ackee.server.parabible.com', { detailed: true })
+window.ackeeStop = window.ackeeInstance.record('bfd6b998-4003-4784-bb03-8b5683d24b42')
+
 import React from 'react'
 import { render } from 'react-dom'
 import App from 'components/App'
-
-// Make a fake a goatcounter object to give time to load it so HistoryManager doesn't crash things all the time
-if (!("goatcounter" in window)) {
-	window.goatcounter = {
-		count: () => { console.error("Failed to hit goatcoutner. GC loaded too late (I think).") }
-	}
-}
 
 import HistoryManager from 'util/HistoryManager'
 HistoryManager.init()

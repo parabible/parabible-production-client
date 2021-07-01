@@ -5,10 +5,26 @@ import generateSearchTermMenuItem from './SearchTermMenuItem'
 
 import DataFlow from 'util/DataFlow'
 import ApiRequest from 'util/ApiRequest'
-import bookDetails from 'data/bookDetails'
 import AppNotify from 'util/AppNotify'
 
 import { isNewTestament } from 'util/ReferenceHelper'
+
+import bookDetails from 'data/bookDetails'
+const referenceText = (currentReference, screenSizeIndex) => {
+	if (!currentReference) {
+		return "Select a chapter"
+	}
+	else {
+		const bk = currentReference.book
+		const ch = currentReference.chapter
+		if (screenSizeIndex < 2) {
+			return bookDetails.find(b => b.name === bk).abbreviation + " " + ch
+		}
+		else {
+			return bk + " " + ch
+		}
+	}
+}
 
 class ParabibleHeader extends React.Component {
 	constructor(props) {
@@ -21,7 +37,8 @@ class ParabibleHeader extends React.Component {
 			"searchTerms",
 			"textsToDisplayMainOT",
 			"textsToDisplayMainNT",
-			"stripDiacritics"
+			"copyVowels",
+			"copyPointing"
 		], this.setState.bind(this))
 	}
 	generateSettingsMenu(menuData, multiple = false) {
@@ -74,6 +91,12 @@ class ParabibleHeader extends React.Component {
 			hitType: 'event',
 			eventCategory: 'navigate',
 		})
+		window.ackeeInstance.action('3133ae59-b238-4752-82e4-7f7c9022cd4a', {
+			key: 'navigate-' + referenceText(this.state.reference, 0),
+			value: 1
+		})
+		window.ackeeStop.stop()
+		window.ackeeStop = window.ackeeInstance.record('bfd6b998-4003-4784-bb03-8b5683d24b42')
 	}
 
 	doSearch() {
@@ -98,30 +121,13 @@ class ParabibleHeader extends React.Component {
 			eventCategory: 'search',
 			eventAction: type
 		})
-		window.goatcounter.count({
-			path: 'Search',
-			title: type,
-			event: true,
+		window.ackeeInstance.action('a8d6da10-b385-4eb3-8382-ed1b299b6f93', {
+			key: 'terms-' + DataFlow.get("searchTerms").length,
+			value: 1
 		})
 	}
 
 	render() {
-		const referenceText = (currentReference, screenSizeIndex) => {
-			if (!currentReference) {
-				return "Select a chapter"
-			}
-			else {
-				const bk = currentReference.book
-				const ch = currentReference.chapter
-				if (screenSizeIndex < 2) {
-					return bookDetails.find(b => b.name === bk).abbreviation + " " + ch
-				}
-				else {
-					return bk + " " + ch
-				}
-			}
-		}
-
 		let nearItemList = [{
 			key: 'previousChapter',
 			name: "",
@@ -170,10 +176,9 @@ class ParabibleHeader extends React.Component {
 					eventCategory: 'externalLink',
 					eventAction: "BibleBento"
 				})
-				window.goatcounter.count({
-					path: 'ExternalLink',
-					title: 'BibleBento',
-					event: true,
+				window.ackeeInstance.action('cd056a65-15fe-4f50-826e-b083da2cd968', {
+					key: 'link-bible-bento',
+					value: 1
 				})
 			}
 		}
@@ -196,15 +201,34 @@ class ParabibleHeader extends React.Component {
 						eventCategory: 'externalLink',
 						eventAction: "Shebanq"
 					})
-					window.goatcounter.count({
-						path: 'ExternalLink',
-						title: 'Shebanq',
-						event: true,
+					window.ackeeInstance.action('cd056a65-15fe-4f50-826e-b083da2cd968', {
+						key: 'link-shebanq',
+						value: 1
 					})
 				}
 			})
 		}
 
+
+		const feedbackButton = {
+			key: 'feedbackForm',
+			name: this.state.screenSizeIndex > 2 ? "" : "Give Feedback",
+			iconProps: {
+				iconName: 'Feedback',
+			},
+			onClick: () => {
+				window.open(`https://forms.gle/wWydR2UBkRaxZBL59`, '_blank')
+				ga('send', {
+					hitType: 'event',
+					eventCategory: 'externalLink',
+					eventAction: "feedbackForm"
+				})
+				window.ackeeInstance.action('cd056a65-15fe-4f50-826e-b083da2cd968', {
+					key: 'link-feedback',
+					value: 1
+				})
+			}
+		}
 		const youtubeTutorials = {
 			key: 'youtubeTutorials',
 			name: this.state.screenSizeIndex === 3 ? "" : "Tutorial Videos!",
@@ -221,10 +245,9 @@ class ParabibleHeader extends React.Component {
 					eventCategory: 'externalLink',
 					eventAction: "youtubeTutorials"
 				})
-				window.goatcounter.count({
-					path: 'ExternalLink',
-					title: 'YoutubeTutorials',
-					event: true,
+				window.ackeeInstance.action('cd056a65-15fe-4f50-826e-b083da2cd968', {
+					key: 'link-youtube',
+					value: 1
 				})
 			}
 		}
@@ -236,7 +259,7 @@ class ParabibleHeader extends React.Component {
 					iconName: 'OpenInNewWindow'
 				},
 				subMenuProps: { items: externalLinkItems }
-			}, youtubeTutorials)
+			}, feedbackButton, youtubeTutorials)
 		}
 
 		const searchTermMenuItems = this.state.searchTerms.map(t => generateSearchTermMenuItem({ uid: t.uid }))
@@ -397,14 +420,33 @@ class ParabibleHeader extends React.Component {
 				iconProps: {
 					iconName: "Tasks"
 				}
+			},
+			{
+				key: 'divider_copypaste',
+				itemType: ContextualMenuItemType.Divider
 			}, {
-				key: "stripDiacriticsToggle",
-				name: "Strip Diacritics (on copy)",
+				key: "copyVowelsToggle",
+				name: "Copy Vowels",
 				iconProps: {
-					iconName: this.state.stripDiacritics ? "CheckSquare" : "Square"
+					iconName: this.state.copyVowels ? "CheckSquare" : "Square"
 				},
 				onClick: function () {
-					DataFlow.set("stripDiacritics", !DataFlow.get("stripDiacritics"))
+					DataFlow.set("copyVowels", !DataFlow.get("copyVowels"))
+					if (!DataFlow.get("copyVowels")) {
+						DataFlow.set("copyPointing", false)
+					}
+				}
+			}, {
+				key: "copyPointingToggle",
+				name: "Copy All Pointing",
+				iconProps: {
+					iconName: this.state.copyPointing ? "CheckSquare" : "Square"
+				},
+				onClick: function () {
+					DataFlow.set("copyPointing", !DataFlow.get("copyPointing"))
+					if (DataFlow.get("copyPointing")) {
+						DataFlow.set("copyVowels", true)
+					}
 				}
 			}
 		]
@@ -439,10 +481,9 @@ class ParabibleHeader extends React.Component {
 						eventCategory: 'searchTerms',
 						eventAction: "removeAll"
 					})
-					window.goatcounter.count({
-						path: 'SearchTerms',
-						title: 'RemoveAll',
-						event: true,
+					window.ackeeInstance.action('98f81d28-d2fd-4985-84a5-378c9255f9f5', {
+						key: 'remove-search-terms',
+						value: 1
 					})
 				}
 			}
@@ -455,7 +496,12 @@ class ParabibleHeader extends React.Component {
 		}
 
 		if (this.state.screenSizeIndex <= 2) {
+			generalSettingsItems.push({
+				key: 'divider_post_copypaste',
+				itemType: ContextualMenuItemType.Divider
+			})
 			generalSettingsItems.push(youtubeTutorials)
+			generalSettingsItems.push(feedbackButton)
 		}
 		const rightItemList = [
 			{
@@ -490,7 +536,7 @@ class ParabibleHeader extends React.Component {
 				}]
 				if (this.state.searchTerms.length === 0)
 					farItemList[0].subMenuProps.items.splice(1, 1)
-				break;
+				break
 			case 2:
 				farItemList = [
 					searchMenuItem,
@@ -499,21 +545,21 @@ class ParabibleHeader extends React.Component {
 				]
 				if (this.state.searchTerms.length === 0)
 					farItemList.splice(1, 1)
-				break;
+				break
 			case 3:
 				farItemList = [
 					searchMenuItem,
 					...searchTermMenuItems,
 					...rightItemList
 				]
-				break;
+				break
 			case 4:
 				farItemList = [
 					searchMenuItem,
 					...searchTermMenuItems,
 					...rightItemList
 				]
-				break;
+				break
 		}
 
 		return <CommandBar

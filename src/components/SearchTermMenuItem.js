@@ -88,10 +88,9 @@ const generateSearchTermMenuItem = ({ uid }) => {
 						eventCategory: 'swatchColorPick',
 						eventAction: color
 					})
-					window.goatcounter.count({
-						path: 'SwatchColorPick',
-						title: color,
-						event: true,
+					window.ackeeInstance.action('ea00c596-66c8-4ed4-8e2f-e3ae11ec8f80', {
+						key: id,
+						value: 1
 					})
 				}}
 				selectedId={selectedId}
@@ -170,10 +169,9 @@ const generateSearchTermMenuItem = ({ uid }) => {
 							eventCategory: 'searchTerms',
 							eventAction: "remove"
 						})
-						window.goatcounter.count({
-							path: 'SearchTerms',
-							title: 'Remove',
-							event: true,
+						window.ackeeInstance.action('98f81d28-d2fd-4985-84a5-378c9255f9f5', {
+							key: 'remove-search-terms',
+							value: 1
 						})
 					}
 				}

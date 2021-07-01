@@ -46,7 +46,7 @@ class MorphologySidebar extends React.Component {
 		let newT = DataFlow.get("searchTerms")
 		newT.push({
 			"uid": Date.now().toString(),
-			"inverted": false,
+			"invert": false,
 			"data": DataFlow.get("termConstruction")
 		})
 		DataFlow.set("searchTerms", newT)
@@ -57,10 +57,9 @@ class MorphologySidebar extends React.Component {
 			eventCategory: 'searchTerms',
 			eventAction: "add"
 		})
-		window.goatcounter.count({
-			path: 'SearchTerms',
-			title: 'Add',
-			event: true,
+		window.ackeeInstance.action('66f63baf-e914-421c-b68c-e5f744aaf4cd', {
+			key: JSON.stringify(newT[newT.length - 1].data),
+			value: 1
 		})
 	}
 	render() {
@@ -78,7 +77,7 @@ class MorphologySidebar extends React.Component {
 			maxHeight: "calc(100vh - 65px)",
 			overflow: "auto",
 			fontSize: "small",
-			fontFamily: "Open Sans"
+			fontFamily: "Ubuntu"
 		}}>
 			{dataToDisplay.map((d, i) => {
 				const highlightData = selectedValues.indexOf(d.heading) > -1 ? {

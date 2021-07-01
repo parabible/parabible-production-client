@@ -17,8 +17,6 @@
 	<link rel="preload" href="fonts/sbl_blit-webfont.woff2" as="font" type="font/woff2" crossorigin>
 	<link rel="stylesheet" href="/fonts/fonts.css" type="text/css" charset="utf-8">
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap" rel="stylesheet">
-	<link rel="stylesheet"
-		href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css" />
 	<style type="text/css">
 		/* for vendor prefixes*/
 		#headerbar {
@@ -35,23 +33,40 @@
 
 		#morphpopup {
 			position: fixed;
+			display: flex;
+			align-items: center;
 			bottom: 0;
 			left: 0;
 			right: 0;
 			background: rgba(255, 255, 255, 0.9);
 			border-top: 1px solid #ddd;
-			display: flex;
 			font-size: large;
 			width: 100%;
 			backface-visibility: hidden;
 			z-index: 99999;
 			transform: translateY(0);
 			transition: transform 350ms ease-in-out,
-						height 350ms ease-in-out;
+				height 350ms ease-in-out;
 		}
 
 		#morphpopup.hidden {
 			transform: translateY(100%);
+		}
+
+		.chapterPicker {
+			height: 0;
+			pointer-events: none;
+			opacity: 0;
+			transform: translateY(-1em);
+			transition: transform 200ms ease,
+				opacity 200ms ease;
+		}
+
+		.chapterPicker.show {
+			height: inherit;
+			pointer-events: all;
+			transform: translateY(0);
+			opacity: 1;
 		}
 
 		/* here for psuedo-selectors */
@@ -143,7 +158,6 @@
 			background-color: #005a9e;
 		}
 	</style>
-	<script data-goatcounter="https://parabible.goatcounter.com/count" src="//gc.zgo.at/count.js"></script>
 	<script>
 		(function (i, s, o, g, r, a, m) {
 			i['GoogleAnalyticsObject'] = r;
@@ -266,19 +280,6 @@
 		</div>
 	</div>
 	<script src="/bundle.js"></script>
-	<script type="text/javascript">
-		window._urq = window._urq || [];
-		_urq.push(['initSite', 'ff025fdd-793f-4b7e-9312-a8e75409b3d6']);
-		(function () {
-			var ur = document.createElement('script');
-			ur.type = 'text/javascript';
-			ur.async = true;
-			ur.src = ('https:' == document.location.protocol ? 'https://cdn.userreport.com/userreport.js' :
-				'http://cdn.userreport.com/userreport.js');
-			var s = document.getElementsByTagName('script')[0];
-			s.parentNode.insertBefore(ur, s);
-		})();
-	</script>
 	<script src="https://donorbox.org/install-popup-button.js" type="text/javascript" defer></script>
 	<script>
 		window.DonorBox = {

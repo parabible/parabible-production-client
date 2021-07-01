@@ -2,7 +2,7 @@
   "name": "parabible-client",
   "version": "1.0.0",
   "description": "Interface for Parabible, a tool to make original language Bible study intuitive",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server -d --content-base build --hot --inline --port 1234",
@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "abortcontroller-polyfill": "^1.4.0",
+    "ackee-tracker": "^5.1.0",
     "clone": "^2.1.2",
     "history": "^4.10.1",
     "is-equal": "^1.6.1",
