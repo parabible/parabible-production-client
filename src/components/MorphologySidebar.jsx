@@ -1,8 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { PrimaryButton } from 'office-ui-fabric-react/lib/Button'
 import DataFlow from 'util/DataFlow'
 import AppNotify from 'util/AppNotify'
 import Abbreviations from 'data/abbreviations'
+import { transitionKeysAreEqual } from 'office-ui-fabric-react/lib/utilities/keytips/IKeytipTransitionKey'
+
+// const over = (e) => { e.target.style.backgroundColor = "#ffa0a0" }
+const DismissButton = ({ onClick }) => {
+	const [hover, setHover] = useState(false)
+	return <button style={{
+		position: 'sticky',
+		left: 'calc(100% - 25px)',
+		top: "0",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+		borderRadius: "50%",
+		width: "24px",
+		height: "24px",
+		border: 'none',
+		background: hover ? "#ffa0a0" : "#eaeaea",
+		cursor: "pointer",
+		zIndex: "1",
+		border: "1px solid white",
+	}}
+		onClick={onClick}
+		onMouseEnter={() => setHover(true)}
+		onMouseLeave={() => setHover(false)}
+	>
+		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={hover ? "#fff" : "#000"} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+	</button >
+}
 
 let watcherObject = {}
 
@@ -69,16 +97,25 @@ class MorphologySidebar extends React.Component {
 		const dataToDisplay = morphSettings.filter(m => m.visible && wdata.hasOwnProperty(m.heading)).map(m => {
 			return { heading: m.heading, value: wdata[m.heading] }
 		})
-		return <div style={{
-			position: "sticky",
-			boxSizing: "border-box",
-			top: "25px",
-			padding: "0 0 30px 15px",
-			maxHeight: "calc(100vh - 65px)",
-			overflow: "auto",
-			fontSize: "small",
-			fontFamily: "Ubuntu"
-		}}>
+		return <div
+			id="morphbar"
+			style={{
+				position: "sticky",
+				boxSizing: "border-box",
+				top: "0",
+				padding: "1px 15px 30px 15px",
+				maxHeight: "calc(100vh - 47px)", // `height` of commandbar (44) + `top` + `padding` of morphbar (this: 0 + 1)
+				overflow: "auto",
+				fontSize: "small",
+				fontFamily: "Ubuntu",
+
+				// Fade and shift left when the sidebar is hidden
+				transition: "transform 0.2s linear, opacity 0.2s linear",
+				transform: this.props.show ? "translateX(0)" : "translateX(-20px)",
+				opacity: this.props.show ? "1" : "0",
+			}}
+		>
+			<DismissButton onClick={this.props.onHide} />
 			{dataToDisplay.map((d, i) => {
 				const highlightData = selectedValues.indexOf(d.heading) > -1 ? {
 					color: "#deecf9",

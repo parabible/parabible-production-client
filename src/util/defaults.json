@@ -105,8 +105,8 @@
 	],
 	"screenSizeIndex": 0,
 	"fontSetting": "SBL BibLit",
-	"textsToDisplayMainNT": ["sbl"],
-	"textsToDisplayMainOT": ["wlc"],
+	"textsToDisplayMainNT": ["sbl", "net"],
+	"textsToDisplayMainOT": ["wlc", "net", "lxx"],
 	"copyVowels": true,
 	"copyPointing": false
 }

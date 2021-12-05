@@ -123,7 +123,7 @@ import BookSelector from 'components/BookSelector'
 import ResultsOverlay from 'components/ResultsOverlay'
 import PopoutManager from 'components/PopoutManager'
 
-import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
+import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar'
 
 // This just executes and should run before DataFlow
 import MediaBreakpoints from 'util/MediaBreakpoints'
@@ -133,11 +133,14 @@ import DataFlow from 'util/DataFlow'
 import AppNotify from 'util/AppNotify'
 //  import TextDisplayManager from 'util/TextDisplayManager'
 
-const ESCAPE_KEY = 27;
+const ESCAPE_KEY = 27
+
+const morphologySidebarSizeMap = [null, null, 145, 190, 265]
 
 const panelNames = {
 	"bookSelector": "showBookSelector",
 	"morphSettings": "showMorphSettings",
+	"morphSidebar": "showMorphSidebar",
 	"resultsOverlay": "showResults"
 }
 class App extends React.Component {
@@ -167,13 +170,19 @@ class App extends React.Component {
 			appMessages: DataFlow.get("appMessages"),
 			screenSizeIndex: DataFlow.get("screenSizeIndex"),
 			showMorphPopup: false,
+			showMorphSidebar: false,
 			showResults: false,
 			showNewTabSearchResults: false
 		}
 		DataFlow.watch("screenSizeIndex", n => {
 			this.setState({ "screenSizeIndex": n })
 		}).watch("worddata", () => {
-			this.setState({ showMorphPopup: true && DataFlow.get("screenSizeIndex") < 2 })
+			if (DataFlow.get("screenSizeIndex") < 2) {
+				this.setState({ showMorphPopup: true })
+			}
+			else {
+				this.setState({ showMorphSidebar: true })
+			}
 		}).watch("searchResults", () => {
 			const r = DataFlow.get("searchResults")
 			if (r && Object.keys(r).length > 0) {
@@ -222,17 +231,19 @@ class App extends React.Component {
 					overflowY: "auto",
 					WebkitOverflowScrolling: "touch"
 				}}>
-					<div style={{ display: "flex", maxWidth: mainMaxWidth, margin: "auto", paddingTop: 10, verticalAlign: "top" }}>
-						{this.state.screenSizeIndex > 1 ? (
-							<div style={{ flex: 1 }}>
-								<div id="morphbar">
-									<MorphologySidebar />
-								</div>
+					<div style={{ display: "flex", flexDirection: "row", maxWidth: mainMaxWidth, margin: "auto", paddingTop: 10, verticalAlign: "top" }}>
+						{this.state.screenSizeIndex > 1 &&
+							<div style={{
+								flexBasis: morphologySidebarSizeMap[this.state.screenSizeIndex] + "px",
+								paddingTop: "5px",
+								paddingLeft: "10px",
+							}}>
+								<MorphologySidebar
+									show={this.state.showMorphSidebar}
+									onHide={() => this.setPanelDisplay("morphSidebar", false)} />
 							</div>
-						) : null}
-						<div style={{ flex: 3 }}>
-							<Content />
-						</div>
+						}
+						<Content translateX={this.state.showMorphSidebar ? 0 : morphologySidebarSizeMap[this.state.screenSizeIndex] / 2} />
 					</div>
 					<Footer />
 				</div>

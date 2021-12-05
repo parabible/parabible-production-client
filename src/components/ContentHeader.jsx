@@ -25,6 +25,7 @@ const styles = {
         padding: 0
     },
     headerRowStyle: {
+        contentSizing: "border-box",
         position: "sticky",
         top: "0px",
         display: "table",
@@ -49,7 +50,7 @@ const toggleTextDisplay = ({ text, on }) => {
     else {
         var index = texts.indexOf(text)
         if (index > -1) {
-            texts.splice(index, 1);
+            texts.splice(index, 1)
         }
     }
     DataFlow.set(isNewTestament(ref) ? "textsToDisplayMainNT" : "textsToDisplayMainOT", texts)
