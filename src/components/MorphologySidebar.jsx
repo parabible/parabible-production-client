@@ -22,6 +22,7 @@ const DismissButton = ({ onClick }) => {
 		background: hover ? "#ffa0a0" : "#eaeaea",
 		cursor: "pointer",
 		zIndex: "1",
+		border: "1px solid white",
 	}}
 		onClick={onClick}
 		onMouseEnter={() => setHover(true)}
