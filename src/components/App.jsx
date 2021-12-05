@@ -135,11 +135,12 @@ import AppNotify from 'util/AppNotify'
 
 const ESCAPE_KEY = 27
 
-const morphologySidebarSizeMap = [null, null, "small", "medium", "large"]
+const morphologySidebarSizeMap = [null, null, 145, 190, 265]
 
 const panelNames = {
 	"bookSelector": "showBookSelector",
 	"morphSettings": "showMorphSettings",
+	"morphSidebar": "showMorphSidebar",
 	"resultsOverlay": "showResults"
 }
 class App extends React.Component {
@@ -169,13 +170,19 @@ class App extends React.Component {
 			appMessages: DataFlow.get("appMessages"),
 			screenSizeIndex: DataFlow.get("screenSizeIndex"),
 			showMorphPopup: false,
+			showMorphSidebar: false,
 			showResults: false,
 			showNewTabSearchResults: false
 		}
 		DataFlow.watch("screenSizeIndex", n => {
 			this.setState({ "screenSizeIndex": n })
 		}).watch("worddata", () => {
-			this.setState({ showMorphPopup: true && DataFlow.get("screenSizeIndex") < 2 })
+			if (DataFlow.get("screenSizeIndex") < 2) {
+				this.setState({ showMorphPopup: true })
+			}
+			else {
+				this.setState({ showMorphSidebar: true })
+			}
 		}).watch("searchResults", () => {
 			const r = DataFlow.get("searchResults")
 			if (r && Object.keys(r).length > 0) {
@@ -226,9 +233,17 @@ class App extends React.Component {
 				}}>
 					<div style={{ display: "flex", flexDirection: "row", maxWidth: mainMaxWidth, margin: "auto", paddingTop: 10, verticalAlign: "top" }}>
 						{this.state.screenSizeIndex > 1 &&
-							<MorphologySidebar size={morphologySidebarSizeMap[this.state.screenSizeIndex]} />
+							<div style={{
+								flexBasis: morphologySidebarSizeMap[this.state.screenSizeIndex] + "px",
+								paddingTop: "5px",
+								paddingLeft: "10px",
+							}}>
+								<MorphologySidebar
+									show={this.state.showMorphSidebar}
+									onHide={() => this.setPanelDisplay("morphSidebar", false)} />
+							</div>
 						}
-						<Content />
+						<Content translateX={this.state.showMorphSidebar ? 0 : morphologySidebarSizeMap[this.state.screenSizeIndex] / 2} />
 					</div>
 					<Footer />
 				</div>

@@ -55,10 +55,12 @@ class Content extends React.Component {
 		return (
 			<div style={{
 				flex: 1,
-				padding: "5px 20px 50px 20px",
+				padding: "5px 20px 50px 10px",
 				direction: licenseList.has("wlc") ? "rtl" : "ltr",
 				userSelect: DataFlow.get("screenSizeIndex") > 2 ? "text" : "none",
-				cursor: "text"
+				cursor: "text",
+				transition: "transform 0.2s ease-in-out",
+				transform: "translateX(-" + this.props.translateX + "px)"
 			}}>
 				{this.state.screenSizeIndex > 1 ? <ContentHeader openColumns={orderedColumns} isNT={isNT} /> : null}
 				{btextHighlight.map(verse =>
