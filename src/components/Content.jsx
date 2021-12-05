@@ -54,8 +54,7 @@ class Content extends React.Component {
 
 		return (
 			<div style={{
-				margin: "auto",
-				maxWidth: "760px",
+				flex: 1,
 				padding: "5px 20px 50px 20px",
 				direction: licenseList.has("wlc") ? "rtl" : "ltr",
 				userSelect: DataFlow.get("screenSizeIndex") > 2 ? "text" : "none",

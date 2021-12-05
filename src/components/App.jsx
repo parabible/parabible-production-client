@@ -135,6 +135,8 @@ import AppNotify from 'util/AppNotify'
 
 const ESCAPE_KEY = 27;
 
+const morphologySidebarSizeMap = [null, null, "small", "medium", "large"]
+
 const panelNames = {
 	"bookSelector": "showBookSelector",
 	"morphSettings": "showMorphSettings",
@@ -222,17 +224,11 @@ class App extends React.Component {
 					overflowY: "auto",
 					WebkitOverflowScrolling: "touch"
 				}}>
-					<div style={{ display: "flex", maxWidth: mainMaxWidth, margin: "auto", paddingTop: 10, verticalAlign: "top" }}>
-						{this.state.screenSizeIndex > 1 ? (
-							<div style={{ flex: 1 }}>
-								<div id="morphbar">
-									<MorphologySidebar />
-								</div>
-							</div>
-						) : null}
-						<div style={{ flex: 3 }}>
-							<Content />
-						</div>
+					<div style={{ display: "flex", flexDirection: "row", maxWidth: mainMaxWidth, margin: "auto", paddingTop: 10, verticalAlign: "top" }}>
+						{this.state.screenSizeIndex > 1 &&
+							<MorphologySidebar size={morphologySidebarSizeMap[this.state.screenSizeIndex]} />
+						}
+						<Content />
 					</div>
 					<Footer />
 				</div>

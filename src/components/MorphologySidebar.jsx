@@ -10,6 +10,12 @@ const hebrewCategories = ["lex_utf8", "g_cons_utf8", "g_word_utf8", "voc_utf8", 
 // lxxlexeme is on the hebrew data, lexeme is on CCAT
 const greekCategories = ["lxxlexeme", "lexeme"]
 
+const sizePropToPixels = {
+	"small": "145px",
+	"medium": "190px",
+	"large": "265px"
+}
+
 class MorphologySidebar extends React.Component {
 	constructor(props) {
 		super(props)
@@ -69,16 +75,20 @@ class MorphologySidebar extends React.Component {
 		const dataToDisplay = morphSettings.filter(m => m.visible && wdata.hasOwnProperty(m.heading)).map(m => {
 			return { heading: m.heading, value: wdata[m.heading] }
 		})
-		return <div style={{
-			position: "sticky",
-			boxSizing: "border-box",
-			top: "25px",
-			padding: "0 0 30px 15px",
-			maxHeight: "calc(100vh - 65px)",
-			overflow: "auto",
-			fontSize: "small",
-			fontFamily: "Ubuntu"
-		}}>
+		return <div
+			id="morphbar"
+			style={{
+				position: "sticky",
+				flexBasis: sizePropToPixels[this.props.size],
+				boxSizing: "border-box",
+				top: "25px",
+				padding: "0 0 30px 15px",
+				maxHeight: "calc(100vh - 65px)",
+				overflow: "auto",
+				fontSize: "small",
+				fontFamily: "Ubuntu"
+			}}
+		>
 			{dataToDisplay.map((d, i) => {
 				const highlightData = selectedValues.indexOf(d.heading) > -1 ? {
 					color: "#deecf9",
