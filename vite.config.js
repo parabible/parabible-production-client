@@ -10,5 +10,7 @@ export default defineConfig({
             '@data': '/src/data',
         },
     },
-    "build.outDir": './build'
+    "build": {
+        "outDir": './build'
+    }
 })
