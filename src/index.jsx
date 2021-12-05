@@ -1,17 +1,17 @@
-import RegisterServiceWorker from 'util/RegisterServiceWorker.js'
+import RegisterServiceWorker from '@util/RegisterServiceWorker.js'
+RegisterServiceWorker.register()
 
 import React from 'react'
 import { render } from 'react-dom'
 import App from '@components/App'
 
 import HistoryManager from '@util/HistoryManager'
-import ClipboardHelper from '@util/ClipboardHelper'
-
 HistoryManager.init()
+
+import ClipboardHelper from '@util/ClipboardHelper'
 ClipboardHelper.init()
 
 render(
 	<App />,
 	document.getElementById('app')
 )
-RegisterServiceWorker.register()
