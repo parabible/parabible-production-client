@@ -123,7 +123,7 @@ import BookSelector from 'components/BookSelector'
 import ResultsOverlay from 'components/ResultsOverlay'
 import PopoutManager from 'components/PopoutManager'
 
-import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
+import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar'
 
 // This just executes and should run before DataFlow
 import MediaBreakpoints from 'util/MediaBreakpoints'
@@ -133,7 +133,7 @@ import DataFlow from 'util/DataFlow'
 import AppNotify from 'util/AppNotify'
 //  import TextDisplayManager from 'util/TextDisplayManager'
 
-const ESCAPE_KEY = 27;
+const ESCAPE_KEY = 27
 
 const morphologySidebarSizeMap = [null, null, "small", "medium", "large"]
 
