@@ -1,0 +1,295 @@
+<!DOCTYPE>
+<html lang="en" dir="ltr">
+
+<head>
+	<title>Parabible</title>
+	<meta charset="UTF-8">
+	<meta name="description"
+		content="Unlock the original languages with morphologically parsed and tagged Greek, Hebrew and Aramaic for searching and studying the Bible (both Old and New Testament).">
+	<link rel="manifest" href="/manifest.json">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<link rel="icon" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAHYgAAB2IBOHqZ2wAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAALSSURBVFiFtZZLbExRGMd/352pFm094hELBJHOIyHYi00TERIhQmIpLQsRTUNnStPxSGfGK2kqEpZiR7w2RITYWIloytxqooSgiEhUvNo5n4Wo4JyZOzP67e75f9///8u95957hFIrMbAQNesQViA6C0VQXoL0UsVVDkeelmIngTvb+5dgNAusLtClINdQaSfb0PufAFRI9regdAHVgWBhBNH9pGNHKgdI+mmURMDgP0s5QTbaWj5A0m9COVNW+O/aTibq9HADtOfmYMQHplQI8AkjDRyJvLKJnnMs7+0tEv4G5SLoFeBtgb5aPHa5RDtA870qRLc6ZhSlkxozj2x0I5nYemrMXEQPuxm0mU0asilha//UumVgZtq9pJts5OAfa6n4d6CDRG4GyA7L1DQW+0uB+38L9jsQ0rh1HRSTzzo0MN4hQB2Ty2zLdgBlhiNiiKPxISfAz432zgFXGxwA/eKIqHc9SwBSt8NAnVMPDKDywtE/mUWPNzjdvs1eC0y0izIQHMAL3cX1LOEcrYPz/1nd1zcXlW7HjCGUf2DFcgxAwr8DrHSow8ABMLcgHAZdBboHsL85cJNMtNEm2F9DACPH8dQFUAcc+3kDjdNirFROuqQC/wL1aOt/hzC9eELB9GtkYmtcqvtTjBhEN7u3QoASfYLHtkItBQCATOwmIhfKDg95jXTFXpcPACCjO1GGS4hW4CzVVcuDHM+CHcna/ARCukjXM9DriPaQjucC+QYGSD2awFfvIbDYqiudZKMHrdp/AQBI5tajcsmhfiRvGgr+JxxVfA/8qnTsMnDDodYT9lKlhpcGACCmBRi1akoTCX/F+AKk4zmE004vZcv4AgDoSAfw3qJ8BtMz/gCZJR9QDvwrSBfZ+PPxBwAYjJwC+saulafUVB8vx6o8gPOSB9k9di3sIbXga1leFVXCv0Kbf6sSC/d5IFCZVkKhSZU4/ACSHNPyPFIjkwAAAABJRU5ErkJggg==">
+	<meta name="apple-mobile-web-app-title" content="Parabible">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon" href="data:image/png;base64,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">
+	<link rel="apple-touch-icon-precomposed" href="data:image/png;base64,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">
+	<link rel="shortcut icon" sizes="196x196" href="/assets/parabible-196.05d68d7a.png">
+	<link rel="preload" href="/assets/sbl_blit-webfont.768f64e6.woff2" as="font" type="font/woff2" crossorigin>
+	
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap" rel="stylesheet">
+	<style type="text/css">
+		/* for vendor prefixes*/
+		#headerbar {
+			position: -webkit-sticky;
+			position: sticky;
+			top: 0;
+		}
+
+		#morphbar {
+			position: -webkit-sticky;
+			position: sticky;
+			top: 20px;
+		}
+
+		#morphpopup {
+			position: fixed;
+			display: flex;
+			align-items: center;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: rgba(255, 255, 255, 0.9);
+			border-top: 1px solid #ddd;
+			font-size: large;
+			width: 100%;
+			backface-visibility: hidden;
+			z-index: 99999;
+			transform: translateY(0);
+			transition: transform 350ms ease-in-out,
+				height 350ms ease-in-out;
+		}
+
+		#morphpopup.hidden {
+			transform: translateY(100%);
+		}
+
+		.chapterPicker {
+			height: 0;
+			pointer-events: none;
+			opacity: 0;
+			transform: translateY(-1em);
+			transition: transform 200ms ease,
+				opacity 200ms ease;
+		}
+
+		.chapterPicker.show {
+			height: inherit;
+			pointer-events: all;
+			transform: translateY(0);
+			opacity: 1;
+		}
+
+		/* here for psuedo-selectors */
+		.contiguousrid:hover {
+			background-color: #f2f2f2;
+		}
+
+		.wbit:hover {
+			color: #005a9e
+		}
+
+		.mrow:hover {
+			background-color: #deecf9;
+		}
+
+		.resultsRow:hover {
+			background: rgba(230, 230, 230, 0.5);
+		}
+
+		.sortableDrag {
+			z-index: 1000001;
+			font-family: "Ubuntu", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+		}
+
+		.verseUrl,
+		.verseUrl:visited {
+			text-decoration: none;
+			color: #212121;
+		}
+
+		.verseUrl:hover {
+			text-decoration: underline;
+			color: #106ebe;
+		}
+
+		/* straight from net chunks */
+		verse {
+			color: rgb(234, 67, 0);
+			vertical-align: top;
+			font-size: 45%;
+			/* 10% larger than hebrew verse numbers */
+			font-weight: bold;
+		}
+
+		poetry {
+			display: block;
+			text-indent: 10px;
+			font-style: italic;
+		}
+
+		smallcaps {
+			font-variant: small-caps;
+		}
+
+		.loadingmessage {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			text-align: center;
+			background-color: #f4f4f4;
+		}
+
+		.hrefLink,
+		.hrefLink:visited {
+			text-decoration: none;
+			color: #106ebe;
+		}
+
+		.hrefLink:hover {
+			text-decoration: underline;
+			color: #005a9e;
+		}
+
+		.dbox-donation-button {
+			display: flex;
+			align-items: center;
+			background-color: #2d81c5;
+			border-radius: 2px;
+			padding: 5px 10px;
+			font-size: 12px;
+			color: #fff;
+			text-decoration: none;
+		}
+
+		.dbox-donation-button:active,
+		.dbox-donation-button:hover {
+			background-color: #005a9e;
+		}
+	</style>
+	<script>
+		(function (i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function () {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o),
+				m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'UA-105078181-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<script type="application/ld+json">
+		{
+			"@context": "http://schema.org",
+			"@type": "Organization",
+			"url": "https://parabible.com",
+			"logo": "https://parabible.com/images/parabible-196.png"
+		}
+	</script>
+  <script type="module" crossorigin src="/assets/index.39efc214.js"></script>
+  <link rel="modulepreload" href="/assets/vendor.878e974a.js">
+  <link rel="stylesheet" href="/assets/index.d9c184c0.css">
+</head>
+
+<body style="margin: 0; user-select: none">
+	<div id="app">
+		<h1>Welcome to <b><a href="https://parabible.com">parabible.com</a></b></h1>
+		<p>Search the Bible in its original languages rapidly and effectively.</p>
+		<p>Click on words to look up their gloss (definition) and morphology.</p>
+		<p>Compare the BHS (Hebrew) to the LXX (Greek) and English translations (NET).</p>
+		<p>Search clauses and sentences for any combination of word features.</p>
+		<p>Identify syntactical constructions and discover their meanings.</p>
+		<p>Unlock the original languages as a tool for Biblical study.</p>
+		<div class="loadingmessage">
+			<style type="text/css">
+				div.message {
+					margin-top: 100px;
+					text-transform: uppercase;
+					font-family: sans-serif;
+					color: #111;
+					font-weight: bold;
+					font-size: small;
+				}
+
+				.spinner {
+					margin: 10px auto;
+					width: 50px;
+					height: 40px;
+					text-align: center;
+					font-size: 10px;
+				}
+
+				.spinner>div {
+					background-color: #005a9e;
+					height: 100%;
+					width: 6px;
+					display: inline-block;
+
+					-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+					animation: sk-stretchdelay 1.2s infinite ease-in-out;
+				}
+
+				.spinner .rect2 {
+					-webkit-animation-delay: -1.1s;
+					animation-delay: -1.1s;
+				}
+
+				.spinner .rect3 {
+					-webkit-animation-delay: -1.0s;
+					animation-delay: -1.0s;
+				}
+
+				.spinner .rect4 {
+					-webkit-animation-delay: -0.9s;
+					animation-delay: -0.9s;
+				}
+
+				.spinner .rect5 {
+					-webkit-animation-delay: -0.8s;
+					animation-delay: -0.8s;
+				}
+
+				@-webkit-keyframes sk-stretchdelay {
+
+					0%,
+					40%,
+					100% {
+						-webkit-transform: scaleY(0.4)
+					}
+
+					20% {
+						-webkit-transform: scaleY(1.0)
+					}
+				}
+
+				@keyframes sk-stretchdelay {
+
+					0%,
+					40%,
+					100% {
+						transform: scaleY(0.4);
+						-webkit-transform: scaleY(0.4);
+					}
+
+					20% {
+						transform: scaleY(1.0);
+						-webkit-transform: scaleY(1.0);
+					}
+				}
+			</style>
+			<div class="message">loading</div>
+			<div class="spinner">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+		</div>
+	</div>
+	<script>let global = globalThis;</script>
+	
+	<script src="https://donorbox.org/install-popup-button.js" type="text/javascript" defer></script>
+	<script>
+		window.DonorBox = {
+			widgetLinkClassName: 'custom-dbox-popup'
+		}
+	</script>
+</body>
+
+</html>

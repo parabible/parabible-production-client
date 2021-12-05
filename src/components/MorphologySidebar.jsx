@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { PrimaryButton } from 'office-ui-fabric-react/lib/Button'
-import DataFlow from 'util/DataFlow'
-import AppNotify from 'util/AppNotify'
-import Abbreviations from 'data/abbreviations'
-import { transitionKeysAreEqual } from 'office-ui-fabric-react/lib/utilities/keytips/IKeytipTransitionKey'
+import DataFlow from '@util/DataFlow'
+import AppNotify from '@util/AppNotify'
+import Abbreviations from '@data/abbreviations'
 
 // const over = (e) => { e.target.style.backgroundColor = "#ffa0a0" }
 const DismissButton = ({ onClick }) => {
@@ -18,7 +17,6 @@ const DismissButton = ({ onClick }) => {
 		borderRadius: "50%",
 		width: "24px",
 		height: "24px",
-		border: 'none',
 		background: hover ? "#ffa0a0" : "#eaeaea",
 		cursor: "pointer",
 		zIndex: "1",
@@ -28,7 +26,10 @@ const DismissButton = ({ onClick }) => {
 		onMouseEnter={() => setHover(true)}
 		onMouseLeave={() => setHover(false)}
 	>
-		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={hover ? "#fff" : "#000"} stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={hover ? "#fff" : "#000"}
+			strokeWidth="2"
+			strokeLinecap="round"
+			strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 	</button >
 }
 
@@ -84,10 +85,6 @@ class MorphologySidebar extends React.Component {
 			hitType: 'event',
 			eventCategory: 'searchTerms',
 			eventAction: "add"
-		})
-		window.ackeeInstance.action('66f63baf-e914-421c-b68c-e5f744aaf4cd', {
-			key: JSON.stringify(newT[newT.length - 1].data),
-			value: 1
 		})
 	}
 	render() {

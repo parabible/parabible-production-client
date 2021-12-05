@@ -1,6 +1,6 @@
 import React from 'react'
-import DataFlow from '../util/DataFlow'
-import Abbreviations from 'data/abbreviations'
+import DataFlow from '@util/DataFlow'
+import Abbreviations from '@data/abbreviations'
 import { X as CloseIcon } from 'react-feather'
 
 

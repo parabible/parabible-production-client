@@ -1,4 +1,4 @@
-import DataFlow from 'util/DataFlow'
+import DataFlow from '@util/DataFlow'
 
 const DEFAULT_COLOR = "#FF8C00"
 

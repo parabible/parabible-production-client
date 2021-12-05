@@ -1,13 +1,13 @@
 import React from 'react'
-import licenses from 'data/licenses'
+import licenses from '@data/licenses'
 
-const licenseContent = ({name, short_description, data_url}) => (
+const licenseContent = ({ name, short_description, data_url }) => (
     <div>
         <b>{name}</b>: <span>{short_description}</span>&nbsp;
         {data_url ? <a href={data_url} className="hrefLink">↪</a> : null}
     </div>
 )
-const licenseProper = ({name, license_url=null}) => (
+const licenseProper = ({ name, license_url = null }) => (
     <div>{license_url ?
         <a href={license_url} className="hrefLink">{name}</a> :
         <span>{name}</span>}
@@ -33,12 +33,12 @@ const licenseRowStyle = {
     direction: "ltr"
 }
 
-const SingleLicense = ({license}) => (
+const SingleLicense = ({ license }) => (
     <div className="license">
         {licenseContainer(license)}
     </div>
 )
-const ParallelLicenses = ({licenseArray}) => (
+const ParallelLicenses = ({ licenseArray }) => (
     <div className="licenseRow" style={licenseRowStyle}>
         {licenseArray.map(ll => (
             <div key={ll} style={licenseCellStyle}>
@@ -48,7 +48,7 @@ const ParallelLicenses = ({licenseArray}) => (
     </div>
 )
 
-const LicenseView = ({license}) => {
+const LicenseView = ({ license }) => {
     if (!Array.isArray(license))
         throw "You have to give an array of licenses to LicenseView"
     if (license.length === 1)

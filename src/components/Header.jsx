@@ -3,13 +3,13 @@ import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar'
 import { ContextualMenuItemType } from 'office-ui-fabric-react/lib/ContextualMenu'
 import generateSearchTermMenuItem from './SearchTermMenuItem'
 
-import DataFlow from 'util/DataFlow'
-import ApiRequest from 'util/ApiRequest'
-import AppNotify from 'util/AppNotify'
+import DataFlow from '@util/DataFlow'
+import ApiRequest from '@util/ApiRequest'
+import AppNotify from '@util/AppNotify'
 
-import { isNewTestament } from 'util/ReferenceHelper'
+import { isNewTestament } from '@util/ReferenceHelper'
 
-import bookDetails from 'data/bookDetails'
+import bookDetails from '@data/bookDetails'
 const referenceText = (currentReference, screenSizeIndex) => {
 	if (!currentReference) {
 		return "Select a chapter"
@@ -91,12 +91,6 @@ class ParabibleHeader extends React.Component {
 			hitType: 'event',
 			eventCategory: 'navigate',
 		})
-		window.ackeeInstance.action('3133ae59-b238-4752-82e4-7f7c9022cd4a', {
-			key: 'navigate-' + referenceText(this.state.reference, 0),
-			value: 1
-		})
-		window.ackeeStop.stop()
-		window.ackeeStop = window.ackeeInstance.record('bfd6b998-4003-4784-bb03-8b5683d24b42')
 	}
 
 	doSearch() {
@@ -120,10 +114,6 @@ class ParabibleHeader extends React.Component {
 			hitType: 'event',
 			eventCategory: 'search',
 			eventAction: type
-		})
-		window.ackeeInstance.action('a8d6da10-b385-4eb3-8382-ed1b299b6f93', {
-			key: 'terms-' + DataFlow.get("searchTerms").length,
-			value: 1
 		})
 	}
 
@@ -176,10 +166,6 @@ class ParabibleHeader extends React.Component {
 					eventCategory: 'externalLink',
 					eventAction: "BibleBento"
 				})
-				window.ackeeInstance.action('cd056a65-15fe-4f50-826e-b083da2cd968', {
-					key: 'link-bible-bento',
-					value: 1
-				})
 			}
 		}
 		]
@@ -201,10 +187,6 @@ class ParabibleHeader extends React.Component {
 						eventCategory: 'externalLink',
 						eventAction: "Shebanq"
 					})
-					window.ackeeInstance.action('cd056a65-15fe-4f50-826e-b083da2cd968', {
-						key: 'link-shebanq',
-						value: 1
-					})
 				}
 			})
 		}
@@ -223,10 +205,6 @@ class ParabibleHeader extends React.Component {
 					eventCategory: 'externalLink',
 					eventAction: "feedbackForm"
 				})
-				window.ackeeInstance.action('cd056a65-15fe-4f50-826e-b083da2cd968', {
-					key: 'link-feedback',
-					value: 1
-				})
 			}
 		}
 		const youtubeTutorials = {
@@ -244,10 +222,6 @@ class ParabibleHeader extends React.Component {
 					hitType: 'event',
 					eventCategory: 'externalLink',
 					eventAction: "youtubeTutorials"
-				})
-				window.ackeeInstance.action('cd056a65-15fe-4f50-826e-b083da2cd968', {
-					key: 'link-youtube',
-					value: 1
 				})
 			}
 		}
@@ -480,10 +454,6 @@ class ParabibleHeader extends React.Component {
 						hitType: 'event',
 						eventCategory: 'searchTerms',
 						eventAction: "removeAll"
-					})
-					window.ackeeInstance.action('98f81d28-d2fd-4985-84a5-378c9255f9f5', {
-						key: 'remove-search-terms',
-						value: 1
 					})
 				}
 			}

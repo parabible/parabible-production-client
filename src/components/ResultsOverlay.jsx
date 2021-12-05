@@ -1,8 +1,8 @@
 import React from 'react'
 import { List } from 'office-ui-fabric-react/lib/List'
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react/lib/Button'
-import DataFlow from 'util/DataFlow'
-import { generateReference, generateURL } from 'util/ReferenceHelper'
+import DataFlow from '@util/DataFlow'
+import { generateReference, generateURL } from '@util/ReferenceHelper'
 import RidView from './RidView'
 
 const ResultsOverlay = ({ panelIsVisible, hideOverlay, showPopout }) => {

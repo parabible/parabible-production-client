@@ -1,4 +1,4 @@
-require('abortcontroller-polyfill')
+import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
 
 const apiRoot = "https://parabible.com/api"
 const apiUrl = {
@@ -31,7 +31,7 @@ const Xhr = (api, payload) => {
 		}).then(response => {
 			return response.json()
 		}).then(response => {
-			
+
 			resolve(response)
 			delete cancelController[api]
 
