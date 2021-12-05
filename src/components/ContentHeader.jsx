@@ -25,8 +25,8 @@ const styles = {
         padding: 0
     },
     headerRowStyle: {
-        contentSizing: "border-box",
         position: "sticky",
+        boxSizing: "border-box",
         top: "0px",
         display: "table",
         tableLayout: "fixed",
