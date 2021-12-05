@@ -177,6 +177,9 @@ class App extends React.Component {
 		DataFlow.watch("screenSizeIndex", n => {
 			this.setState({ "screenSizeIndex": n })
 		}).watch("worddata", () => {
+			if (Object.keys(DataFlow.get("worddata")).length == 0)
+				return
+
 			if (DataFlow.get("screenSizeIndex") < 2) {
 				this.setState({ showMorphPopup: true })
 			}
@@ -240,7 +243,12 @@ class App extends React.Component {
 							}}>
 								<MorphologySidebar
 									show={this.state.showMorphSidebar}
-									onHide={() => this.setPanelDisplay("morphSidebar", false)} />
+									onHide={() => {
+										this.setPanelDisplay("morphSidebar", false)
+										setTimeout(() => {
+											DataFlow.set("worddata", {})
+										}, 300)
+									}} />
 							</div>
 						}
 						<Content translateX={this.state.showMorphSidebar ? 0 : morphologySidebarSizeMap[this.state.screenSizeIndex] / 2} />
