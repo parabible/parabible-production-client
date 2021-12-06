@@ -202,6 +202,18 @@
 					font-weight: bold;
 					font-size: small;
 				}
+				div.message2 {
+					margin-top: 50px;
+					font-family: sans-serif;
+					color: #b33;
+					font-weight: bold;
+					font-size: x-small;
+					opacity: 1;
+					transition: opacity 300ms ease-in-out;
+				}
+				div.message2.hidden {
+					opacity: 0;
+				}
 
 				.spinner {
 					margin: 10px auto;
@@ -277,6 +289,12 @@
 				<div class="rect4"></div>
 				<div class="rect5"></div>
 			</div>
+			<div class="message2 hidden">Note: If loading takes more than a few<br />seconds, try "hard" refreshing the page.</div>
+			<script>
+				window.setTimeout(() => {
+					document.querySelector(".message2").classList.remove("hidden")
+				}, 10000)
+			</script>
 		</div>
 	</div>
 	<script>let global = globalThis;</script>
