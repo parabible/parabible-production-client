@@ -1,7 +1,7 @@
 import { createBrowserHistory } from 'history'
 import ReferenceParser from 'referenceparser'
-import { generateRid } from 'util/ReferenceHelper'
-import DataFlow from 'util/DataFlow'
+import { generateRid } from '@util/ReferenceHelper'
+import DataFlow from '@util/DataFlow'
 
 export default {
 	init: () => {

@@ -1,6 +1,6 @@
 import React from 'react'
-import DataFlow from 'util/DataFlow'
-import HighlightManager from 'util/HighlightManager'
+import DataFlow from '@util/DataFlow'
+import HighlightManager from '@util/HighlightManager'
 
 const getColor = (wbit, activeWid) => {
 	if (wbit.hasOwnProperty("temperature")) {

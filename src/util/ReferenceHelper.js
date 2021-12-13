@@ -1,4 +1,4 @@
-import bookDetails from "data/bookDetails"
+import bookDetails from "@data/bookDetails"
 
 const _groupConsecutiveRids = (rids) => {
 	const ridSort = rids.sort()
@@ -30,7 +30,7 @@ const _getVerse = (rid) => {
 	return rid % 1000
 }
 
-const generateReference = (rids, abbreviation=false) => {
+const generateReference = (rids, abbreviation = false) => {
 	const groupedRids = _groupConsecutiveRids(rids)
 	const ridRefs = groupedRids.map(ridList => {
 		const lastRid = ridList[ridList.length - 1]
@@ -103,7 +103,7 @@ const generateRid = (reference) => {
 }
 
 const isNewTestament = (reference) => {
-	const {book} = reference
+	const { book } = reference
 	return bookDetails.findIndex(d => d.name === book) > 38
 }
 export { generateReference, generateURL, generateRid, isNewTestament }

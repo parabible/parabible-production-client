@@ -1,5 +1,5 @@
 import React from 'react'
-import DataFlow from 'util/DataFlow'
+import DataFlow from '@util/DataFlow'
 
 import { ContextualMenuItemType } from 'office-ui-fabric-react/lib/ContextualMenu'
 import { SwatchColorPicker } from 'office-ui-fabric-react/lib/SwatchColorPicker'
@@ -88,10 +88,6 @@ const generateSearchTermMenuItem = ({ uid }) => {
 						eventCategory: 'swatchColorPick',
 						eventAction: color
 					})
-					window.ackeeInstance.action('ea00c596-66c8-4ed4-8e2f-e3ae11ec8f80', {
-						key: id,
-						value: 1
-					})
 				}}
 				selectedId={selectedId}
 			/>
@@ -168,10 +164,6 @@ const generateSearchTermMenuItem = ({ uid }) => {
 							hitType: 'event',
 							eventCategory: 'searchTerms',
 							eventAction: "remove"
-						})
-						window.ackeeInstance.action('98f81d28-d2fd-4985-84a5-378c9255f9f5', {
-							key: 'remove-search-terms',
-							value: 1
 						})
 					}
 				}

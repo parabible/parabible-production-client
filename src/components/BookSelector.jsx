@@ -6,15 +6,15 @@ import {
 	PanelType,
 	Nav,
 } from 'office-ui-fabric-react/'
-import DataFlow from 'util/DataFlow'
-import bookDetails from 'data/bookDetails'
+import DataFlow from '@util/DataFlow'
+import bookDetails from '@data/bookDetails'
 
 const bookButtons = [{
 	links: bookDetails.map((b, i) =>
-		({
-			name: b.name,
-			key: b.name,
-		})
+	({
+		name: b.name,
+		key: b.name,
+	})
 	)
 }]
 

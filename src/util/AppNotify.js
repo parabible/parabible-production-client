@@ -1,4 +1,4 @@
-import DataFlow from 'util/DataFlow'
+import DataFlow from '@util/DataFlow'
 
 const messageTypes = ["info", "success", "blocked", "error", "remove", "warning", "severeWarning"]
 class AppNotify {

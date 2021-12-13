@@ -2,8 +2,8 @@ import React from 'react'
 import AccentUnit from './AccentUnit'
 import LXXVerse from './LXXVerse'
 import SBLVerse from './SBLVerse'
-import DataFlow from 'util/DataFlow'
-import { generateReference } from 'util/ReferenceHelper'
+import DataFlow from '@util/DataFlow'
+import { generateReference } from '@util/ReferenceHelper'
 
 const wlcDisplay = (rid, wlc, activeWid) => (
 	wlc.map((accentUnit, i) =>

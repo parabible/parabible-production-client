@@ -1,8 +1,8 @@
 import React from 'react'
 
-import DataFlow from 'util/DataFlow'
+import DataFlow from '@util/DataFlow'
 import { Popout } from 'react-popout-component'
-import { generateReference } from 'util/ReferenceHelper'
+import { generateReference } from '@util/ReferenceHelper'
 
 const removeAccents = (s) => s.replace(/[\u0590-\u05AF\u05BD]/g, "")
 

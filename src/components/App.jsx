@@ -113,25 +113,25 @@ loadTheme({
 	}
 })
 
-import Header from 'components/Header'
-import Content from 'components/Content'
-import Footer from 'components/Footer'
-import MorphologySidebar from 'components/MorphologySidebar'
-import MorphologyPopup from 'components/MorphologyPopup'
-import MorphologySettings from 'components/MorphologySettings'
-import BookSelector from 'components/BookSelector'
-import ResultsOverlay from 'components/ResultsOverlay'
-import PopoutManager from 'components/PopoutManager'
+import Header from '@components/Header'
+import Content from '@components/Content'
+import Footer from '@components/Footer'
+import MorphologySidebar from '@components/MorphologySidebar'
+import MorphologyPopup from '@components/MorphologyPopup'
+import MorphologySettings from '@components/MorphologySettings'
+import BookSelector from '@components/BookSelector'
+import ResultsOverlay from '@components/ResultsOverlay'
+import PopoutManager from '@components/PopoutManager'
 
 import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar'
 
 // This just executes and should run before DataFlow
-import MediaBreakpoints from 'util/MediaBreakpoints'
+import MediaBreakpoints from '@util/MediaBreakpoints'
 MediaBreakpoints.init()
 
-import DataFlow from 'util/DataFlow'
-import AppNotify from 'util/AppNotify'
-//  import TextDisplayManager from 'util/TextDisplayManager'
+import DataFlow from '@util/DataFlow'
+import AppNotify from '@util/AppNotify'
+//  import TextDisplayManager from '@util/TextDisplayManager'
 
 const ESCAPE_KEY = 27
 
@@ -177,6 +177,9 @@ class App extends React.Component {
 		DataFlow.watch("screenSizeIndex", n => {
 			this.setState({ "screenSizeIndex": n })
 		}).watch("worddata", () => {
+			if (Object.keys(DataFlow.get("worddata")).length == 0)
+				return
+
 			if (DataFlow.get("screenSizeIndex") < 2) {
 				this.setState({ showMorphPopup: true })
 			}
@@ -240,7 +243,12 @@ class App extends React.Component {
 							}}>
 								<MorphologySidebar
 									show={this.state.showMorphSidebar}
-									onHide={() => this.setPanelDisplay("morphSidebar", false)} />
+									onHide={() => {
+										this.setPanelDisplay("morphSidebar", false)
+										setTimeout(() => {
+											DataFlow.set("worddata", {})
+										}, 300)
+									}} />
 							</div>
 						}
 						<Content translateX={this.state.showMorphSidebar ? 0 : morphologySidebarSizeMap[this.state.screenSizeIndex] / 2} />

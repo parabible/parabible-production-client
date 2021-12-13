@@ -1,0 +1,24 @@
+{
+	"short_name": "Parabible",
+	"name": "Parabible",
+	"start_url": "/",
+	"icons": [
+		{
+			"src": "/images/parabible-32.png",
+			"type": "image/png",
+			"sizes": "32x32"
+		},
+		{
+			"src": "/images/parabible-152.png",
+			"type": "image/png",
+			"sizes": "152x152"
+		},
+		{
+			"src": "/images/parabible-196.png",
+			"type": "image/png",
+			"sizes": "196x196"
+		}
+	],
+	"display": "standalone",
+	"theme_color": "#0078d7"
+}

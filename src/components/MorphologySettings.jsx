@@ -1,7 +1,7 @@
-import React from 'react';
-import DataFlow from 'util/DataFlow'
-import Abbreviations from 'data/abbreviations'
-import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
+import React from 'react'
+import DataFlow from '@util/DataFlow'
+import Abbreviations from '@data/abbreviations'
+import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel'
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox'
 
 const OptionItem = ({ value, checked, toggleCheck }) => {

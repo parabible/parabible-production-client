@@ -1,6 +1,6 @@
 import React from 'react'
-import DataFlow from 'util/DataFlow'
-import { isNewTestament } from 'util/ReferenceHelper'
+import DataFlow from '@util/DataFlow'
+import { isNewTestament } from '@util/ReferenceHelper'
 
 const headerTitles = {
     "wlc": { name: "BHS", nt: false, ot: true },
@@ -25,8 +25,8 @@ const styles = {
         padding: 0
     },
     headerRowStyle: {
-        contentSizing: "border-box",
         position: "sticky",
+        boxSizing: "border-box",
         top: "0px",
         display: "table",
         tableLayout: "fixed",
